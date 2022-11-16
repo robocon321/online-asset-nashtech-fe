@@ -15,20 +15,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const MainLayout = (props) => {
-  const [open, setOpen] = useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Box sx={{ display: "flex" }}>
-      <Header open={open} handleDrawerOpen={handleDrawerOpen} />
-      <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
+      <Header  />
+      <Sidebar open={true}/>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Outlet />

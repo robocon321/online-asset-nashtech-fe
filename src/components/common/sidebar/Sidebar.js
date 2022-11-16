@@ -1,16 +1,20 @@
 import { styled, useTheme } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
+import PieChartOutlineIcon from '@mui/icons-material/PieChartOutline';
+import StyleIcon from '@mui/icons-material/Style';
 
 import { Link } from 'react-router-dom';
+
+import styles from './Sidebar.module.css';
 
 const drawerWidth = 300;
 
@@ -23,17 +27,6 @@ const openedMixin = (theme) => ({
   overflowX: 'hidden',
 });
 
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -41,15 +34,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
-    ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
-  }),
+  })
 );
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -65,39 +52,17 @@ const Sidebar = (props) => {
   const theme = useTheme();
 
   return (
-    <Drawer variant="permanent" open={props.open}>
+    <Drawer variant="permanent" open={props.open} className={styles['sidebar']}>
     <DrawerHeader>
-      <IconButton onClick={props.handleDrawerClose}>
-        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-      </IconButton>
     </DrawerHeader>
     <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/admin/dashboard'>
-        <ListItemButton
-          sx={{
-            minHeight: 48,
-            justifyContent: props.open ? 'initial' : 'center',
-            px: 2.5,
-          }}
-        >
-          <ListItemIcon
-            sx={{
-              minWidth: 0,
-              mr: props.open ? 3 : 'auto',
-              justifyContent: 'center',
-            }}
-          >
-            <AccountCircleIcon />
-          </ListItemIcon>
-          <ListItemText primary='Paeg 1' sx={{ opacity: props.open ? 1 : 0 }} />
-        </ListItemButton>
-      </Link>
+      <div className={styles['wrap-logo']}>
+        <img className={styles['logo']} src="/logo.png" alt="Not found" />
+      </div>
     </ListItem>
-    
-    <Divider />
 
     <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/'>
+      <Link to='/home'>
         <ListItemButton
           sx={{
             minHeight: 48,
@@ -109,40 +74,20 @@ const Sidebar = (props) => {
             sx={{
               minWidth: 0,
               mr: props.open ? 3 : 'auto',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
-            <AccountCircleIcon />
+            <HomeIcon />
           </ListItemIcon>
-          <ListItemText primary='Paeg 2' sx={{ opacity: props.open ? 1 : 0 }} />
-        </ListItemButton>
-      </Link>
-    </ListItem>
-    <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/'>
-        <ListItemButton
-          sx={{
-            minHeight: 48,
-            justifyContent: props.open ? 'initial' : 'center',
-            px: 2.5,
-          }}
-        >
-          <ListItemIcon
-            sx={{
-              minWidth: 0,
-              mr: props.open ? 3 : 'auto',
-              justifyContent: 'center',
-            }}
-          >
-            <AccountCircleIcon />
-          </ListItemIcon>
-          <ListItemText primary='Page 3' sx={{ opacity: props.open ? 1 : 0 }} />
+          <ListItemText primary='Home' sx={{ 
+            opacity: props.open ? 1 : 0,
+          }} />
         </ListItemButton>
       </Link>
     </ListItem>
 
     <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/'>
+      <Link to='/users'>
         <ListItemButton
           sx={{
             minHeight: 48,
@@ -157,12 +102,104 @@ const Sidebar = (props) => {
               justifyContent: 'center',
             }}
           >
-            <AccountCircleIcon />
+            <PersonIcon />
           </ListItemIcon>
-          <ListItemText primary='Menu 4' sx={{ opacity: props.open ? 1 : 0 }} />
+          <ListItemText primary='Manage User' sx={{ opacity: props.open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      <Link to='/assets'>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: props.open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon           
+            sx={{
+              minWidth: 0,
+              mr: props.open ? 3 : 'auto',
+              justifyContent: 'center',
+              color: 'var(primary_color)'
+            }}
+          >
+            <StyleIcon />
+          </ListItemIcon>
+          <ListItemText className='sidebar_itemtext' primary='Manage Asset' sx={{ opacity: props.open ? 1 : 0 }} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
+
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      <Link to='/assignments'>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: props.open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: props.open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            <AssignmentIcon />
+          </ListItemIcon>
+          <ListItemText primary='Manage Assignment' sx={{ opacity: props.open ? 1 : 0 }} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
+
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      <Link to='/request'>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: props.open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: props.open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            <AssignmentReturnIcon />
+          </ListItemIcon>
+          <ListItemText primary='Manage for Returning' sx={{ opacity: props.open ? 1 : 0 }} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      <Link to='/report'>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: props.open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: props.open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            <PieChartOutlineIcon />
+          </ListItemIcon>
+          <ListItemText primary='Report' sx={{ opacity: props.open ? 1 : 0 }} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
+
   </Drawer>
 
   )

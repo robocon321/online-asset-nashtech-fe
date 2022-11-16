@@ -1,0 +1,18 @@
+.sidebar a {
+  text-decoration: none;
+  color: gray;
+}
+
+.sidebar .sidebar_itemtext {
+  font-size: 30px;
+}
+
+.wrap-logo {
+  margin-top: -20px;
+  margin-left: 60px;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+}
