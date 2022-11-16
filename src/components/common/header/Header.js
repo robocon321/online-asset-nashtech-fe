@@ -15,6 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
+import styles from './Header.module.css'
 
 const drawerWidth = 300;
 
@@ -79,7 +80,7 @@ const Header = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Change password</MenuItem>
       <MenuItem>Logout</MenuItem>
     </Menu>
   );
@@ -139,14 +140,14 @@ const Header = (props) => {
 
 
   return (
-    <AppBar position="fixed" open={props.open}>
-    <Toolbar>
+    <AppBar position="fixed" open={true}>
+    <Toolbar className={styles['topbar']}>
       <IconButton
           color="inherit"
           aria-label="open drawer"
           onClick={props.handleDrawerOpen}
           edge="start"
-          sx={{ mr: 2, ...(props.open && { display: 'none' }) }}
+          sx={{ mr: 2, display: 'none' }}
         >
         <MenuIcon />
       </IconButton>
