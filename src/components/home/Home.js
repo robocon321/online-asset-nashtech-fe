@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { HomeContext } from "../../contexts/providers/HomeProvider";
-
 const Home = props => {
   const { homeState, changeTitle } = useContext(HomeContext);
   return (

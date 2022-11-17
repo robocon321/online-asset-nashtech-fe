@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -16,10 +17,11 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
 import styles from './Header.module.css'
+import ChangePassword from "../dialog/changepassword/Changepassword"
 
 const drawerWidth = 300;
 
-const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open'})(({ theme, open }) => ({
+const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
@@ -37,6 +39,12 @@ const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open'}
 
 
 const Header = (props) => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -48,6 +56,7 @@ const Header = (props) => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+
   };
 
 
@@ -70,7 +79,7 @@ const Header = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Change password</MenuItem>
+      <MenuItem onClick={handleClickOpen}>Change password</MenuItem>
       <MenuItem>Logout</MenuItem>
     </Menu>
   );
@@ -81,16 +90,17 @@ const Header = (props) => {
 
   return (
     <AppBar position="fixed" open={true}>
-    <Toolbar className={styles['topbar']}>
-      <IconButton
+      <ChangePassword open={open} setOpen={setOpen} />
+      <Toolbar className={styles['topbar']}>
+        <IconButton
           color="inherit"
           aria-label="open drawer"
           onClick={props.handleDrawerOpen}
           edge="start"
           sx={{ mr: 2, display: 'none' }}
         >
-        <MenuIcon />
-      </IconButton>
+          <MenuIcon />
+        </IconButton>
         <Typography
           variant="h6"
           noWrap
@@ -100,7 +110,7 @@ const Header = (props) => {
           NASHTECH
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ display: {  md: 'flex' } }}>
+        <Box sx={{ display: { md: 'flex' } }}>
           <IconButton
             size="large"
             edge="end"
@@ -113,9 +123,9 @@ const Header = (props) => {
             <AccountCircle />
           </IconButton>
         </Box>
-    </Toolbar>
-    {renderMenu}
-  </AppBar>
+      </Toolbar>
+      {renderMenu}
+    </AppBar>
 
   )
 }
