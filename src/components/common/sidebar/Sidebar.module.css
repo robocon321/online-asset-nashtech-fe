@@ -1,10 +1,31 @@
 .sidebar a {
   text-decoration: none;
   color: gray;
+  display: flex;
+  align-items: center;
+  padding: 15px;
 }
 
-.sidebar .sidebar_itemtext {
-  font-size: 30px;
+.sidebar a:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+.sidebar a .icon {
+  display: flex;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.sidebar a.active {
+  background-color: var(--primary_color);
+}
+
+.sidebar a.active .icon {
+  color: white;
+}
+
+.sidebar a.active .title {
+  color: white;
 }
 
 .wrap-logo {
