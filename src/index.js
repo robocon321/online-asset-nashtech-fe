@@ -9,9 +9,9 @@ import HomeProvider from "./contexts/providers/HomeProvider";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <HomeProvider>
+    <BrowserRouter>
       <App />
-    </HomeProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
