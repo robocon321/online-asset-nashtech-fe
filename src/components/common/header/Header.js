@@ -43,6 +43,7 @@ const Header = (props) => {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setAnchorEl(null);
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
