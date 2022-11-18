@@ -86,13 +86,11 @@ const Header = (props) => {
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
 
-
-
   return (
     <AppBar position="fixed" open={true}>
       <ChangePassword open={open} setOpen={setOpen} />
       <Toolbar className={styles['topbar']}>
-        <IconButton
+      <IconButton
           color="inherit"
           aria-label="open drawer"
           onClick={props.handleDrawerOpen}
