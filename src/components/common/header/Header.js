@@ -87,7 +87,7 @@ const Header = (props) => {
   const mobileMenuId = 'primary-search-account-menu-mobile';
 
   return (
-    <AppBar position="fixed" open={true}>
+    <AppBar position="fixed" open={true} style={{backgroundColor: 'var(--primary_color)'}}>
       <ChangePassword open={open} setOpen={setOpen} />
       <Toolbar className={styles['topbar']}>
       <IconButton
