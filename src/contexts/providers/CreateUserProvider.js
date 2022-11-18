@@ -66,7 +66,7 @@ const CreateUserProvider = props => {
     const error = {};
     const { dob, joinedDate } =  createUserState.form;
 
-    if(getAge(dob) > 18) {
+    if(getAge(dob) < 18) {
       error.dob = 'User is under 18. Please select a different date';
     }
     if(isGreater(dob, joinedDate)) {
