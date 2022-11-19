@@ -8,12 +8,16 @@ const reducer = (state, {type,payload}) => {
     case ACTIONS.SET_ENABLE_SUBMIT:
       state = {...state, enableSubmit: payload};
       break;
-    case ACTIONS.SET_ERROR:
-      state = {...state, error: payload};
-      break; 
     case ACTIONS.SET_FIELD_ERROR:
       state = {...state, error: {...state.error, [payload.name]: payload.value}}
-      break;   
+      break;
+    case ACTIONS.REMOVE_FIELD_ERROR:
+      delete state.error[payload];
+      state = {...state, error: {...state.error}}
+      break;
+    case ACTIONS.ADD_FIELD_ERROR:
+      state = {...state, error: {...state.error, [payload.name]: payload.value}}
+      break;
     default: 
       break;
   }

@@ -2,8 +2,8 @@ import { createContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { changeToSlug } from "../../utils/ConvertString";
 import { getAge, isDay, isGreater } from "../../utils/DateUtils";
-import { validateFirstName, validateLastname } from "../../utils/Validate";
-import { setEnableSubmitAction, setErrorAction, setErrorFieldAction, setFieldAction, submitAction } from "../actions/CreateUserAction";
+import * as Validate from "../../utils/Validate";
+import { addErrorFieldAction, removeErrorFieldAction, setEnableSubmitAction, setErrorAction, setErrorFieldAction, setFieldAction, submitAction } from "../actions/CreateUserAction";
 import CreateUserReducer from '../reducers/CreateUserReducer';
 
 export const CreateUserContext = createContext();
@@ -34,10 +34,7 @@ const CreateUserProvider = props => {
   }, [createUserState]);
 
   useEffect(() => {
-    validateDate();
-  }, [createUserState.form.dob, createUserState.form.joinedDate]);
-
-  useEffect(() => {
+    console.log("Hello world");
     if(Object.keys(createUserState.error).length > 0 || isBlankField()) {
       setEnableSubmitAction(false)(dispatch);
     } else {
@@ -48,7 +45,6 @@ const CreateUserProvider = props => {
   const changeField = e => {
     e.preventDefault();
     const { name, value } = e.target;
-    console.log(name, value);
     setFieldAction(name, value)(dispatch);
     validateField(name, value);
   }
@@ -56,65 +52,84 @@ const CreateUserProvider = props => {
   const validateField = (name, value) => {   
     value = value.trim(); 
 
-    if(name == 'firstName') {
-      const slug = changeToSlug(value);
-      console.log(value, slug);
-      if(!validateFirstName(slug)) {
-        if(value.length > 50) {
-          setErrorFieldAction(name, "First name is incorrect format. Max length is 50")(dispatch);
-        } else {
-          setErrorFieldAction(name, "First name is incorrect format")(dispatch);
-        }
-      } else {
-        if(value.length > 50) {
-          setErrorFieldAction(name, "Max length is 50")(dispatch);
-        } else {
-          setErrorFieldAction(name, null)(dispatch);     
-        }   
-      }
-    } else if(name == 'lastName') {
-      const slug = changeToSlug(value);
+    switch(name) {
+      case 'firstName':
+        validateFirstName(value);
+        break;
+      case 'lastName':
+        validateLastName(value);
+        break;
+      case 'dob':
+        validateDob(value);
+        break;
+      case 'joinedDate':
+        validateJoinedDate(value);
+        break;
+      default:
+        break;
+    }
+  }
 
-      if(!validateLastname(slug)) {
-        if(value.length > 50) {
-          setErrorFieldAction(name, "Last name is incorrect format. Max length is 50")(dispatch);
-        } else {
-          setErrorFieldAction(name, "Last name is incorrect format")(dispatch);
-        }
+  const validateFirstName = (value) => {
+    console.log(value);
+    const slug = changeToSlug(value);
+
+    if(!Validate.validateFirstName(slug)) {
+      if(value.length > 50) {
+        addErrorFieldAction('firstName', "First name is incorrect format. Max length is 50")(dispatch);
       } else {
-        if(value.length > 50) {
-          setErrorFieldAction(name, "Max length is 50")(dispatch);
-        } else {
-          setErrorFieldAction(name, null)(dispatch);     
-        }
+        addErrorFieldAction('firstName', "First name is incorrect format")(dispatch);
+      }
+    } else {
+      if(value.length > 50) {
+        addErrorFieldAction('firstName', "Max length is 50")(dispatch);
+      } else {
+        removeErrorFieldAction('firstName')(dispatch);
+      }   
+    }
+  }
+
+  const validateLastName = (value) => {
+    const slug = changeToSlug(value);
+
+    if(!Validate.validateLastname(slug)) {
+      if(value.length > 50) {
+        addErrorFieldAction('lastName', "Last name is incorrect format. Max length is 50")(dispatch);
+      } else {
+        addErrorFieldAction('lastName', "Last name is incorrect format")(dispatch);
+      }
+    } else {
+      if(value.length > 50) {
+        addErrorFieldAction('lastName', "Max length is 50")(dispatch);
+      } else {
+        removeErrorFieldAction('lastName')(dispatch);
       }
     }
   }
  
-  const validateDate = () => {
-    const error = {};
-    const { dob, joinedDate } =  createUserState.form;
-
-    if(dob && getAge(dob) < 18) {
-      error.dob = 'User is under 18. Please select a different date';
-    }
-    if(dob && joinedDate && isGreater(dob, joinedDate)) {
-      error.joinedDate = 'Joined date is not later than Date of Birth. Please select a different date';
-    }
-    if(joinedDate && (isDay(joinedDate, 0) || isDay(joinedDate, 6))) {
-      if(error.joinedDate == null) {
-        error.joinedDate = 'Joined date is Saturday or Sunday. Please select a different date';
-      } else {
-        error.joinedDate += '. Joined date is Saturday or Sunday. Please select a different date';
-      }
-    }
-
-    setErrorAction(error)(dispatch);
-
-    if(Object.keys(error).length > 0) {
-      return false;
+  const validateDob = (value) => {
+    if(value && getAge(value) < 18) {
+      addErrorFieldAction('dob', 'User is under 18. Please select a different date')(dispatch);
     } else {
-      return true;
+      removeErrorFieldAction('dob')(dispatch);
+    }
+  }
+
+  const validateJoinedDate = (value) => {
+    const joinedDate = value;
+    const { dob } = createUserState.form;
+    const { error } = createUserState;
+
+    if(dob && joinedDate && isGreater(dob, joinedDate)) {
+      addErrorFieldAction('joinedDate','Joined date is not later than Date of Birth. Please select a different date')(dispatch);
+    } else if(joinedDate && (isDay(joinedDate, 0) || isDay(joinedDate, 6))) {
+      if(error.joinedDate == null) {
+        addErrorFieldAction('joinedDate', 'Joined date is Saturday or Sunday. Please select a different date')(dispatch);
+      } else {
+        addErrorFieldAction('joinedDate', 'Joined date is not later than Date of Birth. Please select a different date. Joined date is Saturday or Sunday. Please select a different date. ')(dispatch);
+      }
+    } else {
+      removeErrorFieldAction('joinedDate')(dispatch);
     }
   }
 
