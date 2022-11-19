@@ -1,6 +1,6 @@
 import React from "react";
 
-function Tiltle(props) {
+function Title(props) {
   return (
     <div style={{ color: "#e30613" }}>
       <h3>{props.title}</h3>
@@ -8,4 +8,4 @@ function Tiltle(props) {
   );
 }
 
-export default Tiltle;
+export default Title;

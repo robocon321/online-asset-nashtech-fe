@@ -16,7 +16,7 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import Pagination from "@mui/material/Pagination";
-import Tiltle from "../components/common/title/Tiltle";
+import Title from "../components/common/title/Title";
 import Modal from "@mui/material/Modal";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -320,7 +320,7 @@ function ListUserPage() {
 
   return (
     <div>
-      <Tiltle title="User List"></Tiltle>
+      <Title title="User List"></Title>
       <div
         style={{
           marginBottom: "20px",
@@ -422,7 +422,7 @@ function ListUserPage() {
               // textAlign: "center",
             }}
           >
-            <Tiltle title="Detailed User Information" />
+            <Title title="Detailed User Information" />
             <IconButton onClick={handleClose}>
               <DisabledByDefaultOutlinedIcon
                 sx={{ fontSize: 40 }}
