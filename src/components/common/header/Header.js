@@ -18,6 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 
 import styles from './Header.module.css'
 import ChangePassword from "../dialog/changepassword/Changepassword"
+import Logout from "../dialog/Logout"
 
 const drawerWidth = 300;
 
@@ -40,9 +41,15 @@ const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const Header = (props) => {
   const [open, setOpen] = React.useState(false);
+  const [logout, setLogout] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+    setAnchorEl(null);
+  };
+
+  const handleClickOpenLogout = () => {
+    setLogout(true);
     setAnchorEl(null);
   };
 
@@ -81,22 +88,28 @@ const Header = (props) => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleClickOpen}>Change password</MenuItem>
-      <MenuItem>Logout</MenuItem>
+      <MenuItem onClick={handleClickOpenLogout}>Logout</MenuItem>
     </Menu>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
 
   return (
-    <AppBar position="fixed" open={true} style={{backgroundColor: 'var(--primary_color)'}}>
+    <AppBar
+      position="fixed"
+      open={true}
+      style={{ backgroundColor: "var(--primary_color)" }}
+    >
       <ChangePassword open={open} setOpen={setOpen} />
-      <Toolbar className={styles['topbar']}>
-      <IconButton
+      <Logout open={logout} setOpen={setLogout} />
+
+      <Toolbar className={styles["topbar"]}>
+        <IconButton
           color="inherit"
           aria-label="open drawer"
           onClick={props.handleDrawerOpen}
           edge="start"
-          sx={{ mr: 2, display: 'none' }}
+          sx={{ mr: 2, display: "none" }}
         >
           <MenuIcon />
         </IconButton>
@@ -104,12 +117,12 @@ const Header = (props) => {
           variant="h6"
           noWrap
           component="div"
-          sx={{ display: { xs: 'none', sm: 'block' } }}
+          sx={{ display: { xs: "none", sm: "block" } }}
         >
           NASHTECH
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ display: { md: 'flex' } }}>
+        <Box sx={{ display: { md: "flex" } }}>
           <IconButton
             size="large"
             edge="end"
@@ -125,8 +138,7 @@ const Header = (props) => {
       </Toolbar>
       {renderMenu}
     </AppBar>
-
-  )
+  );
 }
 
 export default Header;
