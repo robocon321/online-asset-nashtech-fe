@@ -4,6 +4,7 @@ export const ACTIONS = {
   SET_FIELD: 'SET_FIELD',
   SET_ENABLE_SUBMIT: 'SET_ENABLE_SUBMIT',
   SET_ERROR: 'SET_ERROR',
+  SET_FIELD_ERROR: 'SET_FIELD_ERROR',
   SET_LOADING: 'SET_LOADING'
 }
 
@@ -35,11 +36,17 @@ export const setLoadingAction = (isLoading) => dispatch => {
   })
 }
 
+export const setErrorFieldAction = (name, value) => dispatch => {
+  dispatch({
+    type: ACTIONS.SET_FIELD_ERROR,
+    payload: { name, value}
+  })
+}
+
 export const submitAction = (form, navigate) => async (dispatch) => {
  setLoadingAction(false)(dispatch);
  
  setTimeout(() => {
-  console.log(form);
   navigate('/users');
  }, 1000);
 

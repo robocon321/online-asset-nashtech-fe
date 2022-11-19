@@ -10,7 +10,10 @@ const reducer = (state, {type,payload}) => {
       break;
     case ACTIONS.SET_ERROR:
       state = {...state, error: payload};
-      break;    
+      break; 
+    case ACTIONS.SET_FIELD_ERROR:
+      state = {...state, error: {...state.error, [payload.name]: payload.value}}
+      break;   
     default: 
       break;
   }
