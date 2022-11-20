@@ -1,6 +1,6 @@
 import { ACTIONS } from "../actions/AppAction";
 
-const reducer = (state, { type, payload }) {
+const reducer = (state, { type, payload }) => {
   switch(type) {
     case ACTIONS.SET_USER:
       state = { ...state, user: payload };
@@ -8,8 +8,11 @@ const reducer = (state, { type, payload }) {
     case ACTIONS.SET_LOADING:
       state = { ...state, status: {
         ...state.status,
-        isLoading: payload       
+        isLoading: payload 
       }};
+      break;
+    case ACTIONS.SET_FIELD_MODAL_LOGIN_FIRST_TIME:
+      state = { ...state, modalLoginFirstTime: { ...state.modalLoginFirstTime, [payload.name]: payload.value}}
       break;
     default:
       break;

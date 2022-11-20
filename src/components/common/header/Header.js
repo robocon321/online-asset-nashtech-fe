@@ -13,6 +13,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import styles from './Header.module.css'
 import ChangePassword from "../dialog/changepassword/Changepassword"
+import ChangePasswordLoginFirstTimeDialog from '../dialog/change-password-login-first-time/ChangePasswordLoginFirstTimeDialog';
 
 const drawerWidth = 300;
 
@@ -85,6 +86,7 @@ const Header = (props) => {
   return (
     <AppBar position="fixed" open={true} style={{backgroundColor: 'var(--primary_color)'}}>
       <ChangePassword open={open} setOpen={setOpen} />
+      <ChangePasswordLoginFirstTimeDialog />
       <Toolbar className={styles['topbar']}>
       <IconButton
           color="inherit"
