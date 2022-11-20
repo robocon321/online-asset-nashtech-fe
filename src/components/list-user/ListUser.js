@@ -1,28 +1,32 @@
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
-import { useState } from "react";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import {
+  gridPageCountSelector,
+  gridPageSelector,
+  useGridApiContext,
+  useGridSelector,
+} from "@mui/x-data-grid";
+import { styled, alpha } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
+import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import InputLabel from "@mui/material/InputLabel";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
+import Title from "../common/title/Title";
+import InputBase from "@mui/material/InputBase";
 import Pagination from "@mui/material/Pagination";
-import Tiltle from "../components/common/title/Tiltle";
 import Modal from "@mui/material/Modal";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useContext } from "react";
+import { ListUserContext } from "../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
-
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -73,60 +77,42 @@ const style = {
   p: 4,
 };
 
-function CustomPagination() {
-  // const apiRef = useGridApiContext();
-  // const page = useGridSelector(apiRef, gridPageSelector);
-  // const pageCount = useGridSelector(apiRef, gridPageCountSelector);
-
-  return (
-    <Pagination
-      color="primary"
-      // count={pageCount}
-      // page={page + 1}
-      count={2}
-      page={1}
-      // onChange={(event, value) => apiRef.current.setPage(value - 1)}
-      // onChange={(event, value) => apiRef.current.setPage(value - 1)}
-      showFirstButton
-      showLastButton
-    />
-  );
-}
-
-function ListUserPage() {
-  const [check, setCheck] = useState(false);
-  const [check2, setCheck2] = useState(false);
-  const [userRole, setUserRole] = useState([]);
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
-  const [checkId, setCheckId] = useState("");
-  const [sortStaffCode, setSortStaffCode] = useState(0);
-  const [sortFullName, setSortFullName] = useState(0);
-  const [sortJoinedDate, setSortJoinedDate] = useState(0);
-  const [sortType, setSortType] = useState(0);
+function ListUser() {
+  const {
+    listUserState,
+    handleChange,
+    handleOnCellClick,
+    handleClose,
+    handleSearch,
+  } = useContext(ListUserContext);
+  function CustomPagination() {
+    const apiRef = useGridApiContext();
+    const page = useGridSelector(apiRef, gridPageSelector);
+    const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+    // const page = 0;
+    return (
+      <Pagination
+        color="primary"
+        count={pageCount}
+        page={page + 1}
+        onChange={(event, value) => apiRef.current.setPage(value - 1)}
+        showFirstButton
+        showLastButton
+      />
+    );
+  }
   const columns = [
     {
-      field: "id",
+      field: "code",
       renderHeader: () => {
         return (
-          <strong
-            style={{ display: "flex" }}
-            onClick={() => {
-              setSortStaffCode(!sortStaffCode);
-              setSortFullName(0);
-              setSortJoinedDate(0);
-              setSortType(0);
-            }}
-          >
+          <strong style={{ display: "flex" }}>
             <h4>Staff Code</h4>
-            <IconButton>
-              {sortStaffCode ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-            </IconButton>
           </strong>
         );
       },
+      type: "code",
       width: 90,
-      sortable: false,
       flex: 2,
       headerAlign: "center",
       align: "center",
@@ -135,30 +121,19 @@ function ListUserPage() {
       field: "fullName",
       renderHeader: () => {
         return (
-          <strong
-            style={{ display: "flex" }}
-            onClick={() => {
-              setSortStaffCode(0);
-              setSortFullName(!sortFullName);
-              setSortJoinedDate(0);
-              setSortType(0);
-            }}
-          >
+          <strong style={{ display: "flex" }}>
             <h4>Full Name</h4>
-            <IconButton>
-              {sortFullName ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-            </IconButton>
           </strong>
         );
       },
+      type: "number",
       width: 150,
-      sortable: false,
       flex: 2,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "userName",
+      field: "username",
       renderHeader: () => {
         return (
           <strong>
@@ -166,88 +141,54 @@ function ListUserPage() {
           </strong>
         );
       },
+      type: "string",
       width: 150,
-      sortable: false,
       flex: 2,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "joinDate",
+      field: "joinedDate",
       renderHeader: () => {
         return (
-          <strong
-            style={{ display: "flex" }}
-            onClick={() => {
-              setSortStaffCode(0);
-              setSortFullName(0);
-              setSortJoinedDate(!sortJoinedDate);
-              setSortType(0);
-            }}
-          >
+          <strong style={{ display: "flex" }}>
             <h4>Joined Date</h4>
-            <IconButton>
-              {sortJoinedDate ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-            </IconButton>
           </strong>
         );
       },
-      type: "number",
+      type: "date",
       width: 110,
-      sortable: false,
       flex: 2,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "type",
+      field: "role",
       renderHeader: () => {
         return (
-          <strong
-            style={{ display: "flex" }}
-            onClick={() => {
-              setSortStaffCode(0);
-              setSortFullName(0);
-              setSortJoinedDate(0);
-              setSortType(!sortType);
-              console.log(sortStaffCode);
-              console.log(sortFullName);
-              console.log(sortJoinedDate);
-              console.log(sortType);
-            }}
-          >
-            <h4>Type</h4>
-            <IconButton>
-              {sortType ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-            </IconButton>
+          <strong style={{ display: "flex" }}>
+            <h4>Role</h4>
           </strong>
         );
       },
+      type: "string",
       width: 110,
-      sortable: false,
       flex: 2,
       headerAlign: "center",
       align: "center",
     },
     {
-      // field: "disable",
       width: 110,
       flex: 2,
       align: "center",
-      sortable: false,
       renderCell: (params) => {
         console.log(params.row.id);
         return (
           <div>
-            <GridActionsCellItem
-              icon={<EditRoundedIcon />}
-              label="edit"
-              //   onClick={deleteUser(params.id)}
-            />
+            <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
             <GridActionsCellItem
               icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
               label="Delete"
-              //   onClick={deleteUser(params.id)}
             />
           </div>
         );
@@ -255,72 +196,10 @@ function ListUserPage() {
     },
   ];
 
-  const rows = [
-    {
-      id: "SD0001",
-      fullName: "Pham Phu Hung",
-      userName: "hungpp1",
-      joinDate: "17/11/2022",
-      type: "Admin",
-    },
-    {
-      id: "SD0002",
-      fullName: "Pham Phu Hung",
-      userName: "hungpp1",
-      joinDate: "17/11/2022",
-      type: "Admin",
-    },
-    {
-      id: "SD0003",
-      fullName: "Pham Phu Hung",
-      userName: "hungpp1",
-      joinDate: "17/11/2022",
-      type: "Admin",
-    },
-    {
-      id: "SD0004",
-      fullName: "Pham Phu Hung",
-      userName: "hungpp1",
-      joinDate: "17/11/2022",
-      type: "Admin",
-    },
-  ];
-  const roles = ["All", "Admin", "Staff"];
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setUserRole(event);
-
-    setUserRole(typeof value === "string" ? value.split(",") : value);
-    setCheck(!check);
-  };
-
-  useEffect(() => {
-    if (userRole[userRole.length - 1] === "All") {
-      setUserRole(["All"]);
-    } else if (userRole[0] === "All") {
-      userRole.splice(0, 1);
-      setUserRole(userRole);
-      setCheck2(!check2);
-    }
-    console.log(userRole);
-  }, [check]);
-  useEffect(() => {}, [check2]);
-
-  const [finalClickInfo, setFinalClickInfo] = useState(null);
-
-  const handleOnCellClick = (params) => {
-    console.log(params);
-    setFinalClickInfo(params);
-    setCheckId(params.id);
-    setOpen(true);
-  };
-
+  const roles = ["ALL", "ADMIN", "STAFF"];
   return (
     <div>
-      <Tiltle title="User List"></Tiltle>
+      <Title title="User List"></Title>
       <div
         style={{
           marginBottom: "20px",
@@ -337,17 +216,19 @@ function ListUserPage() {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 multiple
-                value={userRole}
+                value={listUserState.userRole}
                 onChange={handleChange}
                 renderValue={() => "Type"}
                 sx={{ width: "120px" }}
               >
-                {roles.map((role) => {
-                  console.log(userRole);
+                {roles.map((userrole) => {
+                  //   console.log(userRole);
                   return (
-                    <MenuItem key={role} value={role}>
-                      <Checkbox checked={userRole.indexOf(role) > -1} />
-                      <ListItemText primary={role} />
+                    <MenuItem key={userrole} value={userrole}>
+                      <Checkbox
+                        checked={listUserState.userRole.indexOf(userrole) > -1}
+                      />
+                      <ListItemText primary={userrole} />
                     </MenuItem>
                   );
                 })}
@@ -371,6 +252,7 @@ function ListUserPage() {
               <StyledInputBase
                 style={{ border: "1px solid black", borderRadius: "8px" }}
                 placeholder="Search…"
+                onChange={handleSearch}
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
@@ -389,29 +271,48 @@ function ListUserPage() {
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           // labelRowsPerPage=""
-          disableColumnMenu
-          rows={rows}
+          // disableColumnMenu
+          rows={listUserState.listUser.filter((item) => {
+            if (
+              listUserState.userRole.length &&
+              listUserState.userRole[0] !== "ALL" &&
+              !listUserState.userRole.includes(item.role.toUpperCase())
+            ) {
+              return false;
+            }
+
+            if (
+              !(
+                item.fullName
+                  .toUpperCase()
+                  .includes(listUserState.search.toUpperCase()) ||
+                item.code
+                  .toUpperCase()
+                  .includes(listUserState.search.toUpperCase())
+              )
+            ) {
+              return false;
+            }
+
+            return true;
+          })}
           columns={columns}
           pageSize={20}
           onCellClick={handleOnCellClick}
           components={{
             Pagination: CustomPagination,
           }}
-          // pageSize={2}
-          // rowsPerPageOptions={[20]}
         ></DataGrid>
       </Box>
 
       <Modal
         keepMounted
-        open={open}
+        open={listUserState.open}
         onClose={handleClose}
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={style} style={{ borderRadius: "20px" }}>
-          {/* <div style={{ display: "flex", justifyContent: "end" }}>
-          </div> */}
           <div
             style={{
               display: "flex",
@@ -419,10 +320,9 @@ function ListUserPage() {
               width: "100%",
               alignItems: "center",
               justifyContent: "space-between",
-              // textAlign: "center",
             }}
           >
-            <Tiltle title="Detailed User Information" />
+            <Title title="Detailed User Information" />
             <IconButton onClick={handleClose}>
               <DisabledByDefaultOutlinedIcon
                 sx={{ fontSize: 40 }}
@@ -442,14 +342,14 @@ function ListUserPage() {
               <p>Location </p>
             </div>
             <div>
-              <p> {checkId}</p>
-              <p> {checkId}</p>
-              <p> {checkId}</p>
-              <p> {checkId}</p>
-              <p> {checkId}</p>
-              <p> {checkId}</p>
-              <p> {checkId}</p>
-              <p> {checkId}</p>
+              <p> {listUserState.userDetail.code}</p>
+              <p> {listUserState.userDetail.fullName}</p>
+              <p> {listUserState.userDetail.username}</p>
+              <p> {listUserState.userDetail.dob}</p>
+              <p> {listUserState.userDetail.gender}</p>
+              <p> {listUserState.userDetail.joinedDate}</p>
+              <p> {listUserState.userDetail.role}</p>
+              <p> {listUserState.userDetail.location}</p>
             </div>
           </div>
         </Box>
@@ -458,4 +358,4 @@ function ListUserPage() {
   );
 }
 
-export default ListUserPage;
+export default ListUser;
