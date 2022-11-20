@@ -1,7 +1,9 @@
 import { createContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import { changeToSlug } from "../../utils/ConvertString";
 import { getAge, isDay, isGreater } from "../../utils/DateUtils";
-import { setEnableSubmitAction, setErrorAction, setFieldAction, submitAction } from "../actions/CreateUserAction";
+import * as Validate from "../../utils/Validate";
+import { addErrorFieldAction, removeErrorFieldAction, setEnableSubmitAction, setErrorAction, setErrorFieldAction, setFieldAction, submitAction } from "../actions/CreateUserAction";
 import CreateUserReducer from '../reducers/CreateUserReducer';
 
 export const CreateUserContext = createContext();
@@ -9,9 +11,9 @@ const initState = {
   form: {
     firstName: '',
     lastName: '',
-    dob: '',
+    dob: null,
     gender: true,
-    joinedDate: '',
+    joinedDate: null,
     type: 'ADMIN'
   },
   status: {
@@ -32,61 +34,118 @@ const CreateUserProvider = props => {
   }, [createUserState]);
 
   useEffect(() => {
-    validateWhenChange();
-  }, [createUserState.form]);
-
-  const validateWhenChange = async () => {
-    const isBlank = isBlankField();
-    setEnableSubmitAction(isBlank)(dispatch);
-  }
+    if(Object.keys(createUserState.error).length > 0 || isBlankField()) {
+      setEnableSubmitAction(false)(dispatch);
+    } else {
+      setEnableSubmitAction(true)(dispatch);
+    }
+  }, [createUserState.error]);
 
   const changeField = e => {
     e.preventDefault();
-    setFieldAction(e.target.name, e.target.value)(dispatch);
+    const { name, value } = e.target;
+    setFieldAction(name, value)(dispatch);
+    validateField(name, value);
+  }
+
+  const validateField = (name, value) => {   
+    value = value.trim(); 
+
+    switch(name) {
+      case 'firstName':
+        validateFirstName(value);
+        break;
+      case 'lastName':
+        validateLastName(value);
+        break;
+      case 'dob':
+        validateDob(value);
+        break;
+      case 'joinedDate':
+        validateJoinedDate(value);
+        break;
+      default:
+        break;
+    }
+  }
+
+  const validateFirstName = (value) => {
+    console.log(value);
+    const slug = changeToSlug(value);
+
+    if(!Validate.validateFirstName(slug)) {
+      if(value.length > 50) {
+        addErrorFieldAction('firstName', "First name is incorrect format. Max length is 50")(dispatch);
+      } else {
+        addErrorFieldAction('firstName', "First name is incorrect format")(dispatch);
+      }
+    } else {
+      if(value.length > 50) {
+        addErrorFieldAction('firstName', "Max length is 50")(dispatch);
+      } else {
+        removeErrorFieldAction('firstName')(dispatch);
+      }   
+    }
+  }
+
+  const validateLastName = (value) => {
+    const slug = changeToSlug(value);
+
+    if(!Validate.validateLastname(slug)) {
+      if(value.length > 50) {
+        addErrorFieldAction('lastName', "Last name is incorrect format. Max length is 50")(dispatch);
+      } else {
+        addErrorFieldAction('lastName', "Last name is incorrect format")(dispatch);
+      }
+    } else {
+      if(value.length > 50) {
+        addErrorFieldAction('lastName', "Max length is 50")(dispatch);
+      } else {
+        removeErrorFieldAction('lastName')(dispatch);
+      }
+    }
+  }
+ 
+  const validateDob = (value) => {
+    if(value && getAge(value) < 18) {
+      addErrorFieldAction('dob', 'User is under 18. Please select a different date')(dispatch);
+    } else {
+      removeErrorFieldAction('dob')(dispatch);
+    }
+  }
+
+  const validateJoinedDate = (value) => {
+    const joinedDate = value;
+    const { dob } = createUserState.form;
+    const { error } = createUserState;
+
+    if(dob && joinedDate && isGreater(dob, joinedDate)) {
+      addErrorFieldAction('joinedDate','Joined date is not later than Date of Birth. Please select a different date')(dispatch);
+    } else if(joinedDate && (isDay(joinedDate, 0) || isDay(joinedDate, 6))) {
+      if(error.joinedDate == null) {
+        addErrorFieldAction('joinedDate', 'Joined date is Saturday or Sunday. Please select a different date')(dispatch);
+      } else {
+        addErrorFieldAction('joinedDate', 'Joined date is not later than Date of Birth. Please select a different date. Joined date is Saturday or Sunday. Please select a different date. ')(dispatch);
+      }
+    } else {
+      removeErrorFieldAction('joinedDate')(dispatch);
+    }
   }
 
   const isBlankField = () => {
-    if(createUserState.form.firstName == null || createUserState.form.firstName.trim() == '') return false;
-    if(createUserState.form.lastName == null || createUserState.form.lastName.trim() == '') return false;
-    if(createUserState.form.dob == null || createUserState.form.dob.trim() == '') return false;
-    if(createUserState.form.joinedDate == null || createUserState.form.joinedDate.trim() == '') return false;
-    if(createUserState.form.type == null) return false;
-    if(createUserState.form.gender == null) return false;
-    return true;
+    if(createUserState.form.firstName == null || createUserState.form.firstName.trim() == '') return true;
+    if(createUserState.form.lastName == null || createUserState.form.lastName.trim() == '') return true;
+    if(createUserState.form.dob == null || createUserState.form.dob.trim() == '') return true;
+    if(createUserState.form.joinedDate == null || createUserState.form.joinedDate.trim() == '') return true;
+    if(createUserState.form.type == null) return true;
+    if(createUserState.form.gender == null) return true;
+    return false;
   }
 
   const submit = () => {
-    if(validate()) {
-      setErrorAction({})(dispatch);
+    if(Object.keys(createUserState.error).length == 0) {
       submitAction(createUserState.form, navigate)(dispatch);
-    }
-  }
-
-  const validate = () => {
-    const error = {};
-    const { dob, joinedDate } =  createUserState.form;
-
-    if(getAge(dob) < 18) {
-      error.dob = 'User is under 18. Please select a different date';
-    }
-    if(isGreater(dob, joinedDate)) {
-      error.joinedDate = 'Joined date is not later than Date of Birth. Please select a different date';
-    }
-    if(isDay(joinedDate, 0) || isDay(joinedDate, 6)) {
-      if(error.joinedDate == null) {
-        error.joinedDate = 'Joined date is Saturday or Sunday. Please select a different date';
-      } else {
-        error.joinedDate += '. Joined date is Saturday or Sunday. Please select a different date';
-      }
-    }
-
-    setErrorAction(error)(dispatch);
-
-    if(Object.keys(error).length > 0) {
-      return false;
-    } else {
-      return true;
-    }
+    } 
   }
 
   const value = {

@@ -14,6 +14,15 @@ const reducer = (state, { type, payload }) => {
         },
       };
       break;
+    case ACTIONS.SET_FIELD_MODAL_LOGIN_FIRST_TIME:
+      state = {
+        ...state,
+        modalLoginFirstTime: {
+          ...state.modalLoginFirstTime,
+          [payload.name]: payload.value,
+        },
+      };
+      break;
     default:
       break;
   }
