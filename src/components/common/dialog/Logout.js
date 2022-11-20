@@ -13,13 +13,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function AlertDialogSlide(props) {
-
   const handleClose = () => {
     props.setOpen(false);
   };
 
   const handleLogout = () => {
-    Cookies.remove("token");
+    localStorage.clear();
     window.location.href = "/login";
   };
 
@@ -36,7 +35,13 @@ export default function AlertDialogSlide(props) {
         "border-style": "solid",
       }}
     >
-      <DialogTitle style={{ color: "red", "background-color": "#e2e2e2", "font-weight": "bold" }}>
+      <DialogTitle
+        style={{
+          color: "red",
+          "background-color": "#e2e2e2",
+          "font-weight": "bold",
+        }}
+      >
         Are you sure
       </DialogTitle>
       <DialogContent sx={{ mx: "auto", p: 0 }}>
