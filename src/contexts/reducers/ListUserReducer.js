@@ -17,6 +17,15 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.SET_CHECK_ID:
       state = { ...state, checkId: payload };
       break;
+    case ACTIONS.SET_LIST_USERS:
+      state = { ...state, listUser: payload };
+      break;
+    case ACTIONS.SET_USER_DETAIL:
+      state = { ...state, userDetail: payload };
+      break;
+    case ACTIONS.SET_SEARCH:
+      state = { ...state, search: payload };
+      break;
     default:
       break;
   }
