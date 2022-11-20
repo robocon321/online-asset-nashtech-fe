@@ -34,7 +34,6 @@ const CreateUserProvider = props => {
   }, [createUserState]);
 
   useEffect(() => {
-    console.log("Hello world");
     if(Object.keys(createUserState.error).length > 0 || isBlankField()) {
       setEnableSubmitAction(false)(dispatch);
     } else {
