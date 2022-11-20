@@ -68,18 +68,3 @@ export const setUserDetailAction = (id) => async (dispatch) => {
     });
   });
 };
-
-// export const getUserListAction = () => async (dispatch) => {
-//     await axios.get().then(response => {
-//         dispatch({
-//             type: ACTIONS.SET_LIST_USER,
-//             payload: response.data
-//         })
-//     })
-// }
-// const [open, setOpen] = useState(false);
-//   const [checkId, setCheckId] = useState("");
-//   const [sortStaffCode, setSortStaffCode] = useState(0);
-//   const [sortFullName, setSortFullName] = useState(0);
-//   const [sortJoinedDate, setSortJoinedDate] = useState(0);
-//   const [sortType, setSortType] = useState(0);

@@ -1,6 +1,5 @@
 import { createContext, useReducer } from "react";
 import { useEffect } from "react";
-// import { setTitleAction } from '../actions/HomeAction';
 import {
   setCheck1Action,
   setCheck2Action,
