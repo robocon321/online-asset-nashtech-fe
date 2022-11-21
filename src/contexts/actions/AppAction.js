@@ -6,22 +6,17 @@ export const ACTIONS = {
   SET_FIELD_MODAL_LOGIN_FIRST_TIME: 'SET_FIELD_MODAL_LOGIN_FIRST_TIME'
 }
 
-export const loadUserAction = () => async (dispatch) => {
-  setLoadingAction(true);
-
-  await setTimeout(() => {
-    dispatch({
-      type: ACTIONS.SET_USER,
-      payload: {
-        firstName: 'Long',
-        lastName: 'Tran Hoang',
-        username: 'robocon321',
-        role: 'ADMIN'
-      }
-    });
-  }, 1000);
-
-  setLoadingAction(false);
+export const loadUserAction = () => (dispatch) => {
+  dispatch({
+    type: ACTIONS.SET_USER,
+    payload: {
+      username: localStorage['username'],
+      fullName: localStorage['fullName'],
+      enabled: localStorage['enabled'] === 'true',
+      role: localStorage['role'],
+      location: localStorage['location']
+    }
+  });
 }
 
 export const setLoadingAction = (isLoading) => (dispatch) => {
@@ -31,7 +26,7 @@ export const setLoadingAction = (isLoading) => (dispatch) => {
   })
 }
 
-export const setFieldModalLoginFirstTime = (name, value) => dispatch => {
+export const setFieldModalLoginFirstTimeAction = (name, value) => dispatch => {
   dispatch({
     type: ACTIONS.SET_FIELD_MODAL_LOGIN_FIRST_TIME,
     payload: {name, value}

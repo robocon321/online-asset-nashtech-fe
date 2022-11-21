@@ -1,8 +1,10 @@
-import { createContext, useEffect, useReducer } from "react"
+import { createContext, useContext, useEffect, useReducer } from "react"
+import { useNavigate } from "react-router-dom";
 import { setFieldAction } from "../actions/CreateUserAction";
-import { addErrorFieldAction, removeErrorFieldAction, setEnableSubmitAction } from "../actions/LoginAction";
+import { addErrorFieldAction, removeErrorFieldAction, setEnableSubmitAction, submitAction } from "../actions/LoginAction";
 
 import LoginReducer from '../reducers/LoginReducer';
+import { AppContext } from "./AppProvider";
 
 const initState = {
   form: {
@@ -13,7 +15,7 @@ const initState = {
   enableSubmit: false,
   status: {
     isLoading: false,
-    success: false,
+    success: true,
     message: ''
   }
 }
@@ -21,14 +23,16 @@ const initState = {
 export const LoginContext = createContext();
 
 const LoginProvider = props => {
-  const [loginState, dispatch] = useReducer(LoginReducer, initState);
+  const [loginState, dispatch] = useReducer(LoginReducer, initState);  
+  const navigate = useNavigate();
+
+  const { loadUser } = useContext(AppContext);
 
   useEffect(() => {
     console.log(loginState);
   }, [loginState]);
 
   useEffect(() => {
-    console.log(Object.keys(loginState.error).length > 0, isBlankField());
     if(Object.keys(loginState.error).length > 0 || isBlankField()) {
       setEnableSubmitAction(false)(dispatch);
     } else {
@@ -66,9 +70,18 @@ const LoginProvider = props => {
     return false;
   }
 
+  const submit = async (e) => {
+    e.preventDefault();
+    if(loginState.enableSubmit) {
+      await submitAction(loginState.form, navigate)(dispatch);      
+      loadUser();
+    }
+  }
+
   const value = {
     loginState,
-    changeField
+    changeField,
+    submit
   };
   return (
     <LoginContext.Provider value={value}>

@@ -17,6 +17,30 @@ export const isGreater = (dateString1, dateString2) => {
 
 export const isDay = (dateString, day) => {
   const date = new Date(dateString);
-  console.log(date.getDay());
   return date.getDay() === day;
 }
+
+export const convertDateByFormat = (dateString, format) => {
+    //parse the input date
+    const date = new Date(dateString);
+
+    //extract the parts of the date
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();    
+
+    //replace the month
+    format = format.replace("MM", month.toString().padStart(2,"0"));        
+
+    //replace the year
+    if (format.indexOf("yyyy") > -1) {
+        format = format.replace("yyyy", year.toString());
+    } else if (format.indexOf("yy") > -1) {
+        format = format.replace("yy", year.toString().substr(2,2));
+    }
+
+    //replace the day
+    format = format.replace("dd", day.toString().padStart(2,"0"));
+
+    return format;
+  }
