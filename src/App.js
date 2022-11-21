@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import MainLayout from "./components/common/MainLayout";
-// import ListUser from "./components/list-user/ListUser";
 import CreateUserPage from "./pages/CreateUserPage";
 import HomePage from "./pages/HomePage";
 // import ListUserPage from "./pages/ListUserPage";
