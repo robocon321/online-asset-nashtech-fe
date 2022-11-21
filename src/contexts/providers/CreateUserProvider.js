@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { changeToSlug } from "../../utils/ConvertString";
 import { getAge, isDay, isGreater } from "../../utils/DateUtils";
 import * as Validate from "../../utils/Validate";
-import { addErrorFieldAction, removeErrorFieldAction, setEnableSubmitAction, setErrorAction, setErrorFieldAction, setFieldAction, submitAction } from "../actions/CreateUserAction";
+import { addErrorFieldAction, removeErrorFieldAction, setEnableSubmitAction, setFieldAction, submitAction } from "../actions/CreateUserAction";
 import CreateUserReducer from '../reducers/CreateUserReducer';
 
 export const CreateUserContext = createContext();
@@ -14,7 +14,7 @@ const initState = {
     dob: null,
     gender: true,
     joinedDate: null,
-    type: 'ADMIN'
+    role: 'ADMIN'
   },
   status: {
     isLoading: false,
@@ -28,10 +28,6 @@ const initState = {
 const CreateUserProvider = props => {
   const navigate = useNavigate();
   const [createUserState, dispatch] = useReducer(CreateUserReducer, initState);
-
-  useEffect(() => {
-    console.log(createUserState);
-  }, [createUserState]);
 
   useEffect(() => {
     if(Object.keys(createUserState.error).length > 0 || isBlankField()) {
@@ -70,7 +66,6 @@ const CreateUserProvider = props => {
   }
 
   const validateFirstName = (value) => {
-    console.log(value);
     const slug = changeToSlug(value);
 
     if(!Validate.validateFirstName(slug)) {
@@ -112,6 +107,8 @@ const CreateUserProvider = props => {
     } else {
       removeErrorFieldAction('dob')(dispatch);
     }
+
+    validateJoinedDate(createUserState.form.joinedDate);
   }
 
   const validateJoinedDate = (value) => {
@@ -137,14 +134,14 @@ const CreateUserProvider = props => {
     if(createUserState.form.lastName == null || createUserState.form.lastName.trim() == '') return true;
     if(createUserState.form.dob == null || createUserState.form.dob.trim() == '') return true;
     if(createUserState.form.joinedDate == null || createUserState.form.joinedDate.trim() == '') return true;
-    if(createUserState.form.type == null) return true;
+    if(createUserState.form.role == null) return true;
     if(createUserState.form.gender == null) return true;
     return false;
   }
 
   const submit = () => {
     if(Object.keys(createUserState.error).length == 0) {
-      submitAction(createUserState.form, navigate)(dispatch);
+      submitAction({...createUserState.form}, navigate)(dispatch);
     } 
   }
 

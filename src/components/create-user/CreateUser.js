@@ -10,11 +10,13 @@ import {
   TextField,
   Card,
   CardContent,
+  Alert,
 } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 
 import { CreateUserContext } from "../../contexts/providers/CreateUserProvider";
 
@@ -28,6 +30,10 @@ const CreateUser = (props) => {
   return (
     <div className={styles["create-user"]}>
       <Title title="Create New User" />
+      {
+        !createUserState.status.success && <Alert severity="error">{createUserState.status.message}</Alert> 
+      }
+           
       <Card>
         <CardContent>
           <form>
@@ -135,11 +141,11 @@ const CreateUser = (props) => {
             </FormControl>
             <FormControl className={styles["input"]}>
               <FormLabel id="demo-row-radio-buttons-group-label">
-                Type
+                Role
               </FormLabel>
-              <Select onChange={changeField} value={"Admin"} id="role" name="role">
-                <MenuItem value={"Staff"}>Staff</MenuItem>
-                <MenuItem value={"Admin"}>Admin</MenuItem>
+              <Select onChange={changeField} value={createUserState.form.role} id="role" name="role">
+                <MenuItem value={"STAFF"}>Staff</MenuItem>
+                <MenuItem value={"ADMIN"}>Admin</MenuItem>
               </Select>
             </FormControl>
             <div className={styles["btn"]}>
