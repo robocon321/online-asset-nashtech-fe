@@ -11,6 +11,8 @@ import StyleIcon from '@mui/icons-material/Style';
 import { Link, useLocation } from 'react-router-dom';
 
 import styles from './Sidebar.module.css';
+import { AppContext } from '../../../contexts/providers/AppProvider';
+import { useContext } from 'react';
 
 const drawerWidth = 300;
 
@@ -45,6 +47,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const Sidebar = (props) => {
+  const { appState } = useContext(AppContext);
   const theme = useTheme();
   const location = useLocation();
   const pathSplit = location.pathname.split('/');
@@ -68,19 +71,27 @@ const Sidebar = (props) => {
       </Link>
     </ListItem>
 
-    <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/users' className={path == 'users' ? styles['active'] : ''}>
-        <span className={styles['icon']}><PersonIcon /></span>
-        <span className={styles['title']}>Manage User</span>
-      </Link>
-    </ListItem>
+    {
+      appState.user.role == 'ADMIN' && (
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <Link to='/users' className={path == 'users' ? styles['active'] : ''}>
+            <span className={styles['icon']}><PersonIcon /></span>
+            <span className={styles['title']}>Manage User</span>
+          </Link>
+        </ListItem>
+      )
+    }
 
-    <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/assets' className={path == 'assets' ? styles['active'] : ''}>
-        <span className={styles['icon']}><StyleIcon /></span>
-        <span className={styles['title']}>Manage Asset</span>
-      </Link>
-    </ListItem>
+    {
+      appState.user.role == 'ADMIN' && (
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <Link to='/assets' className={path == 'assets' ? styles['active'] : ''}>
+            <span className={styles['icon']}><StyleIcon /></span>
+            <span className={styles['title']}>Manage Asset</span>
+          </Link>
+        </ListItem>
+      )
+    }
 
     <ListItem disablePadding sx={{ display: 'block' }}>
       <Link to='/assignments' className={path == 'assignments' ? styles['active'] : ''}>
@@ -96,12 +107,17 @@ const Sidebar = (props) => {
       </Link>
     </ListItem>
 
-    <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/report' className={styles['active']} className={path == 'report' ? styles['active'] : ''}>
-        <span className={styles['icon']}><PieChartOutlineIcon /></span>
-        <span className={styles['title']}>Report</span>
-      </Link>
-    </ListItem>
+    {
+      appState.user.role == 'ADMIN' && (
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <Link to='/report' className={styles['active']} className={path == 'report' ? styles['active'] : ''}>
+            <span className={styles['icon']}><PieChartOutlineIcon /></span>
+            <span className={styles['title']}>Report</span>
+          </Link>
+        </ListItem>
+      )
+    }
+
 
   </Drawer>
 
