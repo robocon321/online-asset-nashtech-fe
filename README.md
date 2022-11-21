@@ -10,7 +10,7 @@ TODO: Guide users through getting your code up and running on their own system. 
 
 # Build and Test
 
-Add new .env file to root folder for configuration
+Add new .env.local file to root folder for configuration
 > REACT_APP_API_URL=http://localhost:8080
 
 Install application
