@@ -15,6 +15,18 @@ const reducer = (state, {type, payload}) => {
     case ACTIONS.SET_FIELD:
       state = {...state, form: {...state.form, [payload.name]: payload.value}};
       break;
+    case ACTIONS.SET_LOADING:
+      state = {...state, status: {...state.status, isLoading: payload}};
+      break;
+    case ACTIONS.SET_MESSAGE:
+      state = {...state, status: {...state.status, message: payload}};
+      break;
+    case ACTIONS.SET_SUCCESS:
+      state = {...state, status: {...state.status, success: payload}};
+      break;
+    case ACTIONS.SET_STATUS:
+      state = {...state, status: payload};
+      break;  
     default:
       break; 
   }

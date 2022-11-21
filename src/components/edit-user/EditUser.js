@@ -10,30 +10,23 @@ import {
   TextField,
   Card,
   CardContent,
-  Alert,
 } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
+import { EditUserContext } from "../../contexts/providers/EditUserProvider";
 
-import { CreateUserContext } from "../../contexts/providers/CreateUserProvider";
+import styles from "./EditUser.module.css";
 
-import styles from "./CreateUser.module.css";
-import Title from "../common/title/Title";
-
-const CreateUser = (props) => {
-  const { changeField, createUserState, submit, navigate } =
-    useContext(CreateUserContext);
+const EditUser = (props) => {
+  const { changeField, editUserState, submit, navigate } =
+    useContext(EditUserContext);
 
   return (
-    <div className={styles["create-user"]}>
-      <Title title="Create New User" />
-      {
-        !createUserState.status.success && <Alert severity="error">{createUserState.status.message}</Alert> 
-      }
-           
+    <div className={styles["edit-user"]}>
+      <h1>Edit User</h1>
       <Card>
         <CardContent>
           <form>
@@ -42,12 +35,13 @@ const CreateUser = (props) => {
                 First Name
               </FormLabel>
               <TextField
-                onChange={changeField}
                 className={styles["input"]}
-                error={createUserState.error.firstName != null}
-                helperText={createUserState.error.firstName}
+                error={editUserState.error.firstName != null}
+                helperText={editUserState.error.firstName}
                 id="firstName"
                 name="firstName"
+                disabled
+                defaultValue="An"
               />
             </FormControl>
             <FormControl className={styles["input"]}>
@@ -55,12 +49,13 @@ const CreateUser = (props) => {
                 Last Name
               </FormLabel>
               <TextField
-                onChange={changeField}
                 className={styles["input"]}
-                error={createUserState.error.lastName != null}
-                helperText={createUserState.error.lastName}
+                error={editUserState.error.lastName != null}
+                helperText={editUserState.error.lastName}
                 id="lastName"
                 name="lastName"
+                disabled
+                defaultValue="Nguyen Van"
               />
             </FormControl>
             <FormControl className={styles["input"]}>
@@ -69,18 +64,16 @@ const CreateUser = (props) => {
               </FormLabel>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  value={createUserState.form.dob}
+                  value={editUserState.form.dob}
                   renderInput={(params) => {
                     return (
                       <TextField
                         className={styles["input"]}
-                        value={createUserState.form.dob}
+                        value={editUserState.form.dob}
                         onChange={changeField}
                         onKeyUp={changeField}
-                        error={
-                          createUserState.error.dob != null || params.error
-                        }
-                        helperText={createUserState.error.dob}
+                        error={editUserState.error.dob != null || params.error}
+                        helperText={editUserState.error.dob}
                         id="dob"
                         name="dob"
                         type="date"
@@ -120,20 +113,22 @@ const CreateUser = (props) => {
               </FormLabel>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  value={createUserState.form.joinedDate}
+                  value={editUserState.form.joinedDate}
                   renderInput={(params) => {
                     return (
-                      <TextField                      
-                        value={createUserState.form.joinedDate}
+                      <TextField
+                        value={editUserState.form.joinedDate}
                         onChange={changeField}
                         onKeyUp={changeField}
                         className={styles["input"]}
-                        error={createUserState.error.joinedDate != null || params.error}
-                        helperText={createUserState.error.joinedDate}
+                        error={
+                          editUserState.error.joinedDate != null || params.error
+                        }
+                        helperText={editUserState.error.joinedDate}
                         id="joinedDate"
                         name="joinedDate"
                         type="date"
-                        />
+                      />
                     );
                   }}
                 />
@@ -141,20 +136,20 @@ const CreateUser = (props) => {
             </FormControl>
             <FormControl className={styles["input"]}>
               <FormLabel id="demo-row-radio-buttons-group-label">
-                Role
+                Type
               </FormLabel>
-              <Select onChange={changeField} value={createUserState.form.role} id="role" name="role">
-                <MenuItem value={"STAFF"}>Staff</MenuItem>
-                <MenuItem value={"ADMIN"}>Admin</MenuItem>
+              <Select
+                onChange={changeField}
+                value={"Admin"}
+                id="role"
+                name="role"
+              >
+                <MenuItem value={"Staff"}>Staff</MenuItem>
+                <MenuItem value={"Admin"}>Admin</MenuItem>
               </Select>
             </FormControl>
             <div className={styles["btn"]}>
-              <Button
-                variant="contained"
-                color="error"
-                disabled={!createUserState.enableSubmit}
-                onClick={submit}
-              >
+              <Button variant="contained" color="error" onClick={submit}>
                 Submit
               </Button>
               <Button
@@ -172,4 +167,4 @@ const CreateUser = (props) => {
   );
 };
 
-export default CreateUser;
+export default EditUser;

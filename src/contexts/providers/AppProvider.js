@@ -1,19 +1,22 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
+import { validatePassword } from "../../utils/Validate";
 
-import { setFieldModalLoginFirstTime } from "../actions/AppAction";
+import { loadUserAction, setFieldModalLoginFirstTimeAction } from "../actions/AppAction";
 import AppReducer from '../reducers/AppReducer';
 
 const initState = {
   modalLoginFirstTime: {
     open: true,
-    password: "",
+    password: null,
     showPassword: false,
+    error: null
   },
   status: {
     isLoading: false,
     success: true,
     message: "",
   },
+  user: null
 };
 
 export const AppContext = createContext();
@@ -21,23 +24,44 @@ export const AppContext = createContext();
 const AppProvider = (props) => {
   const [appState, dispatch] = useReducer(AppReducer, initState);
 
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  useEffect(() => {
+    if(!validatePassword(appState.modalLoginFirstTime.password) && appState.modalLoginFirstTime.password != null) {
+      setFieldModalLoginFirstTimeAction('error', "Minimum eight characters, at least one letter, one number and one special character")(dispatch);
+    } else {
+      setFieldModalLoginFirstTimeAction('error', null)(dispatch);
+    }
+  }, [appState.modalLoginFirstTime.password]);
+
+  useEffect(() => {
+    console.log(appState);
+  }, [appState]);
+
+  const loadUser = () => {
+    loadUserAction()(dispatch);
+  }
+
   const handleChange_ModalLoginFirstTime = (e) => {
-    setFieldModalLoginFirstTime('password', e.target.value)(dispatch);
+    setFieldModalLoginFirstTimeAction('password', e.target.value)(dispatch);
   };
 
-  const toggleShowPassword_ModalLoginFirstTime = (showPassword) => {
-    setFieldModalLoginFirstTime('showPassword', showPassword)(dispatch);
+  const setShowPassword_ModalLoginFirstTime = (showPassword) => {
+    setFieldModalLoginFirstTimeAction('showPassword', showPassword)(dispatch);
   };
 
-  const toggleOpen_ModalLoginFirstTime = (open) => {
-    setFieldModalLoginFirstTime('open', open)(dispatch);
+  const setOpen_ModalLoginFirstTime = (open) => {
+    setFieldModalLoginFirstTimeAction('open', open)(dispatch);
   }
 
   const value = {
     appState,
     handleChange_ModalLoginFirstTime,
-    toggleShowPassword_ModalLoginFirstTime,
-    toggleOpen_ModalLoginFirstTime
+    setShowPassword_ModalLoginFirstTime,
+    setOpen_ModalLoginFirstTime,
+    loadUser
   };
 
   return (

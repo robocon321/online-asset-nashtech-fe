@@ -1,6 +1,7 @@
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
+  Alert,
   Button,
   FormControl,
   IconButton,
@@ -30,13 +31,12 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
   const {
     appState,
     handleChange_ModalLoginFirstTime,
-    toggleShowPassword_ModalLoginFirstTime,
-    toggleOpen_ModalLoginFirstTime,
+    setShowPassword_ModalLoginFirstTime,
   } = useContext(AppContext);
+
   return (
     <Modal
-      open={false}
-      // onClose={handleClose}
+      open={!appState.user.enabled}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -47,7 +47,11 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           This is the first time you logged in. You have to change your password
           to continue
-          <FormControl sx={{ width: "100%", my: 2 }} variant="outlined">
+          <FormControl
+            sx={{ width: "100%", my: 2 }}
+            variant="outlined"
+            error={appState.modalLoginFirstTime.error != null}
+          >
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
@@ -63,7 +67,7 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={() =>
-                      toggleShowPassword_ModalLoginFirstTime(
+                      setShowPassword_ModalLoginFirstTime(
                         !appState.modalLoginFirstTime.showPassword
                       )
                     }
@@ -80,9 +84,15 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
               label="Password"
             />
           </FormControl>
+          {appState.modalLoginFirstTime.error != null && (
+            <Alert severity="error">{appState.modalLoginFirstTime.error}</Alert>
+          )}
         </Typography>
         <Typography id="modal-btn" sx={{ mt: 2 }}>
-          <Button varient="contained" color="primary">
+          <Button
+            variant="contained"
+            disabled={appState.modalLoginFirstTime.error != null}
+          >
             Submit
           </Button>
         </Typography>

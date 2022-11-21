@@ -15,19 +15,22 @@ import styles from './Header.module.css'
 import ChangePassword from "../dialog/changepassword/Changepassword"
 import ChangePasswordLoginFirstTimeDialog from '../dialog/change-password-login-first-time/ChangePasswordLoginFirstTimeDialog';
 import Logout from "../dialog/Logout"
+import { AppContext } from '../../../contexts/providers/AppProvider';
 
 const drawerWidth = 300;
 
-const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
+  transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -35,7 +38,9 @@ const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open' 
 }));
 
 
-const Header = (props) => {
+const Header = (props) => {  
+  const { appState } = React.useContext(AppContext);
+
   const [open, setOpen] = React.useState(false);
   const [logout, setLogout] = React.useState(false);
 
@@ -57,28 +62,24 @@ const Header = (props) => {
     setAnchorEl(event.currentTarget);
   };
 
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-
   };
 
-
-
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
 
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
@@ -87,8 +88,6 @@ const Header = (props) => {
       <MenuItem onClick={handleClickOpenLogout}>Logout</MenuItem>
     </Menu>
   );
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
 
   return (
     <AppBar
@@ -128,7 +127,8 @@ const Header = (props) => {
             aria-haspopup="true"
             onClick={handleProfileMenuOpen}
             color="inherit"
-          >
+          >            
+            <span>{appState.user.username}</span>
             <AccountCircle />
           </IconButton>
         </Box>
@@ -136,6 +136,6 @@ const Header = (props) => {
       {renderMenu}
     </AppBar>
   );
-}
+};
 
 export default Header;
