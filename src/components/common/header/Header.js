@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import * as React from "react";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
@@ -15,6 +16,26 @@ import styles from "./Header.module.css";
 import ChangePassword from "../dialog/changepassword/Changepassword";
 import ChangePasswordLoginFirstTimeDialog from "../dialog/change-password-login-first-time/ChangePasswordLoginFirstTimeDialog";
 import Logout from "../dialog/Logout";
+=======
+import * as React from 'react';
+import { useState } from 'react';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+
+import styles from './Header.module.css'
+import ChangePassword from "../dialog/changepassword/Changepassword"
+import ChangePasswordLoginFirstTimeDialog from '../dialog/change-password-login-first-time/ChangePasswordLoginFirstTimeDialog';
+import Logout from "../dialog/Logout"
+import { AppContext } from '../../../contexts/providers/AppProvider';
+>>>>>>> 40a9e02 (T965 Show dialog change password when first time login)
 
 const drawerWidth = 300;
 
@@ -36,7 +57,14 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+<<<<<<< HEAD
 const Header = (props) => {
+=======
+
+const Header = (props) => {  
+  const { appState } = React.useContext(AppContext);
+
+>>>>>>> 40a9e02 (T965 Show dialog change password when first time login)
   const [open, setOpen] = React.useState(false);
   const [logout, setLogout] = React.useState(false);
 
@@ -85,8 +113,11 @@ const Header = (props) => {
     </Menu>
   );
 
+<<<<<<< HEAD
   const mobileMenuId = "primary-search-account-menu-mobile";
 
+=======
+>>>>>>> 40a9e02 (T965 Show dialog change password when first time login)
   return (
     <AppBar
       position="fixed"
@@ -125,7 +156,8 @@ const Header = (props) => {
             aria-haspopup="true"
             onClick={handleProfileMenuOpen}
             color="inherit"
-          >
+          >            
+            <span>{appState.user.username}</span>
             <AccountCircle />
           </IconButton>
         </Box>
