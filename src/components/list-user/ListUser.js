@@ -195,7 +195,7 @@ function ListUser() {
       },
     },
   ];
-  const gender = ["Male", "Female"];
+  const gender = [ "Female","Male"];
   const roles = ["ALL", "ADMIN", "STAFF"];
   return (
     <div>
