@@ -15,13 +15,13 @@ import { useContext } from "react";
 import { AppContext } from "../../../../contexts/providers/AppProvider";
 
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'white',
-  border: '2px solid white',
+  bgcolor: "white",
+  border: "2px solid white",
   boxShadow: 24,
   p: 4,
 };
@@ -31,11 +31,11 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
     appState,
     handleChange_ModalLoginFirstTime,
     toggleShowPassword_ModalLoginFirstTime,
-    toggleOpen_ModalLoginFirstTime
+    toggleOpen_ModalLoginFirstTime,
   } = useContext(AppContext);
   return (
     <Modal
-      open={true}
+      open={false}
       // onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -47,23 +47,33 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           This is the first time you logged in. You have to change your password
           to continue
-          <FormControl sx={{ width: '100%', my: 2 }} variant="outlined">
+          <FormControl sx={{ width: "100%", my: 2 }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
-              type={appState.modalLoginFirstTime.showPassword ? "text" : "password"}
+              type={
+                appState.modalLoginFirstTime.showPassword ? "text" : "password"
+              }
               value={appState.modalLoginFirstTime.password}
               onChange={handleChange_ModalLoginFirstTime}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
-                    onClick={() => toggleShowPassword_ModalLoginFirstTime(!appState.modalLoginFirstTime.showPassword)}
+                    onClick={() =>
+                      toggleShowPassword_ModalLoginFirstTime(
+                        !appState.modalLoginFirstTime.showPassword
+                      )
+                    }
                     edge="end"
                   >
-                    {appState.modalLoginFirstTime.showPassword ? <VisibilityOff /> : <Visibility />}
+                    {appState.modalLoginFirstTime.showPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
                   </IconButton>
                 </InputAdornment>
               }
@@ -71,8 +81,10 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
             />
           </FormControl>
         </Typography>
-        <Typography id="modal-btn" sx={{mt: 2}}>
-            <Button varient="contained" color="primary">Submit</Button>
+        <Typography id="modal-btn" sx={{ mt: 2 }}>
+          <Button varient="contained" color="primary">
+            Submit
+          </Button>
         </Typography>
       </Box>
     </Modal>
