@@ -2,11 +2,13 @@ import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import MainLayout from "./components/common/MainLayout";
+import ListUser from "./components/list-user/ListUser";
 import CreateUserPage from "./pages/CreateUserPage";
 import HomePage from "./pages/HomePage";
 import ListUserPage from "./pages/ListUserPage";
-import LoginPage from "./pages/LoginPage";
+import NewListUserPage from "./pages/NewListUserPage";
 import EditUserPage from "./pages/EditUserPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
         <Route path="" element={<HomePage />} />
         <Route path="/users/create" element={<CreateUserPage />} />
         <Route path="/users/edit" element={<EditUserPage />} />
-        <Route path="/users" element={<ListUserPage />} />
+        <Route path="/users" element={<NewListUserPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
     </Routes>
