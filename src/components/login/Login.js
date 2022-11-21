@@ -13,12 +13,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginContext } from '../../contexts/providers/LoginProvider';
-import { FormControl, FormLabel } from '@mui/material';
+import { Alert, FormControl, FormLabel } from '@mui/material';
 
 const theme = createTheme();
 
 const Login = (props) => {
-  const { changeField, loginState } = useContext(LoginContext);
+  const { changeField, loginState, submit } = useContext(LoginContext);
 
   return (
     <ThemeProvider theme={theme}>
@@ -38,6 +38,9 @@ const Login = (props) => {
           <Typography component="h1" variant="h5">
             Log In
           </Typography>
+          {
+            !loginState.status.success && <Alert severity="error">{loginState.status.message}</Alert> 
+          }
           <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
             <TextField
               onChange={changeField}
@@ -65,6 +68,7 @@ const Login = (props) => {
               label="Remember me"
             />
             <Button
+              onClick={submit}
               disabled={!loginState.enableSubmit}
               type="submit"
               fullWidth

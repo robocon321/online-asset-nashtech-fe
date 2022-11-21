@@ -19,6 +19,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { CreateUserContext } from "../../contexts/providers/CreateUserProvider";
 
 import styles from "./CreateUser.module.css";
+import Title from "../common/title/Title";
 
 const CreateUser = (props) => {
   const { changeField, createUserState, submit, navigate } =
@@ -26,7 +27,7 @@ const CreateUser = (props) => {
 
   return (
     <div className={styles["create-user"]}>
-      <h1>Create New User</h1>
+      <Title title="Create New User" />
       <Card>
         <CardContent>
           <form>

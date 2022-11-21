@@ -1,6 +1,6 @@
 import { createContext, useReducer } from "react";
 
-import { setFieldModalLoginFirstTime } from "../actions/AppAction";
+import { setFieldModalLoginFirstTimeAction } from "../actions/AppAction";
 import AppReducer from '../reducers/AppReducer';
 
 const initState = {
@@ -22,15 +22,15 @@ const AppProvider = (props) => {
   const [appState, dispatch] = useReducer(AppReducer, initState);
 
   const handleChange_ModalLoginFirstTime = (e) => {
-    setFieldModalLoginFirstTime('password', e.target.value)(dispatch);
+    setFieldModalLoginFirstTimeAction('password', e.target.value)(dispatch);
   };
 
   const toggleShowPassword_ModalLoginFirstTime = (showPassword) => {
-    setFieldModalLoginFirstTime('showPassword', showPassword)(dispatch);
+    setFieldModalLoginFirstTimeAction('showPassword', showPassword)(dispatch);
   };
 
   const toggleOpen_ModalLoginFirstTime = (open) => {
-    setFieldModalLoginFirstTime('open', open)(dispatch);
+    setFieldModalLoginFirstTimeAction('open', open)(dispatch);
   }
 
   const value = {
