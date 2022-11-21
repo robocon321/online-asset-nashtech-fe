@@ -9,7 +9,18 @@ TODO: Guide users through getting your code up and running on their own system. 
 4.	API references
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+
+Add new .env file to root folder for configuration
+> REACT_APP_API_URL=http://localhost:8080
+
+Install application
+> \> npm install
+
+Run the application
+> \> npm start
+
+**NOTE:**
+It ran successfully at local using *node 16.13* and *npm 8.1.2*
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
