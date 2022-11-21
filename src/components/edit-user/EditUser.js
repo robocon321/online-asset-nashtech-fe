@@ -114,7 +114,6 @@ const EditUser = (props) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   value={editUserState.form.joinedDate}
-                  
                   renderInput={(params) => {
                     return (
                       <TextField
