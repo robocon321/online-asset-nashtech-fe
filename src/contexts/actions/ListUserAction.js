@@ -1,7 +1,7 @@
-import axios from "axios";
+import request from "../../utils/api/request";
 
-const GET_ALL_USER = "http://localhost:8080/api/v1/users/";
-const GET_USER_DETAIL = "http://localhost:8080/api/v1/users/id";
+const GET_ALL_USER = "/api/v1/users/";
+const GET_USER_DETAIL = "/api/v1/users/id";
 
 export const ACTIONS = {
   SET_CHECK: "SET_CHECK",
@@ -53,7 +53,7 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
   });
 };
 export const setListUserAction = () => async (dispatch) => {
-  await axios.get(GET_ALL_USER).then((res) => {
+  await request.get(GET_ALL_USER).then((res) => {
     dispatch({
       type: ACTIONS.SET_LIST_USERS,
       payload: res.data,
@@ -61,7 +61,7 @@ export const setListUserAction = () => async (dispatch) => {
   });
 };
 export const setUserDetailAction = (id) => async (dispatch) => {
-  await axios.get(GET_USER_DETAIL, { params: { id } }).then((res) => {
+  await request.get(GET_USER_DETAIL, { params: { id } }).then((res) => {
     dispatch({
       type: ACTIONS.SET_USER_DETAIL,
       payload: res.data,
