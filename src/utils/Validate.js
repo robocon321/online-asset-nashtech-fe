@@ -8,3 +8,7 @@ export const validateLastname = (value) => {
   return re.test(value);
 }
 
+export const validatePassword = (value) => {
+  var re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+  return re.test(value);
+}
