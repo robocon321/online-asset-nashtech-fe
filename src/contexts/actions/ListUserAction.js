@@ -1,11 +1,17 @@
 import axios from "axios";
 
+const GET_ALL_USER = "http://localhost:8080/api/v1/users/";
+const GET_USER_DETAIL = "http://localhost:8080/api/v1/users/id";
+
 export const ACTIONS = {
   SET_CHECK: "SET_CHECK",
   SET_CHECK2: "SET_CHECK2",
   SET_USER_ROLE: "SET_USER_ROLE",
   SET_OPEN: "SET_OPEN",
   SET_CHECK_ID: "SET_CHECK_ID",
+  SET_LIST_USERS: "SET_LIST_USERS",
+  SET_USER_DETAIL: "SET_USER_DETAIL",
+  SET_SEARCH: "SET_SEARCH",
 
   //   SET_LIST_USER: "SET_LIST_USER"
 };
@@ -34,10 +40,32 @@ export const setOpenAction = (open) => (dispatch) => {
     payload: open,
   });
 };
+export const setSearchAction = (search) => (dispatch) => {
+  dispatch({
+    type: ACTIONS.SET_SEARCH,
+    payload: search,
+  });
+};
 export const setCheckIdAction = (checkId) => (dispatch) => {
   dispatch({
     type: ACTIONS.SET_CHECK_ID,
     payload: checkId,
+  });
+};
+export const setListUserAction = () => async (dispatch) => {
+  await axios.get(GET_ALL_USER).then((res) => {
+    dispatch({
+      type: ACTIONS.SET_LIST_USERS,
+      payload: res.data,
+    });
+  });
+};
+export const setUserDetailAction = (id) => async (dispatch) => {
+  await axios.get(GET_USER_DETAIL, { params: { id } }).then((res) => {
+    dispatch({
+      type: ACTIONS.SET_USER_DETAIL,
+      payload: res.data,
+    });
   });
 };
 

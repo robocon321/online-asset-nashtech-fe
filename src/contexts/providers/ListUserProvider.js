@@ -7,6 +7,9 @@ import {
   setUserRoleAction,
   setOpenAction,
   setCheckIdAction,
+  setListUserAction,
+  setUserDetailAction,
+  setSearchAction,
 } from "../actions/ListUserAction";
 import ListUserReducer from "../reducers/ListUserReducer";
 
@@ -18,7 +21,9 @@ const initState = {
   userRole: [],
   open: false,
   checkId: "",
-  listUser: "",
+  listUser: [],
+  userDetail: [],
+  search: "",
 };
 
 const ListUserProvider = (props) => {
@@ -36,34 +41,51 @@ const ListUserProvider = (props) => {
   };
 
   useEffect(() => {
-    console.log(listUserState.userRole);
+    setListUserAction()(dispatch);
+  }, []);
+
+  useEffect(() => {
+    console.log(listUserState);
   }, [listUserState]);
 
   useEffect(() => {
-    if (listUserState.userRole[listUserState.userRole.length - 1] === "All") {
-      setUserRoleAction(["All"])(dispatch);
-    } else if (listUserState.userRole[0] === "All") {
+    if (listUserState.userRole[listUserState.userRole.length - 1] === "ALL") {
+      setUserRoleAction(["ALL"])(dispatch);
+    } else if (listUserState.userRole[0] === "ALL") {
       listUserState.userRole.splice(0, 1);
       setUserRoleAction(listUserState.userRole)(dispatch);
       setCheck2Action(!listUserState.check2)(dispatch);
     }
-    // console.log(userRole);
   }, [listUserState.check]);
+
   useEffect(() => {}, [listUserState.check2]);
+
+  useEffect(() => {
+    setUserDetailAction(listUserState.checkId)(dispatch);
+  }, [listUserState.checkId]);
 
   const handleOnCellClick = (params) => {
     setCheckIdAction(params.id)(dispatch);
     setOpenAction(true)(dispatch);
   };
+  const handleSearch = (e) => {
+    setSearchAction(e.target.value.toUpperCase())(dispatch);
+  };
+
   const handleClose = () => {
     setOpenAction(false)(dispatch);
   };
+
+  // useEffect(() =>{
+  //   setSearchAction(listUserState.search)(dispatch);
+  // },[listUserState.search])
 
   const value = {
     listUserState,
     handleChange,
     handleOnCellClick,
     handleClose,
+    handleSearch,
   };
 
   return (
