@@ -195,7 +195,7 @@ function ListUser() {
       },
     },
   ];
-
+  const gender = [ "Female","Male"];
   const roles = ["ALL", "ADMIN", "STAFF"];
   return (
     <div>
@@ -346,7 +346,7 @@ function ListUser() {
               <p> {listUserState.userDetail.fullName}</p>
               <p> {listUserState.userDetail.username}</p>
               <p> {listUserState.userDetail.dob}</p>
-              <p> {listUserState.userDetail.gender}</p>
+              <p> {gender[+listUserState.userDetail.gender]}</p>
               <p> {listUserState.userDetail.joinedDate}</p>
               <p> {listUserState.userDetail.role}</p>
               <p> {listUserState.userDetail.location}</p>
