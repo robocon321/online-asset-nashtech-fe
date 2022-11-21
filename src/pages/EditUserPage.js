@@ -1,4 +1,4 @@
-import EditUser from "../components/edit-user/EditUser";
+import EditUser from "../components/users/edit-user/EditUser";
 import EditUserProvider from "../contexts/providers/EditUserProvider";
 
 const EditUserPage = (props) => {
