@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 import MainLayout from "./components/common/MainLayout";
@@ -11,6 +11,7 @@ import NewListUserPage from "./pages/NewListUserPage";
 import EditUserPage from "./pages/EditUserPage";
 import LoginPage from "./pages/LoginPage";
 import UserLayout from "./components/users/UserLayout";
+import Loading from "./components/common/loading/Loading";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -40,8 +41,19 @@ function App() {
       );
     }
   } else {
-    return <LoginPage />;
-  }
+    if(appState.status.isLoading) {
+      return <Loading />
+    } else
+    return (
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+            path="*"
+            element={<Navigate to="/login" />}
+        />
+      </Routes>
+    );
+}
 }
 
 export default App;
