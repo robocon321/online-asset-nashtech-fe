@@ -21,17 +21,24 @@ import { EditUserContext } from "../../../contexts/providers/EditUserProvider";
 import dayjs from "dayjs";
 import styles from "./EditUser.module.css";
 import Title from "../../common/title/Title";
-
+import { addUser, setUserInput } from "../../../contexts/actions/UserAction";
+import UserProvider from "../../../contexts/providers/UserProvider";
 const EditUser = (props) => {
   const { changeField, editUserState, submit, navigate } =
     useContext(EditUserContext);
+
+  // const [state, dispatch] = useContext(UserProvider);
+
+  // const handleAdd = () => {
+  //   dispatch(addUser(state.userInput));
+  // };
+
   return (
     <div className={styles["create-user"]}>
       <Title title="Create New User" />
       {!editUserState.status.success && (
         <Alert severity="error">{editUserState.status.message}</Alert>
       )}
-
       <Card>
         <CardContent>
           <form>

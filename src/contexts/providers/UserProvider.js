@@ -6,6 +6,7 @@ export const UserContext = createContext();
 
 const initState = {
   users: [],
+  userInput: "",
 };
 
 const UserProvider = (props) => {
