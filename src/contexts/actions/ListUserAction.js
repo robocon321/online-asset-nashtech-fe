@@ -1,4 +1,3 @@
-import request from "../../utils/api/request";
 import axios from "axios";
 // import * as dotenv from 'dotenv'
 const GET_USER_DETAIL = "/v1/users/id";
