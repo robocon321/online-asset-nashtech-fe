@@ -1,17 +1,10 @@
 import axios from "axios";
 
 export const ACTIONS = {
-  SET_USER_INPUT: "set_todo_input",
-  ADD_USER: "add_todo",
   SET_USERS: "SET_USERS",
+  ADD_USER: 'ADD_USER'
 };
 
-export const setUserInput = (payload) => ({
-  type: ACTIONS.SET_USER_INPUT,
-  payload,
-});
-
-export const addUser = (payload) => ({ type: ACTIONS.ADD_USER, payload });
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const GET_ALL_USER = "/v1/users/";
 const token = localStorage["TOKEN"];
@@ -33,3 +26,10 @@ export const setUsersAction = () => async (dispatch) => {
       });
     });
 };
+
+export const addUserAction = (user) => dispatch => {
+  dispatch({
+    type: ACTIONS.ADD_USER,
+    payload: user
+  })
+}

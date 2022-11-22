@@ -32,6 +32,7 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
     appState,
     handleChange_ModalLoginFirstTime,
     setShowPassword_ModalLoginFirstTime,
+    submit_ModalLoginFirstTime
   } = useContext(AppContext);
 
   return (
@@ -92,6 +93,7 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
           <Button
             variant="contained"
             disabled={appState.modalLoginFirstTime.error != null}
+            onClick={submit_ModalLoginFirstTime}
           >
             Submit
           </Button>

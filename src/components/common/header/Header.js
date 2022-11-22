@@ -95,7 +95,7 @@ const Header = (props) => {
       style={{ backgroundColor: "var(--primary_color)" }}
     >
       <ChangePassword open={open} setOpen={setOpen} />
-      {/* <ChangePasswordLoginFirstTimeDialog /> */}
+      <ChangePasswordLoginFirstTimeDialog />
       <Logout open={logout} setOpen={setLogout} />
 
       <Toolbar className={styles["topbar"]}>
