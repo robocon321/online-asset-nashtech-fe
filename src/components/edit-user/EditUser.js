@@ -41,7 +41,7 @@ const EditUser = (props) => {
                 id="firstName"
                 name="firstName"
                 disabled
-                defaultValue="An"
+                defaultValue={props.firstName}
               />
             </FormControl>
             <FormControl className={styles["input"]}>
@@ -55,7 +55,7 @@ const EditUser = (props) => {
                 id="lastName"
                 name="lastName"
                 disabled
-                defaultValue="Nguyen Van"
+                defaultValue={props.lastName}
               />
             </FormControl>
             <FormControl className={styles["input"]}>
@@ -93,7 +93,7 @@ const EditUser = (props) => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 id="gender"
                 name="gender"
-                defaultValue={true}
+                defaultValue={props.gender}
               >
                 <FormControlLabel
                   value={true}
@@ -140,12 +140,12 @@ const EditUser = (props) => {
               </FormLabel>
               <Select
                 onChange={changeField}
-                value={"Admin"}
+                value={props.role}
                 id="role"
                 name="role"
               >
-                <MenuItem value={"Staff"}>Staff</MenuItem>
-                <MenuItem value={"Admin"}>Admin</MenuItem>
+                <MenuItem value={"STAFF"}>Staff</MenuItem>
+                <MenuItem value={"ADMIN"}>Admin</MenuItem>
               </Select>
             </FormControl>
             <div className={styles["btn"]}>

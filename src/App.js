@@ -13,19 +13,19 @@ import LoginPage from "./pages/LoginPage";
 
 function App() {
   const { appState } = useContext(AppContext);
-  if(appState.user) {
-    if(appState.user.role == 'ADMIN') {
+  if (appState.user) {
+    if (appState.user.role == "ADMIN") {
       return (
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route path="" element={<HomePage />} />
             <Route path="/users/create" element={<CreateUserPage />} />
-            <Route path="/users/edit" element={<EditUserPage />} />
+            <Route path="/users/edit/:id" element={<EditUserPage />} />
             <Route path="/users" element={<NewListUserPage />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
         </Routes>
-      );    
+      );
     } else {
       return (
         <Routes>
@@ -35,12 +35,9 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       );
-    
     }
   } else {
-    return (
-      <LoginPage />
-    )
+    return <LoginPage />;
   }
 }
 

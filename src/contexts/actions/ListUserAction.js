@@ -1,7 +1,13 @@
 import request from "../../utils/api/request";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const GET_ALL_USER = "/api/v1/users/";
 const GET_USER_DETAIL = "/api/v1/users/id";
+const token = localStorage["TOKEN"];
+
+const config = {
+  headers: { Authorization: `Bearer ${token}` },
+};
 
 export const ACTIONS = {
   SET_CHECK: "SET_CHECK",
@@ -12,8 +18,7 @@ export const ACTIONS = {
   SET_LIST_USERS: "SET_LIST_USERS",
   SET_USER_DETAIL: "SET_USER_DETAIL",
   SET_SEARCH: "SET_SEARCH",
-
-  //   SET_LIST_USER: "SET_LIST_USER"
+  SET_LIST_USER: "SET_LIST_USER",
 };
 
 export const setCheck1Action = (check) => (dispatch) => {
@@ -52,8 +57,9 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
     payload: checkId,
   });
 };
+
 export const setListUserAction = () => async (dispatch) => {
-  await request.get(GET_ALL_USER).then((res) => {
+  await request.get(`${API_ENDPOINT}/v1/users/`, config).then((res) => {
     dispatch({
       type: ACTIONS.SET_LIST_USERS,
       payload: res.data,
@@ -61,10 +67,12 @@ export const setListUserAction = () => async (dispatch) => {
   });
 };
 export const setUserDetailAction = (id) => async (dispatch) => {
-  await request.get(GET_USER_DETAIL, { params: { id } }).then((res) => {
-    dispatch({
-      type: ACTIONS.SET_USER_DETAIL,
-      payload: res.data,
+  await request
+    .get(`${API_ENDPOINT}/v1/users/id`, { params: { id } })
+    .then((res) => {
+      dispatch({
+        type: ACTIONS.SET_USER_DETAIL,
+        payload: res.data,
+      });
     });
-  });
 };

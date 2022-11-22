@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import {
@@ -84,6 +85,7 @@ function ListUser() {
     handleOnCellClick,
     handleClose,
     handleSearch,
+    handleOnCellClickEdit,
   } = useContext(ListUserContext);
   function CustomPagination() {
     const apiRef = useGridApiContext();
@@ -182,10 +184,11 @@ function ListUser() {
       flex: 2,
       align: "center",
       renderCell: (params) => {
-        console.log(params.row.id);
         return (
           <div>
-            <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
+            <Link to={"/users/edit/" + params.id}>
+              <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
+            </Link>
             <GridActionsCellItem
               icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
               label="Delete"
@@ -197,6 +200,7 @@ function ListUser() {
   ];
 
   const roles = ["ALL", "ADMIN", "STAFF"];
+  const gender = ["FEMALE", "MALE"];
   return (
     <div>
       <Title title="User List"></Title>
@@ -222,7 +226,6 @@ function ListUser() {
                 sx={{ width: "120px" }}
               >
                 {roles.map((userrole) => {
-                  //   console.log(userRole);
                   return (
                     <MenuItem key={userrole} value={userrole}>
                       <Checkbox
@@ -346,7 +349,7 @@ function ListUser() {
               <p> {listUserState.userDetail.fullName}</p>
               <p> {listUserState.userDetail.username}</p>
               <p> {listUserState.userDetail.dob}</p>
-              <p> {listUserState.userDetail.gender}</p>
+              <p> {gender[+listUserState.userDetail.gender]}</p>
               <p> {listUserState.userDetail.joinedDate}</p>
               <p> {listUserState.userDetail.role}</p>
               <p> {listUserState.userDetail.location}</p>
