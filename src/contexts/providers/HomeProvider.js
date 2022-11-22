@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import { setTitleAction } from "../actions/HomeAction";
 
 import HomeReducer from "../reducers/HomeReducer";
@@ -15,7 +15,6 @@ const HomeProvider = (props) => {
   const changeTitle = () => {
     setTitleAction("Change title")(dispatch);
   };
-
   const value = {
     homeState,
     changeTitle,
