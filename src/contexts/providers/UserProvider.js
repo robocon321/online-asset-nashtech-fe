@@ -16,6 +16,12 @@ const UserProvider = (props) => {
   useEffect(() => {
     setUsersAction()(dispatch);
   }, [appState.user]);
+
+  useEffect(() => {
+    // setUsersAction()(dispatch);
+    console.log(userState);
+  }, [userState]);
+
   const value = {
     userState,
   };

@@ -184,7 +184,6 @@ function ListUser() {
       flex: 2,
       align: "center",
       renderCell: (params) => {
-        console.log(params.row.id);
         return (
           <div>
             <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
@@ -274,33 +273,30 @@ function ListUser() {
         <DataGrid
           // labelRowsPerPage=""
           // disableColumnMenu
-          rows={
-            userState.users &&
-            userState.users.filter((item) => {
-              if (
-                listUserState.userRole.length &&
-                listUserState.userRole[0] !== "ALL" &&
-                !listUserState.userRole.includes(item.role.toUpperCase())
-              ) {
-                return false;
-              }
+          rows={userState.users.filter((item) => {
+            if (
+              listUserState.userRole.length &&
+              listUserState.userRole[0] !== "ALL" &&
+              !listUserState.userRole.includes(item.role.toUpperCase())
+            ) {
+              return false;
+            }
 
-              if (
-                !(
-                  item.fullName
-                    .toUpperCase()
-                    .includes(listUserState.search.toUpperCase()) ||
-                  item.code
-                    .toUpperCase()
-                    .includes(listUserState.search.toUpperCase())
-                )
-              ) {
-                return false;
-              }
+            if (
+              !(
+                item.fullName
+                  .toUpperCase()
+                  .includes(listUserState.search.toUpperCase()) ||
+                item.code
+                  .toUpperCase()
+                  .includes(listUserState.search.toUpperCase())
+              )
+            ) {
+              return false;
+            }
 
-              return true;
-            })
-          }
+            return true;
+          })}
           columns={columns}
           pageSize={20}
           onCellClick={handleOnCellClick}

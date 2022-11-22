@@ -1,5 +1,6 @@
 import request from "../../utils/api/request";
 import axios from "axios";
+// import * as dotenv from 'dotenv'
 const GET_USER_DETAIL = "/v1/users/id";
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const GET_ALL_USER = "/v1/users/";
@@ -65,9 +66,13 @@ export const setListUserAction = () => async (dispatch) => {
   });
 };
 export const setUserDetailAction = (id) => async (dispatch) => {
+  const token = localStorage["TOKEN"];
   await axios
-    .get(`${API_ENDPOINT}/v1/users/id`, { params: { id } }, config)
+    .get(`${API_ENDPOINT}/v1/users/id?id=${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
     .then((res) => {
+      console.log(res.data);
       dispatch({
         type: ACTIONS.SET_USER_DETAIL,
         payload: res.data,
