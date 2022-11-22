@@ -189,9 +189,8 @@ const CreateUserProvider = (props) => {
 
   const submit = () => {
     if (Object.keys(createUserState.error).length == 0) {
-      addUser(createUserState.form);
       navigate('/users');
-      // submitAction({ ...createUserState.form }, navigate, addUser)(dispatch);
+      submitAction({ ...createUserState.form }, navigate, addUser)(dispatch);
     }
   };
 

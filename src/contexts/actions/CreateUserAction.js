@@ -53,7 +53,6 @@ export const submitAction = (form, navigate, addUserFunc) => async (dispatch) =>
       message: 'Successful!',
       success: true
     })(dispatch);
-
     addUserFunc(response.data);
     navigate('/users');
   }).catch(error => {
