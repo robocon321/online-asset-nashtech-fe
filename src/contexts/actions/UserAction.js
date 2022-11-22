@@ -20,11 +20,16 @@ const config = {
 };
 
 export const setUsersAction = () => async (dispatch) => {
-  await axios.get(`${API_ENDPOINT}/v1/users/`, config).then((res) => {
-    console.log(res.data);
-    dispatch({
-      type: ACTIONS.SET_USERS,
-      payload: res.data,
+  const token = localStorage["TOKEN"];
+  await axios
+    .get(`${API_ENDPOINT}/v1/users/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: ACTIONS.SET_USERS,
+        payload: res.data,
+      });
     });
-  });
 };
