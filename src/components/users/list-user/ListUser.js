@@ -262,12 +262,14 @@ function ListUser() {
             </Search>
           </div>
           <div>
-            <Button
-              variant="contained"
-              style={{ background: "#e30613", borderRadius: "8px" }}
-            >
-              Create new user
-            </Button>
+            <Link to={"create"} style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                style={{ background: "#e30613", borderRadius: "8px" }}
+              >
+                Create new user
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
