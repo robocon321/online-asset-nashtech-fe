@@ -11,6 +11,7 @@ import NewListUserPage from "./pages/NewListUserPage";
 import EditUserPage from "./pages/EditUserPage";
 import LoginPage from "./pages/LoginPage";
 import UserLayout from "./components/users/UserLayout";
+import Loading from "./components/common/loading/Loading";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -40,12 +41,15 @@ function App() {
       );
     }
   } else {
+    if(appState.status.isLoading) {
+      return <Loading />
+    } else
     return (
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route
             path="*"
-            element={<Navigate to="/login" replace />}
+            element={<Navigate to="/login" />}
         />
       </Routes>
     );

@@ -14,6 +14,9 @@ const reducer = (state, { type, payload }) => {
         },
       };
       break;
+    case ACTIONS.SET_STATUS:
+      state = {...state, status: payload};
+      break;
     case ACTIONS.SET_FIELD_MODAL_LOGIN_FIRST_TIME:
       state = {
         ...state,
