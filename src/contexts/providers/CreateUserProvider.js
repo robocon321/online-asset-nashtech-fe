@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { changeToSlug } from "../../utils/ConvertString";
 import { getAge, isDay, isGreater } from "../../utils/DateUtils";
@@ -11,6 +11,7 @@ import {
   submitAction,
 } from "../actions/CreateUserAction";
 import CreateUserReducer from "../reducers/CreateUserReducer";
+import { UserContext } from "./UserProvider";
 
 export const CreateUserContext = createContext();
 const initState = {
@@ -34,6 +35,7 @@ const initState = {
 const CreateUserProvider = (props) => {
   const navigate = useNavigate();
   const [createUserState, dispatch] = useReducer(CreateUserReducer, initState);
+  const { addUser } = useContext(UserContext);
 
   useEffect(() => {
     if (Object.keys(createUserState.error).length > 0 || isBlankField()) {
@@ -187,7 +189,9 @@ const CreateUserProvider = (props) => {
 
   const submit = () => {
     if (Object.keys(createUserState.error).length == 0) {
-      submitAction({ ...createUserState.form }, navigate)(dispatch);
+      addUser(createUserState.form);
+      navigate('/users');
+      // submitAction({ ...createUserState.form }, navigate, addUser)(dispatch);
     }
   };
 
