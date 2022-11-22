@@ -1,5 +1,9 @@
 import axios from "axios";
-import { convertDateByFormat } from "../../utils/DateUtils";
+import {
+  convertDateByFormat,
+  convertDateByFormatEdit,
+} from "../../utils/DateUtils";
+import request from "../../utils/api/request";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const token = localStorage["TOKEN"];
@@ -13,6 +17,7 @@ export const ACTIONS = {
   SET_MESSAGE: "SET_MESSAGE",
   SET_SUCCESS: "SET_SUCCESS",
   SET_STATUS: "SET_STATUS",
+  SET_USER_DETAIL: "SET_USER_DETAIL",
 };
 
 export const setFieldAction = (name, value) => (dispatch) => {
@@ -34,6 +39,24 @@ export const setLoadingAction = (isLoading) => (dispatch) => {
     type: ACTIONS.SET_LOADING,
     payload: isLoading,
   });
+};
+
+export const setUserDetailAction = (id) => async (dispatch) => {
+  await axios
+    .get(`${API_ENDPOINT}/v1/users/id`, { params: { id } })
+    .then((res) => {
+      // console.log(res.data.dob);
+      res.data.dob = convertDateByFormatEdit(res.data.dob, "yyyy-MM-dd");
+      res.data.joinedDate = convertDateByFormatEdit(
+        res.data.joinedDate,
+        "yyyy-MM-dd"
+      );
+      // console.log(res.data.dob);
+      dispatch({
+        type: ACTIONS.SET_USER_DETAIL,
+        payload: res.data,
+      });
+    });
 };
 
 export const submitAction = (form, navigate) => async (dispatch) => {

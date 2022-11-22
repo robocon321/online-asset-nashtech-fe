@@ -5,12 +5,11 @@ import UserReducer from "../reducers/UserReducer";
 export const UserContext = createContext();
 
 const initState = {
-  users: []
-}
+  users: [],
+};
 
 const UserProvider = (props) => {
   const [userState, dispatch] = useReducer(UserReducer, initState);
-
 
   const value = {
     userState,
