@@ -21,7 +21,7 @@ const config = {
 
 export const setUsersAction = () => async (dispatch) => {
   const token = localStorage["TOKEN"];
-  await request
+  await axios
     .get(`${API_ENDPOINT}/v1/users/`, {
       headers: { Authorization: `Bearer ${token}` },
     })

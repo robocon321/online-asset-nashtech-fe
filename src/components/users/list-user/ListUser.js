@@ -301,7 +301,7 @@ function ListUser() {
             return true;
           })}
           columns={columns}
-          pageSize={20}
+          pageSize={5}
           onCellClick={handleOnCellClick}
           components={{
             Pagination: CustomPagination,
