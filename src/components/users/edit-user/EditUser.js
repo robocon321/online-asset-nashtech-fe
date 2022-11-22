@@ -16,7 +16,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-import { EditUserContext } from "../../contexts/providers/EditUserProvider";
+import { EditUserContext } from "../../../contexts/providers/EditUserProvider";
 
 import styles from "./EditUser.module.css";
 

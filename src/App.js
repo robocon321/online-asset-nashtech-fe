@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import NewListUserPage from "./pages/NewListUserPage";
 import EditUserPage from "./pages/EditUserPage";
 import LoginPage from "./pages/LoginPage";
+import UserLayout from "./components/users/UserLayout";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -19,11 +20,13 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route path="" element={<HomePage />} />
-            <Route path="/users/create" element={<CreateUserPage />} />
-            <Route path="/users/edit/:id" element={<EditUserPage />} />
-            <Route path="/users" element={<NewListUserPage />} />
+            <Route path="users" element={<UserLayout />}>
+              <Route path="" element={<NewListUserPage />} />
+              <Route path="create" element={<CreateUserPage />} />
+              <Route path="edit/:id" element={<EditUserPage />} />
+            </Route>
           </Route>
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="login" element={<LoginPage />} />
         </Routes>
       );
     } else {

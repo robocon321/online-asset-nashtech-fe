@@ -20,13 +20,13 @@ import InputLabel from "@mui/material/InputLabel";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
-import Title from "../common/title/Title";
+import Title from "../../common/title/Title";
 import InputBase from "@mui/material/InputBase";
 import Pagination from "@mui/material/Pagination";
 import Modal from "@mui/material/Modal";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import { useContext } from "react";
-import { ListUserContext } from "../../contexts/providers/ListUserProvider";
+import { ListUserContext } from "../../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -198,7 +198,7 @@ function ListUser() {
       },
     },
   ];
-
+  const gender = [ "Female","Male"];
   const roles = ["ALL", "ADMIN", "STAFF"];
   const gender = ["FEMALE", "MALE"];
   return (

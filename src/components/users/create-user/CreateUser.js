@@ -17,10 +17,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-import { CreateUserContext } from "../../contexts/providers/CreateUserProvider";
+import { CreateUserContext } from "../../../contexts/providers/CreateUserProvider";
 
 import styles from "./CreateUser.module.css";
-import Title from "../common/title/Title";
+import Title from "../../common/title/Title";
 
 const CreateUser = (props) => {
   const { changeField, createUserState, submit, navigate } =
