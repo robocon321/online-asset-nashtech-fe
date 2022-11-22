@@ -189,7 +189,6 @@ const CreateUserProvider = (props) => {
 
   const submit = () => {
     if (Object.keys(createUserState.error).length == 0) {
-      navigate('/users');
       submitAction({ ...createUserState.form }, navigate, addUser)(dispatch);
     }
   };
