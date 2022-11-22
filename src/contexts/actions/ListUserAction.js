@@ -1,14 +1,12 @@
 import request from "../../utils/api/request";
-
+import axios from "axios";
+const GET_USER_DETAIL = "/v1/users/id";
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
-const GET_ALL_USER = "/api/v1/users/";
-const GET_USER_DETAIL = "/api/v1/users/id";
+const GET_ALL_USER = "/v1/users/";
 const token = localStorage["TOKEN"];
-
 const config = {
   headers: { Authorization: `Bearer ${token}` },
 };
-
 export const ACTIONS = {
   SET_CHECK: "SET_CHECK",
   SET_CHECK2: "SET_CHECK2",
@@ -59,7 +57,7 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
 };
 
 export const setListUserAction = () => async (dispatch) => {
-  await request.get(`${API_ENDPOINT}/v1/users/`, config).then((res) => {
+  await axios.get(`${API_ENDPOINT}${GET_ALL_USER}`, config).then((res) => {
     dispatch({
       type: ACTIONS.SET_LIST_USERS,
       payload: res.data,
@@ -67,12 +65,15 @@ export const setListUserAction = () => async (dispatch) => {
   });
 };
 export const setUserDetailAction = (id) => async (dispatch) => {
-  await request
-    .get(`${API_ENDPOINT}/v1/users/id`, { params: { id } })
+  await axios
+    .get(`${API_ENDPOINT}/v1/users/id`, { params: { id } }, config)
     .then((res) => {
       dispatch({
         type: ACTIONS.SET_USER_DETAIL,
         payload: res.data,
       });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

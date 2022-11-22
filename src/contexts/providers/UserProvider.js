@@ -1,6 +1,8 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect, useContext } from "react";
 
 import UserReducer from "../reducers/UserReducer";
+import { setUsersAction } from "../actions/UserAction";
+import { AppContext } from "./AppProvider";
 
 export const UserContext = createContext();
 
@@ -11,7 +13,10 @@ const initState = {
 
 const UserProvider = (props) => {
   const [userState, dispatch] = useReducer(UserReducer, initState);
-
+  const { appState } = useContext(AppContext);
+  useEffect(() => {
+    setUsersAction()(dispatch);
+  }, [appState.user]);
   const value = {
     userState,
   };

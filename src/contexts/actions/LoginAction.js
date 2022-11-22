@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { setAuthToken } from '../../utils/SetAuth';
+import axios from "axios";
+import { setAuthToken } from "../../utils/SetAuth";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
@@ -71,41 +71,42 @@ export const setSuccesAction = (success) => (dispatch) => {
 };
 
 export const submitAction = (form, navigate) => async (dispatch) => {
-  
   setLoadingAction(true)(dispatch);
- 
-  
-  await axios.post(`${API_ENDPOINT}/v1/users/login`, form).then(response => {
-    const { token, username, fullName, role, location, enabled } = response.data;
-    localStorage['TOKEN'] = token;
-    localStorage['username'] = username;
-    localStorage['fullName'] = fullName;
-    localStorage['role']= role;
-    localStorage['enabled'] = enabled;
-    localStorage['location'] = location;
 
-    setStatusAction({
-      isLoading: false,
-      message: 'Successful!',
-      success: true
-    })(dispatch);
+  await axios
+    .post(`${API_ENDPOINT}/v1/users/login`, form)
+    .then((response) => {
+      const { token, username, fullName, role, location, enabled } =
+        response.data;
+      localStorage["TOKEN"] = token;
+      localStorage["username"] = username;
+      localStorage["fullName"] = fullName;
+      localStorage["role"] = role;
+      localStorage["enabled"] = enabled;
+      localStorage["location"] = location;
 
-    navigate('/');
-
-  }).catch(error => {
-    if(error.response == undefined) {
       setStatusAction({
         isLoading: false,
-        message: error.message,
-        success: false
-      })(dispatch)
-    } else {
-      setStatusAction({
-        isLoading: false,
-        message: error.response.data.message,
-        success: false
-      })(dispatch)
-    }
-  })
+        message: "Successful!",
+        success: true,
+      })(dispatch);
 
-}
+      navigate("/");
+    })
+    .catch((error) => {
+      // if(error.response == undefined) {
+      //   setStatusAction({
+      //     isLoading: false,
+      //     message: error.message,
+      //     success: false
+      //   })(dispatch)
+      // } else {
+      //   setStatusAction({
+      //     isLoading: false,
+      //     message: error.response.data.message,
+      //     success: false
+      //   })(dispatch)
+      // }
+      console.log(error);
+    });
+};
