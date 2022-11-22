@@ -14,10 +14,11 @@ import UserLayout from "./components/users/UserLayout";
 
 function App() {
   const { appState } = useContext(AppContext);
-  if (appState.user) {
+  if (appState.user != null) {
     if (appState.user.role == "ADMIN") {
       return (
         <Routes>
+          <Route index path="login" element={<LoginPage />} />
           <Route path="/" element={<MainLayout />}>
             <Route path="" element={<HomePage />} />
             <Route path="users" element={<UserLayout />}>
@@ -26,10 +27,9 @@ function App() {
               <Route path="edit/:id" element={<EditUserPage />} />
             </Route>
           </Route>
-          <Route path="login" element={<LoginPage />} />
         </Routes>
       );
-    } else {
+    } else if (appState.user.role == "STAFF") {
       return (
         <Routes>
           <Route path="/" element={<MainLayout />}>
@@ -38,6 +38,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       );
+    } else {
+      return <LoginPage />;
     }
   } else {
     return <LoginPage />;

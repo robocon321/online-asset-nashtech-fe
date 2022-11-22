@@ -1,6 +1,7 @@
 import request from "../../utils/api/request";
 import axios from "axios";
 // import * as dotenv from 'dotenv'
+import authHeader from "../../utils/AuthHeader";
 const GET_USER_DETAIL = "/v1/users/id";
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const GET_ALL_USER = "/v1/users/";
