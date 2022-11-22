@@ -19,15 +19,14 @@ import InputLabel from "@mui/material/InputLabel";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
-import Title from "../../common/title/Title";
+import Title from "../common/title/Title";
 import InputBase from "@mui/material/InputBase";
 import Pagination from "@mui/material/Pagination";
 import Modal from "@mui/material/Modal";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import { useContext } from "react";
-import { ListUserContext } from "../../../contexts/providers/ListUserProvider";
+import { ListUserContext } from "../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
-import { UserContext } from "../../../contexts/providers/UserProvider";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -86,7 +85,6 @@ function ListUser() {
     handleClose,
     handleSearch,
   } = useContext(ListUserContext);
-  const { userState } = useContext(UserContext);
   function CustomPagination() {
     const apiRef = useGridApiContext();
     const page = useGridSelector(apiRef, gridPageSelector);
@@ -272,35 +270,30 @@ function ListUser() {
 
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
-          // labelRowsPerPage=""
-          // disableColumnMenu
-          rows={
-            userState.users &&
-            userState.users.filter((item) => {
-              if (
-                listUserState.userRole.length &&
-                listUserState.userRole[0] !== "ALL" &&
-                !listUserState.userRole.includes(item.role.toUpperCase())
-              ) {
-                return false;
-              }
+          rows={listUserState.listUser.filter((item) => {
+            if (
+              listUserState.userRole.length &&
+              listUserState.userRole[0] !== "ALL" &&
+              !listUserState.userRole.includes(item.role.toUpperCase())
+            ) {
+              return false;
+            }
 
-              if (
-                !(
-                  item.fullName
-                    .toUpperCase()
-                    .includes(listUserState.search.toUpperCase()) ||
-                  item.code
-                    .toUpperCase()
-                    .includes(listUserState.search.toUpperCase())
-                )
-              ) {
-                return false;
-              }
+            if (
+              !(
+                item.fullName
+                  .toUpperCase()
+                  .includes(listUserState.search.toUpperCase()) ||
+                item.code
+                  .toUpperCase()
+                  .includes(listUserState.search.toUpperCase())
+              )
+            ) {
+              return false;
+            }
 
-              return true;
-            })
-          }
+            return true;
+          })}
           columns={columns}
           pageSize={20}
           onCellClick={handleOnCellClick}
