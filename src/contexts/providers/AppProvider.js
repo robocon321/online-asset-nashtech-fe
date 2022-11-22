@@ -11,7 +11,7 @@ const initState = {
     error: null
   },
   status: {
-    isLoading: false,
+    isLoading: true,
     success: true,
     message: "",
   },
@@ -29,8 +29,8 @@ const AppProvider = (props) => {
 
   useEffect(() => {
     if(!validatePassword(appState.modalLoginFirstTime.password) && appState.modalLoginFirstTime.password != null) {
-      setFieldModalLoginFirstTimeAction('error', "Minimum eight characters, at least one letter, one number and one special character")(dispatch);
-    } else {
+        setFieldModalLoginFirstTimeAction('error', "Minimum eight characters, at least one letter, one number, one special character and less 50 letters")(dispatch);
+      } else {
       setFieldModalLoginFirstTimeAction('error', null)(dispatch);
     }
   }, [appState.modalLoginFirstTime.password]);
