@@ -7,22 +7,22 @@ import {
   addErrorFieldAction,
   removeErrorFieldAction,
   setEnableSubmitAction,
-  setErrorAction,
-  setErrorFieldAction,
   setFieldAction,
   submitAction,
+  setUserDetailAction,
 } from "../actions/EditUserAction";
 import EditUserReducer from "../reducers/EditUserReducer";
+import { useParams } from "react-router-dom";
 
 export const EditUserContext = createContext();
 const initState = {
+  checkId: "",
   form: {
-    firstName: "",
-    lastName: "",
     dob: null,
+    id: "",
     gender: true,
     joinedDate: null,
-    type: "ADMIN",
+    role: "ADMIN",
   },
   status: {
     isLoading: false,
@@ -34,12 +34,17 @@ const initState = {
 };
 
 const EditUserProvider = (props) => {
+  let { id } = useParams();
   const navigate = useNavigate();
   const [editUserState, dispatch] = useReducer(EditUserReducer, initState);
 
   useEffect(() => {
     console.log(editUserState);
   }, [editUserState]);
+
+  useEffect(() => {
+    setUserDetailAction(id)(dispatch);
+  }, [id]);
 
   useEffect(() => {
     if (Object.keys(editUserState.error).length > 0 || isBlankField()) {
@@ -135,6 +140,7 @@ const EditUserProvider = (props) => {
     } else {
       removeErrorFieldAction("dob")(dispatch);
     }
+    validateJoinedDate(editUserState.form.joinedDate);
   };
 
   const validateJoinedDate = (value) => {
@@ -189,7 +195,7 @@ const EditUserProvider = (props) => {
 
   const submit = () => {
     if (Object.keys(editUserState.error).length == 0) {
-      submitAction(editUserState.form, navigate)(dispatch);
+      submitAction({ ...editUserState.form }, navigate)(dispatch);
     }
   };
 

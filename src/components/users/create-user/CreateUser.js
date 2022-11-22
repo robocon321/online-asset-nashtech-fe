@@ -29,10 +29,10 @@ const CreateUser = (props) => {
   return (
     <div className={styles["create-user"]}>
       <Title title="Create New User" />
-      {
-        !createUserState.status.success && <Alert severity="error">{createUserState.status.message}</Alert> 
-      }
-           
+      {!createUserState.status.success && (
+        <Alert severity="error">{createUserState.status.message}</Alert>
+      )}
+
       <Card>
         <CardContent>
           <form>
@@ -122,17 +122,20 @@ const CreateUser = (props) => {
                   value={createUserState.form.joinedDate}
                   renderInput={(params) => {
                     return (
-                      <TextField                      
+                      <TextField
                         value={createUserState.form.joinedDate}
                         onChange={changeField}
                         onKeyUp={changeField}
                         className={styles["input"]}
-                        error={createUserState.error.joinedDate != null || params.error}
+                        error={
+                          createUserState.error.joinedDate != null ||
+                          params.error
+                        }
                         helperText={createUserState.error.joinedDate}
                         id="joinedDate"
                         name="joinedDate"
                         type="date"
-                        />
+                      />
                     );
                   }}
                 />
@@ -142,7 +145,12 @@ const CreateUser = (props) => {
               <FormLabel id="demo-row-radio-buttons-group-label">
                 Role
               </FormLabel>
-              <Select onChange={changeField} value={createUserState.form.role} id="role" name="role">
+              <Select
+                onChange={changeField}
+                value={createUserState.form.role}
+                id="role"
+                name="role"
+              >
                 <MenuItem value={"STAFF"}>Staff</MenuItem>
                 <MenuItem value={"ADMIN"}>Admin</MenuItem>
               </Select>

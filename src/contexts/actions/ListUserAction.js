@@ -17,8 +17,7 @@ export const ACTIONS = {
   SET_LIST_USERS: "SET_LIST_USERS",
   SET_USER_DETAIL: "SET_USER_DETAIL",
   SET_SEARCH: "SET_SEARCH",
-
-  //   SET_LIST_USER: "SET_LIST_USER"
+  SET_LIST_USER: "SET_LIST_USER",
 };
 
 export const setCheck1Action = (check) => (dispatch) => {
@@ -57,6 +56,7 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
     payload: checkId,
   });
 };
+
 export const setListUserAction = () => async (dispatch) => {
   await axios.get(`${API_ENDPOINT}${GET_ALL_USER}`, config).then((res) => {
     dispatch({
