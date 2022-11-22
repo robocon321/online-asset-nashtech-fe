@@ -16,6 +16,7 @@ export const ACTIONS = {
 }
 
 export const loadUserAction = () => (dispatch) => {
+  if(localStorage['username'] == undefined) return;
   dispatch({
     type: ACTIONS.SET_USER,
     payload: {

@@ -2,10 +2,6 @@ import axios from 'axios';
 import { convertDateByFormat } from '../../utils/DateUtils';
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
-const token = localStorage['TOKEN'];
-const config = {
-  headers: {"Authorization" : `Bearer ${token}`}
-}
 
 export const ACTIONS = {
   SET_FIELD: 'SET_FIELD',
@@ -39,12 +35,17 @@ export const setLoadingAction = (isLoading) => dispatch => {
   })
 }
 
-export const submitAction = (form, navigate) => async (dispatch) => {
+export const submitAction = (form, navigate, addUserFunc) => async (dispatch) => {
   
   setLoadingAction(true)(dispatch);
  
   form.dob = convertDateByFormat(form.dob, 'dd/MM/yyyy');
   form.joinedDate = convertDateByFormat(form.joinedDate, 'dd/MM/yyyy');
+
+  const token = localStorage['TOKEN'];
+  const config = {
+    headers: {"Authorization" : `Bearer ${token}`}
+  }
 
   await axios.post(`${API_ENDPOINT}/v1/users/create`, form, config).then(response => {
     setStatusAction({
@@ -53,8 +54,8 @@ export const submitAction = (form, navigate) => async (dispatch) => {
       success: true
     })(dispatch);
 
+    addUserFunc(response.data);
     navigate('/users');
-
   }).catch(error => {
     if(error.response == undefined) {
       setStatusAction({

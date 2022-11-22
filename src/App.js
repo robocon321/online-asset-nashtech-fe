@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 import MainLayout from "./components/common/MainLayout";
@@ -40,8 +40,16 @@ function App() {
       );
     }
   } else {
-    return <LoginPage />;
-  }
+    return (
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+            path="*"
+            element={<Navigate to="/login" replace />}
+        />
+      </Routes>
+    );
+}
 }
 
 export default App;
