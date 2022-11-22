@@ -3,7 +3,6 @@ import {
   convertDateByFormat,
   convertDateByFormatEdit,
 } from "../../utils/DateUtils";
-import request from "../../utils/api/request";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const token = localStorage["TOKEN"];
