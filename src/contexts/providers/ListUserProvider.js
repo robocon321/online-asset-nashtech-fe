@@ -67,6 +67,10 @@ const ListUserProvider = (props) => {
     setCheckIdAction(params.id)(dispatch);
     setOpenAction(true)(dispatch);
   };
+  const handleOnCellClickEdit = (params) => {
+    setCheckIdAction(params.id)(dispatch);
+    console.log(listUserState.checkId);
+  };
   const handleSearch = (e) => {
     setSearchAction(e.target.value.toUpperCase())(dispatch);
   };
@@ -85,6 +89,7 @@ const ListUserProvider = (props) => {
     handleOnCellClick,
     handleClose,
     handleSearch,
+    handleOnCellClickEdit,
   };
 
   return (

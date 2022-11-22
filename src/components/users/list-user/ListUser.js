@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import {
@@ -85,6 +86,7 @@ function ListUser() {
     handleOnCellClick,
     handleClose,
     handleSearch,
+    handleOnCellClickEdit,
   } = useContext(ListUserContext);
   const { userState } = useContext(UserContext);
   function CustomPagination() {
@@ -184,10 +186,11 @@ function ListUser() {
       flex: 2,
       align: "center",
       renderCell: (params) => {
-        console.log(params.row.id);
         return (
           <div>
-            <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
+            <Link to={"/users/edit/" + params.id}>
+              <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
+            </Link>
             <GridActionsCellItem
               icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
               label="Delete"
@@ -197,8 +200,8 @@ function ListUser() {
       },
     },
   ];
-  const gender = ["Female", "Male"];
   const roles = ["ALL", "ADMIN", "STAFF"];
+  const gender = ["MALE", "FEMALE"];
   return (
     <div>
       <Title title="User List"></Title>
@@ -224,7 +227,6 @@ function ListUser() {
                 sx={{ width: "120px" }}
               >
                 {roles.map((userrole) => {
-                  //   console.log(userRole);
                   return (
                     <MenuItem key={userrole} value={userrole}>
                       <Checkbox
