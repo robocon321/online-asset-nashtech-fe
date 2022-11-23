@@ -1,12 +1,7 @@
 import axios from "axios";
 // import * as dotenv from 'dotenv'
-const GET_USER_DETAIL = "/v1/users/id";
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
-const GET_ALL_USER = "/v1/users/";
-const token = localStorage["TOKEN"];
-const config = {
-  headers: { Authorization: `Bearer ${token}` },
-};
+
 export const ACTIONS = {
   SET_CHECK: "SET_CHECK",
   SET_CHECK2: "SET_CHECK2",
@@ -56,20 +51,9 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
   });
 };
 
-export const setListUserAction = () => async (dispatch) => {
-  await axios.get(`${API_ENDPOINT}${GET_ALL_USER}`, config).then((res) => {
-    dispatch({
-      type: ACTIONS.SET_LIST_USERS,
-      payload: res.data,
-    });
-  });
-};
 export const setUserDetailAction = (id) => async (dispatch) => {
-  const token = localStorage["TOKEN"];
   await axios
-    .get(`${API_ENDPOINT}/v1/users/id?id=${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    .get(`${API_ENDPOINT}/v1/users/id?id=${id}`)
     .then((res) => {
       console.log(res.data);
       dispatch({

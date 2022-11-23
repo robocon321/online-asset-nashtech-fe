@@ -94,19 +94,18 @@ export const submitAction = (form, navigate) => async (dispatch) => {
       navigate("/");
     })
     .catch((error) => {
-      // if(error.response == undefined) {
-      //   setStatusAction({
-      //     isLoading: false,
-      //     message: error.message,
-      //     success: false
-      //   })(dispatch)
-      // } else {
-      //   setStatusAction({
-      //     isLoading: false,
-      //     message: error.response.data.message,
-      //     success: false
-      //   })(dispatch)
-      // }
-      console.log(error);
+      if(error.response == undefined) {
+        setStatusAction({
+          isLoading: false,
+          message: error.message,
+          success: false
+        })(dispatch)
+      } else {
+        setStatusAction({
+          isLoading: false,
+          message: error.response.data.message,
+          success: false
+        })(dispatch)
+      }
     });
 };
