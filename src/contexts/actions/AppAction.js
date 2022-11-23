@@ -101,3 +101,48 @@ export const submit_ModalLoginFirstTimeAction =
         }
       });
   };
+
+export const cancel_ModalChangePasswordAction = () => (dispatch) => {
+  dispatch({
+    type: ACTIONS.SET_CANCEL,
+    payload: null,
+  });
+};
+
+export const submit_ModalChangePasswordAction =
+  (password, newPassword) => async (dispatch) => {
+    setLoadingAction(true)(dispatch);
+
+    const data = {
+      oldPassword: password,
+      newPassword: newPassword,
+    };
+
+    await axios
+      .put(`${API_ENDPOINT}/v1/auth/changePassword`, data, config)
+      .then((response) => {
+        setStatusAction({
+          isLoading: false,
+          message: "Successful!",
+          success: true,
+        })(dispatch);
+
+        localStorage["enabled"] = true;
+        loadUserAction()(dispatch);
+      })
+      .catch((error) => {
+        if (error.response == undefined) {
+          setStatusAction({
+            isLoading: false,
+            message: error.message,
+            success: false,
+          })(dispatch);
+        } else {
+          setStatusAction({
+            isLoading: false,
+            message: error.response.data.message,
+            success: false,
+          })(dispatch);
+        }
+      });
+  };
