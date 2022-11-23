@@ -8,6 +8,15 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.ADD_USER:
       state = { ...state, users: [payload, ...state.users] };
       break;
+    case ACTIONS.EDIT_USER:
+      state = {
+        ...state,
+        users: [
+          payload,
+          ...state.users.filter((item) => item.id != payload.id),
+        ],
+      };
+      break;
     default:
       break;
   }

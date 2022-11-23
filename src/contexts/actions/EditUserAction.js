@@ -3,7 +3,6 @@ import {
   convertDateByFormat,
   convertDateByFormatEdit,
 } from "../../utils/DateUtils";
-
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const ACTIONS = {
@@ -57,40 +56,40 @@ export const setUserDetailAction = (id) => async (dispatch) => {
     });
 };
 
-export const submitAction = (form, navigate) => async (dispatch) => {
-  setLoadingAction(true)(dispatch);
+export const submitAction =
+  (form, navigate, editUserFunc) => async (dispatch) => {
+    setLoadingAction(true)(dispatch);
 
-  form.dob = convertDateByFormat(form.dob, "dd/MM/yyyy");
-  form.joinedDate = convertDateByFormat(form.joinedDate, "dd/MM/yyyy");
+    form.dob = convertDateByFormat(form.dob, "dd/MM/yyyy");
+    form.joinedDate = convertDateByFormat(form.joinedDate, "dd/MM/yyyy");
 
-  await axios
-    .put(`${API_ENDPOINT}/v1/users/update`, form)
-    .then((response) => {
-      setStatusAction({
-        isLoading: false,
-        message: "Successful!",
-        success: true,
-      })(dispatch);
-
-      navigate("/users");
-    })
-    .catch((error) => {
-      // if (error.response == undefined) {
-      //   setStatusAction({
-      //     isLoading: false,
-      //     message: error.message,
-      //     success: false,
-      //   })(dispatch);
-      // } else {
-      //   setStatusAction({
-      //     isLoading: false,
-      //     message: error.response.data,
-      //     success: false,
-      //   })(dispatch);
-      // }
-      console.log(error);
-    });
-};
+    await axios
+      .put(`${API_ENDPOINT}/v1/users/update`, form)
+      .then((response) => {
+        setStatusAction({
+          isLoading: false,
+          message: "Successful!",
+          success: true,
+        })(dispatch);
+        editUserFunc(response.data);
+        navigate("/users");
+      })
+      .catch((error) => {
+        if (error.response == undefined) {
+          setStatusAction({
+            isLoading: false,
+            message: error.message,
+            success: false,
+          })(dispatch);
+        } else {
+          setStatusAction({
+            isLoading: false,
+            message: error.response.data,
+            success: false,
+          })(dispatch);
+        }
+      });
+  };
 
 export const addErrorFieldAction = (name, value) => (dispatch) => {
   dispatch({

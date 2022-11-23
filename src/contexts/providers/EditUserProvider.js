@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { changeToSlug } from "../../utils/ConvertString";
 import { getAge, isDay, isGreater } from "../../utils/DateUtils";
@@ -13,6 +13,7 @@ import {
 } from "../actions/EditUserAction";
 import EditUserReducer from "../reducers/EditUserReducer";
 import { useParams } from "react-router-dom";
+import { UserContext } from "./UserProvider";
 
 export const EditUserContext = createContext();
 const initState = {
@@ -35,6 +36,7 @@ const initState = {
 
 const EditUserProvider = (props) => {
   let { id } = useParams();
+  const { editUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [editUserState, dispatch] = useReducer(EditUserReducer, initState);
 
@@ -195,7 +197,7 @@ const EditUserProvider = (props) => {
 
   const submit = () => {
     if (Object.keys(editUserState.error).length == 0) {
-      submitAction({ ...editUserState.form }, navigate)(dispatch);
+      submitAction({ ...editUserState.form }, navigate, editUser)(dispatch);
     }
   };
 
