@@ -10,7 +10,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-
+import Snackbar from "@mui/material/Snackbar";
+import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
 import styles from "./Header.module.css";
 import ChangePassword from "../dialog/changepassword/Changepassword";
 import ChangePasswordLoginFirstTimeDialog from "../dialog/change-password-login-first-time/ChangePasswordLoginFirstTimeDialog";
@@ -88,16 +90,53 @@ const Header = (props) => {
     </Menu>
   );
 
+  const [openSnack, setOpenSnack] = React.useState(false);
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnack(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleCloseSnack}>
+        OK
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseSnack}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
   return (
     <AppBar
       position="fixed"
       open={true}
       style={{ backgroundColor: "var(--primary_color)" }}
     >
-      <ChangePassword open={open} setOpen={setOpen} />
+      <ChangePassword
+        open={open}
+        setOpen={setOpen}
+        setOpenSnack={setOpenSnack}
+      />
+      <Snackbar
+        open={openSnack}
+        autoHideDuration={5000}
+        onClose={handleCloseSnack}
+        message="Your password has been changed successfully"
+        action={action}
+      />
+      ;
       <ChangePasswordLoginFirstTimeDialog />
       <Logout open={logout} setOpen={setLogout} />
-
       <Toolbar className={styles["topbar"]}>
         <IconButton
           color="inherit"

@@ -23,6 +23,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useContext } from "react";
 import { AppContext } from "../../../../contexts/providers/AppProvider";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -104,7 +105,8 @@ export default function AlertDialogSlide(props) {
       appState.status.message == "Successful!"
     ) {
       cancle_ModalChangePassword();
-      //props.setOpen(false);
+      props.setOpenSnack(true);
+      props.setOpen(false);
     }
   }, [appState.status]);
 
