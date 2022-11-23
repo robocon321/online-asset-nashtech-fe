@@ -74,7 +74,7 @@ export const submitAction = (form, navigate) => async (dispatch) => {
   setLoadingAction(true)(dispatch);
 
   await axios
-    .post(`${API_ENDPOINT}/v1/users/login`, form)
+    .post(`${API_ENDPOINT}/v1/auth/login`, form)
     .then((response) => {
       const { token, username, fullName, role, location, enabled } =
         response.data;
