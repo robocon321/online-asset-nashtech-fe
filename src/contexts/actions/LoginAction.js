@@ -74,7 +74,7 @@ export const submitAction = (form, navigate) => async (dispatch) => {
   setLoadingAction(true)(dispatch);
 
   await axios
-    .post(`${API_ENDPOINT}/v1/users/login`, form)
+    .post(`${API_ENDPOINT}/v1/auth/login`, form)
     .then((response) => {
       const { token, username, fullName, role, location, enabled } =
         response.data;
@@ -94,19 +94,18 @@ export const submitAction = (form, navigate) => async (dispatch) => {
       navigate("/");
     })
     .catch((error) => {
-      // if(error.response == undefined) {
-      //   setStatusAction({
-      //     isLoading: false,
-      //     message: error.message,
-      //     success: false
-      //   })(dispatch)
-      // } else {
-      //   setStatusAction({
-      //     isLoading: false,
-      //     message: error.response.data.message,
-      //     success: false
-      //   })(dispatch)
-      // }
-      console.log(error);
+      if(error.response == undefined) {
+        setStatusAction({
+          isLoading: false,
+          message: error.message,
+          success: false
+        })(dispatch)
+      } else {
+        setStatusAction({
+          isLoading: false,
+          message: error.response.data.message,
+          success: false
+        })(dispatch)
+      }
     });
 };

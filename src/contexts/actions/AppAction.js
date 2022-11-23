@@ -1,10 +1,6 @@
 import axios, { AxiosError } from "axios";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
-const token = localStorage['TOKEN'];
-const config = {
-  headers: {"Authorization" : `Bearer ${token}`}
-}
 
 export const ACTIONS = {
   SET_USER: 'SET_USER',
@@ -60,7 +56,12 @@ export const submit_ModalLoginFirstTimeAction = (password) => async dispatch => 
     newPassword: password
   }
 
-  await axios.put(`${API_ENDPOINT}/v1/users/changePassword`, data, config).then(response => {
+  const token = localStorage['TOKEN'];
+  const config = {
+    headers: {"Authorization" : `Bearer ${token}`}
+  }
+  
+  await axios.put(`${API_ENDPOINT}/v1/auth/changePassword`, data, config).then(response => {
     setStatusAction({
       isLoading: false,
       message: 'Successful!',
@@ -77,7 +78,6 @@ export const submit_ModalLoginFirstTimeAction = (password) => async dispatch => 
         success: false
       })(dispatch)
     } else {
-      console.log(1);
       setStatusAction({
         isLoading: false,
         message: error.response.data.message,

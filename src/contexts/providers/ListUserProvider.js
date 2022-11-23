@@ -6,7 +6,6 @@ import {
   setUserRoleAction,
   setOpenAction,
   setCheckIdAction,
-  setListUserAction,
   setUserDetailAction,
   setSearchAction,
 } from "../actions/ListUserAction";
@@ -38,10 +37,6 @@ const ListUserProvider = (props) => {
     );
     setCheck1Action(!listUserState.check)(dispatch);
   };
-
-  useEffect(() => {
-    setListUserAction()(dispatch);
-  }, []);
 
   useEffect(() => {
     console.log(listUserState);
