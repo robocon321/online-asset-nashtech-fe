@@ -27,6 +27,8 @@ import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefault
 import { useContext } from "react";
 import { ListUserContext } from "../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
+import { UserContext } from "../../contexts/providers/UserProvider";
+import { usePickerState } from "@mui/x-date-pickers/internals/hooks/usePickerState";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -85,6 +87,8 @@ function ListUser() {
     handleClose,
     handleSearch,
   } = useContext(ListUserContext);
+  const { userState } = useContext(UserContext);
+
   function CustomPagination() {
     const apiRef = useGridApiContext();
     const page = useGridSelector(apiRef, gridPageSelector);
@@ -270,7 +274,7 @@ function ListUser() {
 
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={listUserState.listUser.filter((item) => {
+          rows={userState.users.filter((item) => {
             if (
               listUserState.userRole.length &&
               listUserState.userRole[0] !== "ALL" &&
