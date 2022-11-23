@@ -2,10 +2,6 @@ import axios, { AxiosError } from "axios";
 import { setAuthToken } from "../../utils/SetAuth";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
-const token = localStorage["TOKEN"];
-const config = {
-  headers: { Authorization: `Bearer ${token}` },
-};
 
 export const ACTIONS = {
   SET_USER: "SET_USER",
@@ -119,7 +115,7 @@ export const submit_ModalChangePasswordAction =
     };
 
     await axios
-      .put(`${API_ENDPOINT}/v1/auth/changePassword`, data, config)
+      .put(`${API_ENDPOINT}/v1/auth/changePassword`, data)
       .then((response) => {
         setStatusAction({
           isLoading: false,
