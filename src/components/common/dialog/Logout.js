@@ -44,7 +44,7 @@ export default function AlertDialogSlide(props) {
           "font-weight": "bold",
         }}
       >
-        Are you sure
+        Are you sure?
       </DialogTitle>
       <DialogContent sx={{ mx: "auto", p: 0 }}>
         <DialogContentText id="alert-dialog-slide-description">
@@ -54,12 +54,21 @@ export default function AlertDialogSlide(props) {
         </DialogContentText>
       </DialogContent>
       <DialogActions sx={{ mx: "auto", p: 2 }}>
-        <Button variant="contained" color="error" onClick={handleLogout}>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={handleLogout}
+          style={{ "text-transform": "inherit" }}
+        >
           Log out
         </Button>
         <Button
           variant="outlined"
-          style={{ color: "grey", "border-color": "grey" }}
+          style={{
+            color: "grey",
+            "border-color": "grey",
+            "text-transform": "inherit"
+          }}
           onClick={handleClose}
         >
           Cancel

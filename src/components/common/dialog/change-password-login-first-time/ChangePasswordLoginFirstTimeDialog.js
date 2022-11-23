@@ -63,6 +63,7 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
               }
               value={appState.modalLoginFirstTime.password}
               onChange={handleChange_ModalLoginFirstTime}
+              inputProps={{ maxLength: 50 }}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton

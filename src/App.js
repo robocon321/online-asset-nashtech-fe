@@ -12,6 +12,8 @@ import EditUserPage from "./pages/EditUserPage";
 import LoginPage from "./pages/LoginPage";
 import UserLayout from "./components/users/UserLayout";
 import Loading from "./components/common/loading/Loading";
+import AssetLayout from "./components/assets/AssetLayout";
+import CreateAssetPage from "./pages/CreateAssetPage";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -26,6 +28,9 @@ function App() {
               <Route path="" element={<NewListUserPage />} />
               <Route path="create" element={<CreateUserPage />} />
               <Route path="edit/:id" element={<EditUserPage />} />
+            </Route>
+            <Route path="assets" element={<AssetLayout />}>
+              <Route path="create" element={<CreateAssetPage />} />
             </Route>
           </Route>
         </Routes>
