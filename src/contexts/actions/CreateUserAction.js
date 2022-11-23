@@ -42,12 +42,7 @@ export const submitAction = (form, navigate, addUserFunc) => async (dispatch) =>
   form.dob = convertDateByFormat(form.dob, 'dd/MM/yyyy');
   form.joinedDate = convertDateByFormat(form.joinedDate, 'dd/MM/yyyy');
 
-  const token = localStorage['TOKEN'];
-  const config = {
-    headers: {"Authorization" : `Bearer ${token}`}
-  }
-
-  await axios.post(`${API_ENDPOINT}/v1/users/create`, form, config).then(response => {
+  await axios.post(`${API_ENDPOINT}/v1/users/create`, form).then(response => {
     setStatusAction({
       isLoading: false,
       message: 'Successful!',

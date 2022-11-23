@@ -52,11 +52,8 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
 };
 
 export const setUserDetailAction = (id) => async (dispatch) => {
-  const token = localStorage["TOKEN"];
   await axios
-    .get(`${API_ENDPOINT}/v1/users/id?id=${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    .get(`${API_ENDPOINT}/v1/users/id?id=${id}`)
     .then((res) => {
       console.log(res.data);
       dispatch({

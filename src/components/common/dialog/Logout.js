@@ -7,6 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import Cookies from "js-cookie";
+import { setAuthToken } from "../../../utils/SetAuth";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -19,6 +20,7 @@ export default function AlertDialogSlide(props) {
 
   const handleLogout = () => {
     localStorage.clear();
+    setAuthToken('');
     window.location.href = "/login";
   };
 

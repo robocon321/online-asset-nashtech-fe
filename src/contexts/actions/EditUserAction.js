@@ -63,13 +63,8 @@ export const submitAction = (form, navigate) => async (dispatch) => {
   form.dob = convertDateByFormat(form.dob, "dd/MM/yyyy");
   form.joinedDate = convertDateByFormat(form.joinedDate, "dd/MM/yyyy");
 
-  const token = localStorage["TOKEN"];
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-
   await axios
-    .put(`${API_ENDPOINT}/v1/users/update`, form, config)
+    .put(`${API_ENDPOINT}/v1/users/update`, form)
     .then((response) => {
       setStatusAction({
         isLoading: false,
