@@ -29,6 +29,7 @@ import { useContext } from "react";
 import { ListUserContext } from "../../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
 import { UserContext } from "../../../contexts/providers/UserProvider";
+import Stack from "@mui/material/Stack";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -44,6 +45,21 @@ const Search = styled("div")(({ theme }) => ({
     width: "auto",
   },
 }));
+function NoRowsOverlay() {
+  return (
+    <Stack height="100%" alignItems="center" justifyContent="center">
+      No User Found
+    </Stack>
+  );
+}
+
+// function NoResultsOverlay() {
+//   return (
+//     <Stack height="100%" alignItems="center" justifyContent="center">
+//       No User Found.
+//     </Stack>
+//   );
+// }
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
@@ -171,7 +187,7 @@ function ListUser() {
       renderHeader: () => {
         return (
           <strong style={{ display: "flex" }}>
-            <h4>Role</h4>
+            <h4>Type</h4>
           </strong>
         );
       },
@@ -223,8 +239,8 @@ function ListUser() {
                 multiple
                 value={listUserState.userRole}
                 onChange={handleChange}
-                renderValue={() => "Type"}
-                sx={{ width: "120px" }}
+                renderValue={() => listUserState.userRole.toString()}
+                sx={{ width: "150px" }}
               >
                 {roles.map((userrole) => {
                   return (
@@ -265,7 +281,11 @@ function ListUser() {
             <Link to={"create"} style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
-                style={{ background: "#e30613", borderRadius: "8px" }}
+                style={{
+                  background: "#e30613",
+                  borderRadius: "8px",
+                  textTransform: "none",
+                }}
               >
                 Create new user
               </Button>
@@ -307,6 +327,8 @@ function ListUser() {
           onCellClick={handleOnCellClick}
           components={{
             Pagination: CustomPagination,
+            // NoResultsOverlay,
+            NoRowsOverlay,
           }}
         ></DataGrid>
       </Box>
