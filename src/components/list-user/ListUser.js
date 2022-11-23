@@ -27,6 +27,7 @@ import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefault
 import { useContext } from "react";
 import { ListUserContext } from "../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
+import { UserContext } from "../../contexts/providers/UserProvider";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -85,6 +86,7 @@ function ListUser() {
     handleClose,
     handleSearch,
   } = useContext(ListUserContext);
+  const { users } = useContext(UserContext);
   function CustomPagination() {
     const apiRef = useGridApiContext();
     const page = useGridSelector(apiRef, gridPageSelector);
@@ -243,7 +245,7 @@ function ListUser() {
             width: "30vw",
           }}
         >
-          <div>
+          <form autoComplete="off">
             {" "}
             <Search>
               <SearchIconWrapper>
@@ -253,10 +255,15 @@ function ListUser() {
                 style={{ border: "1px solid black", borderRadius: "8px" }}
                 placeholder="Search…"
                 onChange={handleSearch}
-                inputProps={{ "aria-label": "search" }}
+                inputProps={{
+                  "aria-label": "search",
+                  form: {
+                    autoComplete: "nope",
+                  },
+                }}
               />
             </Search>
-          </div>
+          </form>
           <div>
             <Button
               variant="contained"
@@ -270,7 +277,7 @@ function ListUser() {
 
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={listUserState.listUser.filter((item) => {
+          rows={users.filter((item) => {
             if (
               listUserState.userRole.length &&
               listUserState.userRole[0] !== "ALL" &&
