@@ -15,7 +15,7 @@ const reducer = (state, { type, payload }) => {
       };
       break;
     case ACTIONS.SET_STATUS:
-      state = {...state, status: payload};
+      state = { ...state, status: payload };
       break;
     case ACTIONS.SET_FIELD_MODAL_LOGIN_FIRST_TIME:
       state = {
@@ -23,6 +23,31 @@ const reducer = (state, { type, payload }) => {
         modalLoginFirstTime: {
           ...state.modalLoginFirstTime,
           [payload.name]: payload.value,
+        },
+      };
+      break;
+    case ACTIONS.SET_FIELD_MODAL_CHANGE_PASSWORD:
+      state = {
+        ...state,
+        modalChangePassword: {
+          ...state.modalChangePassword,
+          [payload.name]: payload.value,
+        },
+      };
+      break;
+    case ACTIONS.SET_CANCEL:
+      state = {
+        ...state,
+        modalChangePassword: {
+          password: null,
+          newPassword: null,
+          error: null,
+          errorNew: null,
+        },
+        status: {
+          isLoading: true,
+          success: true,
+          message: "",
         },
       };
       break;
