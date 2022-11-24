@@ -4,6 +4,18 @@ import CreateAssetReducer from '../reducers/CreateAssetReducer';
 export const CreateUserContext = createContext();
 
 const initState = {
+  form: {
+    name: null,
+    specification: null,
+    installedDate: null,
+    state: 'AVAILABLE',
+    category: null
+  },
+  newCategory: {
+    name: null,
+    code: null
+  },
+  categories: []
 };
 
 const CreateAssetProvider = (props) => {

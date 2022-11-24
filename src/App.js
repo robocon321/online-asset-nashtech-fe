@@ -21,7 +21,6 @@ function App() {
     if (appState.user.role == "ADMIN") {
       return (
         <Routes>
-          <Route index path="login" element={<LoginPage />} />
           <Route path="/" element={<MainLayout />}>
             <Route path="" element={<HomePage />} />
             <Route path="users" element={<UserLayout />}>
@@ -29,9 +28,13 @@ function App() {
               <Route path="create" element={<CreateUserPage />} />
               <Route path="edit/:id" element={<EditUserPage />} />
             </Route>
-            <Route path="assets" element={<AssetLayout />}>
-              <Route path="create" element={<CreateAssetPage />} />
-            </Route>
+            {
+              appState.user == null && <Route path="/login" element={<LoginPage />} />
+            }
+            <Route
+              path="*"
+              element={<Navigate to="/" />}
+            />
           </Route>
         </Routes>
       );
@@ -40,8 +43,14 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route path="" element={<HomePage />} />
-          </Route>
-          <Route path="/login" element={<LoginPage />} />
+          </Route>          
+          {
+            appState.user == null && <Route path="/login" element={<LoginPage />} />
+          }
+          <Route
+            path="*"
+            element={<Navigate to="/" />}
+          />
         </Routes>
       );
     } else {
