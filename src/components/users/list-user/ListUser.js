@@ -178,9 +178,19 @@ function ListUser() {
           </strong>
         );
       },
-      type: "joinedDate",
+      // type: "date",
       width: 110,
       flex: 2,
+      sortComparator: (v1, v2) => {
+        console.log(v1, v2);
+        const d1 = v1.split("/");
+        const d2 = v2.split("/");
+        console.log(d2, d1);
+        const date1 = new Date(d1[2], d1[1] - 1, d1[0]);
+        const date2 = new Date(d2[2], d2[1] - 1, d2[0]);
+        console.log(date1, date2);
+        return date1 > date2 ? -1 : 1;
+      },
       headerAlign: "center",
       align: "center",
     },
