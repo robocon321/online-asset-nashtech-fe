@@ -1,0 +1,29 @@
+.create-asset form {
+  padding: 40px;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 10px!important;
+}
+
+.btn {
+  text-align: end;
+}
+
+.btn button:nth-child(1) {
+  margin-right: 10px;
+}
+
+.new-category {
+  margin: 10px;
+}
+
+.link-category {
+  color: rgb(0, 170, 255);
+  text-decoration: underline;
+}
+
+.popover {
+  width: 700px;
+}
