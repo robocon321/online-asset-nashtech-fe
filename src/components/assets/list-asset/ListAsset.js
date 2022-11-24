@@ -30,6 +30,7 @@ import { ListUserContext } from "../../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
 import { UserContext } from "../../../contexts/providers/UserProvider";
 import Stack from "@mui/material/Stack";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -45,21 +46,14 @@ const Search = styled("div")(({ theme }) => ({
     width: "auto",
   },
 }));
+
 function NoRowsOverlay() {
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
-      No User Found
+      No Asset Found
     </Stack>
   );
 }
-
-// function NoResultsOverlay() {
-//   return (
-//     <Stack height="100%" alignItems="center" justifyContent="center">
-//       No User Found.
-//     </Stack>
-//   );
-// }
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
@@ -82,7 +76,6 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
 }));
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -94,46 +87,34 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
-function ListUser() {
-  const {
-    listUserState,
-    handleChange,
-    handleOnCellClick,
-    handleClose,
-    handleSearch,
-    handleOnCellClickEdit,
-  } = useContext(ListUserContext);
-  const { userState } = useContext(UserContext);
-  function CustomPagination() {
-    const apiRef = useGridApiContext();
-    const page = useGridSelector(apiRef, gridPageSelector);
-    const pageCount = useGridSelector(apiRef, gridPageCountSelector);
-    // const page = 0;
-    return (
-      <Pagination
-        color="primary"
-        count={pageCount}
-        page={page + 1}
-        onChange={(event, value) => apiRef.current.setPage(value - 1)}
-        showFirstButton
-        showLastButton
-      />
-    );
-  }
+function CustomPagination() {
+  const apiRef = useGridApiContext();
+  const page = useGridSelector(apiRef, gridPageSelector);
+  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+  return (
+    <Pagination
+      color="primary"
+      count={pageCount}
+      page={page + 1}
+      onChange={(event, value) => apiRef.current.setPage(value - 1)}
+      showFirstButton
+      showLastButton
+    />
+  );
+}
+function ListAsset() {
   const columns = [
     {
       field: "code",
       renderHeader: () => {
         return (
           <strong style={{ display: "flex" }}>
-            <h4>Staff Code</h4>
+            <h4>Asset Code</h4>
           </strong>
         );
       },
       type: "code",
       width: 90,
-      // sortComparator: (v1, v2) => v1.code.localeCompare(v2.code),
       flex: 2,
       headerAlign: "center",
       align: "center",
@@ -143,11 +124,11 @@ function ListUser() {
       renderHeader: () => {
         return (
           <strong style={{ display: "flex" }}>
-            <h4>Full Name</h4>
+            <h4>Asset Name</h4>
           </strong>
         );
       },
-      type: "fullName",
+      type: "number",
       width: 150,
       flex: 2,
       headerAlign: "center",
@@ -158,14 +139,13 @@ function ListUser() {
       renderHeader: () => {
         return (
           <strong>
-            <h4>Username</h4>
+            <h4>Category</h4>
           </strong>
         );
       },
-      type: "username",
+      type: "string",
       width: 150,
       flex: 2,
-      sortable: false,
       headerAlign: "center",
       align: "center",
     },
@@ -174,26 +154,11 @@ function ListUser() {
       renderHeader: () => {
         return (
           <strong style={{ display: "flex" }}>
-            <h4>Joined Date</h4>
+            <h4>State</h4>
           </strong>
         );
       },
-      type: "joinedDate",
-      width: 110,
-      flex: 2,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "role",
-      renderHeader: () => {
-        return (
-          <strong style={{ display: "flex" }}>
-            <h4>Type</h4>
-          </strong>
-        );
-      },
-      type: "role",
+      type: "date",
       width: 110,
       flex: 2,
       headerAlign: "center",
@@ -206,9 +171,9 @@ function ListUser() {
       renderCell: (params) => {
         return (
           <div>
-            <Link to={"/users/edit/" + params.id}>
-              <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
-            </Link>
+            {/* <Link to={"/users/edit/" + params.id}> */}
+            <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
+            {/* </Link> */}
             <GridActionsCellItem
               icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
               label="Delete"
@@ -218,11 +183,9 @@ function ListUser() {
       },
     },
   ];
-  const roles = ["ALL", "ADMIN", "STAFF"];
-  const gender = ["MALE", "FEMALE"];
   return (
     <div>
-      <Title title="User List"></Title>
+      <Title title="Asset List"></Title>
       <div
         style={{
           marginBottom: "20px",
@@ -231,32 +194,32 @@ function ListUser() {
         }}
       >
         <div>
-          <Box>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Type</InputLabel>
-              <Select
-                IconComponent={() => <FilterAltIcon />}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                multiple
-                value={listUserState.userRole}
-                onChange={handleChange}
-                renderValue={() => listUserState.userRole.toString()}
-                sx={{ width: "150px" }}
-              >
-                {roles.map((userrole) => {
-                  return (
-                    <MenuItem key={userrole} value={userrole}>
-                      <Checkbox
-                        checked={listUserState.userRole.indexOf(userrole) > -1}
-                      />
-                      <ListItemText primary={userrole} />
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </Box>
+          {/* <Box>
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                <Select
+                  IconComponent={() => <FilterAltIcon />}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  multiple
+                  value={listUserState.userRole}
+                  onChange={handleChange}
+                  renderValue={() => listUserState.userRole.toString()}
+                  sx={{ width: "150px" }}
+                >
+                  {roles.map((userrole) => {
+                    return (
+                      <MenuItem key={userrole} value={userrole}>
+                        <Checkbox
+                          checked={listUserState.userRole.indexOf(userrole) > -1}
+                        />
+                        <ListItemText primary={userrole} />
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Box> */}
         </div>
         <div
           style={{
@@ -274,7 +237,7 @@ function ListUser() {
               <StyledInputBase
                 style={{ border: "1px solid black", borderRadius: "8px" }}
                 placeholder="Search…"
-                onChange={handleSearch}
+                //   onChange={handleSearch}
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
@@ -298,93 +261,18 @@ function ListUser() {
 
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
-          // labelRowsPerPage=""
-          // disableColumnMenu
-          rows={userState.users.filter((item) => {
-            if (
-              listUserState.userRole.length &&
-              listUserState.userRole[0] !== "ALL" &&
-              !listUserState.userRole.includes(item.role.toUpperCase())
-            ) {
-              return false;
-            }
-
-            if (
-              !(
-                item.fullName
-                  .toUpperCase()
-                  .includes(listUserState.search.toUpperCase()) ||
-                item.code
-                  .toUpperCase()
-                  .includes(listUserState.search.toUpperCase())
-              )
-            ) {
-              return false;
-            }
-
-            return true;
-          })}
+          rows={[]}
           columns={columns}
           pageSize={20}
-          onCellClick={handleOnCellClick}
+          // onCellClick={handleOnCellClick}
           components={{
             Pagination: CustomPagination,
             NoRowsOverlay,
           }}
         ></DataGrid>
       </Box>
-
-      <Modal
-        keepMounted
-        open={listUserState.open}
-        onClose={handleClose}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-      >
-        <Box sx={style} style={{ borderRadius: "20px" }}>
-          <div
-            style={{
-              display: "flex",
-              borderBottom: "1px solid black",
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Title title="Detailed User Information" />
-            <IconButton onClick={handleClose}>
-              <DisabledByDefaultOutlinedIcon
-                sx={{ fontSize: 40 }}
-                style={{ color: "#e30613" }}
-              />
-            </IconButton>
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>
-              <p>Staff Code</p>
-              <p>Full Name</p>
-              <p>UserName</p>
-              <p>Date of Birth </p>
-              <p>Gender </p>
-              <p>Joined Date </p>
-              <p>Type</p>
-              <p>Location </p>
-            </div>
-            <div>
-              <p> {listUserState.userDetail.code}</p>
-              <p> {listUserState.userDetail.fullName}</p>
-              <p> {listUserState.userDetail.username}</p>
-              <p> {listUserState.userDetail.dob}</p>
-              <p> {gender[+listUserState.userDetail.gender]}</p>
-              <p> {listUserState.userDetail.joinedDate}</p>
-              <p> {listUserState.userDetail.role}</p>
-              <p> {listUserState.userDetail.location}</p>
-            </div>
-          </div>
-        </Box>
-      </Modal>
     </div>
   );
 }
 
-export default ListUser;
+export default ListAsset;

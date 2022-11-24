@@ -14,6 +14,7 @@ import UserLayout from "./components/users/UserLayout";
 import Loading from "./components/common/loading/Loading";
 import AssetLayout from "./components/assets/AssetLayout";
 import CreateAssetPage from "./pages/CreateAssetPage";
+import ListAssetPage from "./pages/ListAssetPage";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -28,13 +29,14 @@ function App() {
               <Route path="create" element={<CreateUserPage />} />
               <Route path="edit/:id" element={<EditUserPage />} />
             </Route>
-            {
-              appState.user == null && <Route path="/login" element={<LoginPage />} />
-            }
-            <Route
-              path="*"
-              element={<Navigate to="/" />}
-            />
+            <Route path="assets" element={<AssetLayout />}>
+              <Route path="" element={<ListAssetPage />}></Route>
+              <Route path="create" element={<CreateAssetPage />} />
+            </Route>
+            {appState.user == null && (
+              <Route path="/login" element={<LoginPage />} />
+            )}
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
       );
@@ -43,33 +45,27 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route path="" element={<HomePage />} />
-          </Route>          
-          {
-            appState.user == null && <Route path="/login" element={<LoginPage />} />
-          }
-          <Route
-            path="*"
-            element={<Navigate to="/" />}
-          />
+          </Route>
+          {appState.user == null && (
+            <Route path="/login" element={<LoginPage />} />
+          )}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       );
     } else {
       return <LoginPage />;
     }
   } else {
-    if(appState.status.isLoading) {
-      return <Loading />
+    if (appState.status.isLoading) {
+      return <Loading />;
     } else
-    return (
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-            path="*"
-            element={<Navigate to="/login" />}
-        />
-      </Routes>
-    );
-}
+      return (
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+      );
+  }
 }
 
 export default App;
