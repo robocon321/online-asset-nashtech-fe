@@ -26,7 +26,7 @@ const LoginProvider = props => {
   const [loginState, dispatch] = useReducer(LoginReducer, initState);  
   const navigate = useNavigate();
 
-  const { loadUser } = useContext(AppContext);
+  const { appState ,loadUser } = useContext(AppContext);
 
   useEffect(() => {
     console.log(loginState);

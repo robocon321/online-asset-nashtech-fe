@@ -143,7 +143,7 @@ const CreateUser = (props) => {
             </FormControl>
             <FormControl className={styles["input"]}>
               <FormLabel id="demo-row-radio-buttons-group-label">
-                Role
+                Type
               </FormLabel>
               <Select
                 onChange={changeField}
@@ -162,7 +162,7 @@ const CreateUser = (props) => {
                 disabled={!createUserState.enableSubmit}
                 onClick={submit}
               >
-                Submit
+                Save
               </Button>
               <Button
                 variant="contained"
