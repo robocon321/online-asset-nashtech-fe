@@ -35,7 +35,7 @@ const EditUser = (props) => {
 
   return (
     <div className={styles["create-user"]}>
-      <Title title="Create New User" />
+      <Title title="Edit User" />
       {!editUserState.status.success && (
         <Alert severity="error">{editUserState.status.message}</Alert>
       )}
@@ -150,7 +150,7 @@ const EditUser = (props) => {
             </FormControl>
             <FormControl className={styles["input"]}>
               <FormLabel id="demo-row-radio-buttons-group-label">
-                Role
+                Type
               </FormLabel>
               <Select
                 onChange={changeField}
@@ -164,7 +164,7 @@ const EditUser = (props) => {
             </FormControl>
             <div className={styles["btn"]}>
               <Button variant="contained" color="error" onClick={submit}>
-                Submit
+                Save
               </Button>
               <Button
                 variant="contained"

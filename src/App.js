@@ -12,6 +12,8 @@ import EditUserPage from "./pages/EditUserPage";
 import LoginPage from "./pages/LoginPage";
 import UserLayout from "./components/users/UserLayout";
 import Loading from "./components/common/loading/Loading";
+import AssetLayout from "./components/assets/AssetLayout";
+import CreateAssetPage from "./pages/CreateAssetPage";
 
 function App() {
   const { appState } = useContext(AppContext);
