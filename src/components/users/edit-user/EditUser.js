@@ -164,7 +164,7 @@ const EditUser = (props) => {
             </FormControl>
             <div className={styles["btn"]}>
               <Button variant="contained" color="error" onClick={submit}>
-                Submit
+                Save
               </Button>
               <Button
                 variant="contained"
