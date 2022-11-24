@@ -35,7 +35,7 @@ const EditUser = (props) => {
 
   return (
     <div className={styles["create-user"]}>
-      <Title title="Create New User" />
+      <Title title="Edit User" />
       {!editUserState.status.success && (
         <Alert severity="error">{editUserState.status.message}</Alert>
       )}
