@@ -85,7 +85,7 @@ const Sidebar = (props) => {
     {
       appState.user.role == 'ADMIN' && (
         <ListItem disablePadding sx={{ display: 'block' }}>
-          <Link to='/assets' className={path == 'assets' ? styles['active'] : ''}>
+          <Link to='#' className={path == 'assets' ? styles['active'] : ''}>
             <span className={styles['icon']}><StyleIcon /></span>
             <span className={styles['title']}>Manage Asset</span>
           </Link>
@@ -94,14 +94,14 @@ const Sidebar = (props) => {
     }
 
     <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/assignments' className={path == 'assignments' ? styles['active'] : ''}>
+      <Link to='#' className={path == 'assignments' ? styles['active'] : ''}>
         <span className={styles['icon']}><AssignmentIcon /></span>
         <span className={styles['title']}>Manage Assignment</span>
       </Link>
     </ListItem>
 
     <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/request' className={path == 'request' ? styles['active'] : ''}>
+      <Link to='#' className={path == 'request' ? styles['active'] : ''}>
         <span className={styles['icon']}><AssignmentReturnIcon /></span>
         <span className={styles['title']}>Manage for Returning</span>
       </Link>
@@ -110,7 +110,7 @@ const Sidebar = (props) => {
     {
       appState.user.role == 'ADMIN' && (
         <ListItem disablePadding sx={{ display: 'block' }}>
-          <Link to='/report' className={styles['active']} className={path == 'report' ? styles['active'] : ''}>
+          <Link to='#' className={styles['active']} className={path == 'report' ? styles['active'] : ''}>
             <span className={styles['icon']}><PieChartOutlineIcon /></span>
             <span className={styles['title']}>Report</span>
           </Link>

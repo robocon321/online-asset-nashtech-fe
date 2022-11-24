@@ -134,7 +134,6 @@ const Header = (props) => {
         message="Your password has been changed successfully"
         action={action}
       />
-      ;
       <ChangePasswordLoginFirstTimeDialog />
       <Logout open={logout} setOpen={setLogout} />
       <Toolbar className={styles["topbar"]}>

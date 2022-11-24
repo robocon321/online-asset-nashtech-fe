@@ -63,10 +63,6 @@ const Login = (props) => {
               type="password"
               id="password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               onClick={submit}
               disabled={!loginState.enableSubmit}
@@ -77,13 +73,6 @@ const Login = (props) => {
             >
               Log In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>
