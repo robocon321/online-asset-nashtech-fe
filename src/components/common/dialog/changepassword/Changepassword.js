@@ -136,9 +136,9 @@ export default function AlertDialogSlide(props) {
           <FormControl
             sx={{ m: 0, mt: 1, mb: 0.5, width: "100%" }}
             variant="outlined"
-            error={appState.modalLoginFirstTime.error != null}
+            error={appState.status.message == "Old Password incorrect"}
             id={
-              errors.errorPassword
+              appState.status.message == "Old Password incorrect"
                 ? "outlined-error-helper-text"
                 : "outlined-adornment-password"
             }
@@ -147,6 +147,7 @@ export default function AlertDialogSlide(props) {
               Old Password
             </InputLabel>
             <OutlinedInput
+              inputProps={{ maxLength: 50 }}
               sx={{ width: "100%" }}
               id="outlined-adornment-password"
               type={values.showPassword ? "text" : "password"}
@@ -159,7 +160,11 @@ export default function AlertDialogSlide(props) {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
-                    color={errors.errorPassword ? "error" : ""}
+                    color={
+                      appState.status.message == "Old Password incorrect"
+                        ? "error"
+                        : ""
+                    }
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
@@ -172,7 +177,7 @@ export default function AlertDialogSlide(props) {
               label="Old Password"
             />
           </FormControl>
-          {appState.status.success != true && (
+          {appState.status.message == "Old Password incorrect" && (
             <Alert
               severity="error"
               sx={{
@@ -185,13 +190,20 @@ export default function AlertDialogSlide(props) {
             </Alert>
           )}
           <FormControl
-            sx={{ m: 0, mt: 2, mb: 5, width: "100%" }}
+            sx={{ m: 0, mt: 2, mb: 0.5, width: "100%" }}
             variant="outlined"
+            error={appState.modalChangePassword.errorNew != null}
+            id={
+              appState.modalChangePassword.errorNew != null
+                ? "outlined-error-helper-text"
+                : "outlined-adornment-password"
+            }
           >
             <InputLabel htmlFor="outlined-adornment-password">
               New Password
             </InputLabel>
             <OutlinedInput
+              inputProps={{ maxLength: 50 }}
               sx={{ width: "100%" }}
               id="outlined-adornment-password"
               type={values.showNewPassword ? "text" : "password"}
@@ -204,6 +216,11 @@ export default function AlertDialogSlide(props) {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
+                    color={
+                      appState.modalChangePassword.errorNew != null
+                        ? "error"
+                        : ""
+                    }
                     aria-label="toggle password visibility"
                     onClick={handleClickShowNewPassword}
                     onMouseDown={handleMouseDownNewPassword}
@@ -237,7 +254,11 @@ export default function AlertDialogSlide(props) {
       <ThemeProvider theme={theme}>
         <DialogActions>
           <Button
-            disabled={appState.modalChangePassword.error != null}
+            disabled={
+              appState.modalChangePassword.password == null ||
+              appState.modalChangePassword.newPassword == null ||
+              appState.modalChangePassword.errorNew != null
+            }
             onClick={submit_ModalChangePassword}
             color="neutral"
             variant="contained"
