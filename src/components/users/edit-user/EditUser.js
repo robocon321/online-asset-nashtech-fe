@@ -82,6 +82,7 @@ const EditUser = (props) => {
                   renderInput={(params) => {
                     return (
                       <TextField
+                        inputProps={{ max: "9999-12-31" }}
                         className={styles["input"]}
                         value={editUserState.form.dob}
                         onChange={changeField}
@@ -131,6 +132,7 @@ const EditUser = (props) => {
                   renderInput={(params) => {
                     return (
                       <TextField
+                        inputProps={{ max: "9999-12-31" }}
                         value={editUserState.form.joinedDate}
                         onChange={changeField}
                         onKeyUp={changeField}
