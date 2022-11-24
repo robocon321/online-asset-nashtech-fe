@@ -162,7 +162,7 @@ const CreateUser = (props) => {
                 disabled={!createUserState.enableSubmit}
                 onClick={submit}
               >
-                Submit
+                Save
               </Button>
               <Button
                 variant="contained"
