@@ -53,13 +53,12 @@ function NoRowsOverlay() {
   );
 }
 
-// function NoResultsOverlay() {
-//   return (
-//     <Stack height="100%" alignItems="center" justifyContent="center">
-//       No User Found.
-//     </Stack>
-//   );
-// }
+const compareStrings = (a, b) => {
+  if (a < b) return -1;
+  if (a > b) return 1;
+
+  return 0;
+};
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
@@ -147,7 +146,21 @@ function ListUser() {
           </strong>
         );
       },
-      type: "fullName",
+      sortComparator: (v1, v2) => {
+        const d1 = v1.split(" ");
+        const d2 = v2.split(" ");
+        let check;
+        if (!(d1[0] === d2[0])) {
+          if (d1[0] > d2[0]) {
+            return 1;
+          }
+          return -1;
+        }
+        const name1 = d1.join(",");
+        const name2 = d2.join(",");
+        check = name1.localeCompare(name2);
+        return check ? 1 : -1;
+      },
       width: 150,
       flex: 2,
       headerAlign: "center",
@@ -178,9 +191,16 @@ function ListUser() {
           </strong>
         );
       },
-      type: "joinedDate",
+      // type: "date",
       width: 110,
       flex: 2,
+      sortComparator: (v1, v2) => {
+        const d1 = v1.split("/");
+        const d2 = v2.split("/");
+        const date1 = new Date(d1[2], d1[1] - 1, d1[0]);
+        const date2 = new Date(d2[2], d2[1] - 1, d2[0]);
+        return date1 > date2 ? 1 : -1;
+      },
       headerAlign: "center",
       align: "center",
     },

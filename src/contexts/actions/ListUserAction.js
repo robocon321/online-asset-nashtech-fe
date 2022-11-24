@@ -55,7 +55,6 @@ export const setUserDetailAction = (id) => async (dispatch) => {
   await axios
     .get(`${API_ENDPOINT}/v1/users/id?id=${id}`)
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: ACTIONS.SET_USER_DETAIL,
         payload: res.data,
