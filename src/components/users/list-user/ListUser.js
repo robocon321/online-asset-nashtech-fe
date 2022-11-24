@@ -147,7 +147,17 @@ function ListUser() {
           </strong>
         );
       },
-      type: "fullName",
+      // type: "fullName",
+      sortComparator: (v1, v2) => {
+        const d1 = v1.split(" ");
+
+        const d2 = v2.split(" ");
+
+        if (d1[0] === d2[0]) {
+          return d1[1] > d2[1] ? -1 : 1;
+        }
+        return d1[0] > d2[0] ? -1 : 1;
+      },
       width: 150,
       flex: 2,
       headerAlign: "center",
@@ -182,7 +192,6 @@ function ListUser() {
       width: 110,
       flex: 2,
       sortComparator: (v1, v2) => {
-        console.log(v1, v2);
         const d1 = v1.split("/");
         const d2 = v2.split("/");
         console.log(d2, d1);
