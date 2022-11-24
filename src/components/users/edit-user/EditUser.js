@@ -150,7 +150,7 @@ const EditUser = (props) => {
             </FormControl>
             <FormControl className={styles["input"]}>
               <FormLabel id="demo-row-radio-buttons-group-label">
-                Role
+                Type
               </FormLabel>
               <Select
                 onChange={changeField}
