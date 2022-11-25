@@ -46,6 +46,7 @@ const Login = (props) => {
               id="username"
               label="Username"
               name="username"
+              inputProps={{maxLength: 50}}
               autoFocus
             />
 
@@ -57,6 +58,7 @@ const Login = (props) => {
               name="password"
               label="Password"
               type="password"
+              inputProps={{maxLength: 50}}
               id="password"
             />
             <Button
