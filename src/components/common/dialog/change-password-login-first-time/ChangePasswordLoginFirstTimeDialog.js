@@ -3,29 +3,20 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   Alert,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControl,
   IconButton,
   InputAdornment,
   InputLabel,
-  Modal,
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { useContext } from "react";
 import { AppContext } from "../../../../contexts/providers/AppProvider";
 
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "white",
-  border: "2px solid white",
-  boxShadow: 24,
-  p: 4,
-};
 
 const ChangePasswordLoginFirstTimeDialog = (props) => {
   const {
@@ -36,16 +27,15 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
   } = useContext(AppContext);
 
   return (
-    <Modal
+    <Dialog
       open={!appState.user.enabled}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
+      keepMounted
+      disableEscapeKeyDown
+      aria-describedby="alert-dialog-slide-login-first-time"
     >
-      <Box sx={modalStyle}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          <b>Change password</b>
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+      <DialogTitle>Change password</DialogTitle>
+      <DialogContent sx={{ pb: 0 }}>
+      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           This is the first time you logged in. You have to change your password
           to continue
           <FormControl
@@ -90,17 +80,21 @@ const ChangePasswordLoginFirstTimeDialog = (props) => {
             <Alert severity="error">{appState.modalLoginFirstTime.error}</Alert>
           )}
         </Typography>
+      </DialogContent>
+        <DialogActions>
         <Typography id="modal-btn" sx={{ mt: 2 }}>
           <Button
+            color="error"
             variant="contained"
             disabled={appState.modalLoginFirstTime.error != null}
             onClick={submit_ModalLoginFirstTime}
           >
-            Submit
+            Save
           </Button>
         </Typography>
-      </Box>
-    </Modal>
+        </DialogActions>
+    </Dialog>
+
   );
 };
 

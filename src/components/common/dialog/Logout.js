@@ -30,6 +30,7 @@ export default function AlertDialogSlide(props) {
       TransitionComponent={Transition}
       keepMounted
       onClose={handleClose}
+      disableEscapeKeyDown
       aria-describedby="alert-dialog-slide-description"
       style={{
         "border-color": "black",
@@ -37,13 +38,7 @@ export default function AlertDialogSlide(props) {
         "border-style": "solid",
       }}
     >
-      <DialogTitle
-        style={{
-          color: "red",
-          "background-color": "#e2e2e2",
-          "font-weight": "bold",
-        }}
-      >
+      <DialogTitle>
         Are you sure?
       </DialogTitle>
       <DialogContent sx={{ mx: "auto", p: 0 }}>
@@ -63,12 +58,8 @@ export default function AlertDialogSlide(props) {
           Log out
         </Button>
         <Button
-          variant="outlined"
-          style={{
-            color: "grey",
-            "border-color": "grey",
-            "text-transform": "inherit"
-          }}
+          variant="contained"
+          color="success"
           onClick={handleClose}
         >
           Cancel
