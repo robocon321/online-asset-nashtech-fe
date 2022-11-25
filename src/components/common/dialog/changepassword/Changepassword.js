@@ -87,16 +87,16 @@ export default function AlertDialogSlide(props) {
   } = useContext(AppContext);
 
   const handleCancel = (event, reason) => {
-    if (reason === "backdropClick") {
-      console.log(reason);
-    } else {
+    // if (reason === "backdropClick") {
+    //   console.log(reason);
+    // } else {
       props.setOpen(false);
       setValues({
         showPassword: false,
         showNewPassword: false,
       });
       cancle_ModalChangePassword();
-    }
+    // }
   };
 
   React.useEffect(() => {
@@ -260,12 +260,14 @@ export default function AlertDialogSlide(props) {
               appState.modalChangePassword.errorNew != null
             }
             onClick={submit_ModalChangePassword}
-            color="neutral"
+            color="error"
             variant="contained"
           >
             Save
           </Button>
-          <Button onClick={handleCancel}>Cancel</Button>
+          <Button color="success" onClick={handleCancel} variant="contained">
+            Cancel
+          </Button>
         </DialogActions>
       </ThemeProvider>
     </Dialog>
