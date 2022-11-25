@@ -46,6 +46,7 @@ const Login = (props) => {
               id="username"
               label="Username"
               name="username"
+              inputProps={{maxLength: 50}}
               autoFocus
             />
 
