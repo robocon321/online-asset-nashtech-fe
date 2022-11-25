@@ -30,8 +30,6 @@ function App() {
               <Route path="edit/:id" element={<EditUserPage />} />
             </Route>
             <Route path="assets" element={<AssetLayout />}>
-<<<<<<< HEAD
-<<<<<<< HEAD
               <Route path="" element={<ListAssetPage />}></Route>
               <Route path="create" element={<CreateAssetPage />} />
             </Route>
@@ -39,19 +37,6 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
             )}
             <Route path="*" element={<Navigate to="/" />} />
-=======
-=======
->>>>>>> 7b1069b5f9852eaaf7c052f9a808ecddac41c5d7
-              <Route path="create" element={<CreateAssetPage />} />
-            </Route>
-            {
-              appState.user == null && <Route path="/login" element={<LoginPage />} />
-            }
-            <Route
-              path="*"
-              element={<Navigate to="/" />}
-            />
->>>>>>> 7b1069b (T1161 Validate fields)
           </Route>
         </Routes>
       );
