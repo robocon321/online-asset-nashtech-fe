@@ -10,7 +10,6 @@ import {
   Popover,
   Radio,
   RadioGroup,
-  Select,
   TextField,
 } from "@mui/material";
 import styles from "./CreateAsset.module.css";
@@ -21,11 +20,25 @@ import Divider from "@mui/material/Divider";
 
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
+
+import { CreateAssetContext } from "../../../contexts/providers/CreateAssetProvider";
 
 const CreateAsset = (props) => {
+  const {
+    createAssetState,
+    changeField,
+    changeNewCategoryField,
+    openNewCategoryField,
+    closeNewCategoryField,
+    addNewCategory,
+    changeCategoryField,
+    submit,
+    navigate
+  } = useContext(CreateAssetContext);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,15 +63,20 @@ const CreateAsset = (props) => {
                 className={styles["input"]}
                 id="name"
                 name="name"
+                onChange={changeField}
                 inputProps={{ maxLength: 50 }}
               />
             </FormControl>
             <FormControl className={styles["input"]}>
               <FormLabel id="label-category">Category</FormLabel>
-              <TextField 
+              <TextField
                 disabled
                 onClick={handleClick}
-                InputProps={{ maxLength: 50, endAdornment: <ArrowDropDownIcon /> }}
+                value={createAssetState.form.categoryName}
+                inputProps={{
+                  maxLength: 50,
+                  endAdornment: <ArrowDropDownIcon />,
+                }}
               />
               <Popover
                 id={id}
@@ -70,31 +88,71 @@ const CreateAsset = (props) => {
                   horizontal: "left",
                 }}
               >
-              <MenuList
-                id="category"
-                name="category"
-              >
-                <MenuItem value={"STAFF"}>STAFF</MenuItem>
-                <MenuItem value={"ADMIN"}>ADMIN</MenuItem>
-              </MenuList>
-              <Divider />
+                <MenuList
+                  id="category"
+                  name="category"
+                  style={{ width: "500px" }}
+                >
+                  {createAssetState.categories.map((item) => (
+                    <MenuItem
+                      key={item.code}
+                      onClick={() => changeCategoryField(item.code)}
+                    >
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+                <Divider />
                 <div className={styles["new-category"]}>
-                  {/* <div className={styles["link-category"]}>Add New Category</div> */}
-                  <TextField
-                    className={styles["input"]}
-                    id="newCategory"
-                    name="newCategory"
-                    InputProps={{ maxLength: 50, endAdornment: "Haha" }}
-                  />
-                  <Button color="success">
-                    <DoneIcon />
-                  </Button>
-                  <Button color="error">
-                    <CloseIcon />
-                  </Button>
-                </div>  
-
-
+                  {createAssetState.newCategory.isShowInput ? (
+                    <div className={styles["wrap-input-new-category"]}>
+                      <div className={styles["input-new-category"]}>
+                        <TextField
+                          className={styles["category-name"]}
+                          id="newCategoryName"
+                          name="name"
+                          onChange={changeNewCategoryField}
+                          value={createAssetState.newCategory.name}
+                          placeholder="Name"
+                          inputProps={{ maxLength: 50 }}
+                        />
+                        <TextField
+                          className={styles["category-code"]}
+                          id="newCategoryCode"
+                          name="code"
+                          value={createAssetState.newCategory.code}
+                          onChange={changeNewCategoryField}
+                          placeholder="Code"
+                          inputProps={{ maxLength: 4 }}
+                        />
+                      </div>
+                      <div className={styles["error"]}>{createAssetState.newCategory.error.name}</div>
+                      <div className={styles["error"]}>{createAssetState.newCategory.error.code}</div>
+                      <div className={styles["btn-new-category"]}>
+                        <Button
+                          color="success"
+                          onClick={addNewCategory}
+                          disabled={
+                            !createAssetState.newCategory
+                              .enableSubmit
+                          }
+                        >
+                          <DoneIcon />
+                        </Button>
+                        <Button color="error" onClick={closeNewCategoryField}>
+                          <CloseIcon />
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className={styles["link-category"]}
+                      onClick={openNewCategoryField}
+                    >
+                      Add New Category
+                    </div>
+                  )}
+                </div>
               </Popover>
             </FormControl>
             <FormControl className={styles["input"]}>
@@ -103,9 +161,10 @@ const CreateAsset = (props) => {
                 className={styles["input"]}
                 id="specification"
                 name="specification"
+                onChange={changeField}
                 multiline
-                maxRows={4}
-                inputProps={{ maxLength: 12 }}
+                rows={3}
+                inputProps={{ maxLength: 150 }}
               />
             </FormControl>
 
@@ -113,12 +172,17 @@ const CreateAsset = (props) => {
               <FormLabel id="label-installedDate">Installed Date</FormLabel>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
+                  value={createAssetState.form.installedDate}
                   renderInput={(params) => {
                     return (
                       <TextField
                         className={styles["input"]}
                         id="installedDate"
                         name="installedDate"
+                        inputProps={{ max: "9999-12-31" }}
+                        onChange={changeField}
+                        onKeyUp={changeField}
+                        value={createAssetState.form.installedDate}
                         type="date"
                       />
                     );
@@ -133,25 +197,31 @@ const CreateAsset = (props) => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 id="state"
                 name="state"
-                defaultValue={true}
+                defaultValue={"AVAILABLE"}
+                onChange={changeField}
               >
                 <FormControlLabel
-                  value={true}
+                  value={"AVAILABLE"}
                   control={<Radio />}
                   label="Available"
                 />
                 <FormControlLabel
-                  value={false}
+                  value={"NOT AVAILABLE"}
                   control={<Radio />}
                   label="Not Available"
                 />
               </RadioGroup>
             </FormControl>
             <div className={styles["btn"]}>
-              <Button variant="contained" color="error">
-                Submit
+              <Button
+                variant="contained"
+                color="error"
+                disabled={!createAssetState.enableSubmit}
+                onClick={submit}
+              >
+                Save
               </Button>
-              <Button variant="contained" color="success">
+              <Button variant="contained" color="success" onClick={() => navigate('/assets')}>
                 Cancel
               </Button>
             </div>
