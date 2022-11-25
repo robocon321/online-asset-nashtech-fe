@@ -5,7 +5,7 @@ const initState = {
   assets: []
 }
 
-const AssetContext = createContext();
+export const AssetContext = createContext();
 
 const AssetProvider = props => {
   const [ assetState, dispatch] = useReducer(AssetReducer, initState);

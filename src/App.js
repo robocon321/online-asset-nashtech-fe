@@ -28,6 +28,9 @@ function App() {
               <Route path="create" element={<CreateUserPage />} />
               <Route path="edit/:id" element={<EditUserPage />} />
             </Route>
+            <Route path="assets" element={<AssetLayout />}>
+              <Route path="create" element={<CreateAssetPage />} />
+            </Route>
             {
               appState.user == null && <Route path="/login" element={<LoginPage />} />
             }
