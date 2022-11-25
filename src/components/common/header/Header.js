@@ -18,7 +18,11 @@ import ChangePassword from "../dialog/changepassword/Changepassword";
 import ChangePasswordLoginFirstTimeDialog from "../dialog/change-password-login-first-time/ChangePasswordLoginFirstTimeDialog";
 import Logout from "../dialog/Logout";
 import { AppContext } from "../../../contexts/providers/AppProvider";
-
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 const drawerWidth = 300;
 
 const AppBar = styled(MuiAppBar, {
@@ -89,32 +93,18 @@ const Header = (props) => {
       <MenuItem onClick={handleClickOpenLogout}>Logout</MenuItem>
     </Menu>
   );
+  const [openNoti, setOpenNoti] = React.useState(false);
 
-  const [openSnack, setOpenSnack] = React.useState(false);
-
-  const handleCloseSnack = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenSnack(false);
+  const handleCloseNoti = (event, reason) => {
+    if (reason === "backdropClick") {
+      console.log(reason);
+    } else setOpenNoti(false);
   };
 
-  const action = (
-    <React.Fragment>
-      <Button color="secondary" size="small" onClick={handleCloseSnack}>
-        OK
-      </Button>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleCloseSnack}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
+  const handleBackdropClick = (event) => {
+    event.stopPropagation();
+    return false;
+  };
 
   return (
     <AppBar
@@ -122,18 +112,28 @@ const Header = (props) => {
       open={true}
       style={{ backgroundColor: "var(--primary_color)" }}
     >
-      <ChangePassword
-        open={open}
-        setOpen={setOpen}
-        setOpenSnack={setOpenSnack}
-      />
-      <Snackbar
-        open={openSnack}
-        autoHideDuration={5000}
-        onClose={handleCloseSnack}
-        message="Your password has been changed successfully"
-        action={action}
-      />
+      <ChangePassword open={open} setOpen={setOpen} setOpenNoti={setOpenNoti} />
+      <Dialog
+        open={openNoti}
+        onClose={handleCloseNoti}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        onBackdropClick={handleBackdropClick}
+        disableEscapeKeyDown
+      >
+        <DialogTitle id="alert-dialog-title">{"Change password"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Your password has been changed successfully
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseNoti} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <ChangePasswordLoginFirstTimeDialog />
       <Logout open={logout} setOpen={setLogout} />
       <Toolbar className={styles["topbar"]}>

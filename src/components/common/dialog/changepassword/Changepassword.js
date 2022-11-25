@@ -105,8 +105,8 @@ export default function AlertDialogSlide(props) {
       appState.status.message == "Successful!"
     ) {
       cancle_ModalChangePassword();
-      props.setOpenSnack(true);
       props.setOpen(false);
+      props.setOpenNoti(true);
     }
   }, [appState.status]);
 
