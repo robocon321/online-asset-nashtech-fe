@@ -58,6 +58,7 @@ const Login = (props) => {
               name="password"
               label="Password"
               type="password"
+              inputProps={{maxLength: 50}}
               id="password"
             />
             <Button
