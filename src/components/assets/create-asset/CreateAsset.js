@@ -93,7 +93,7 @@ const CreateAsset = (props) => {
                   name="category"
                   style={{ width: "500px", maxHeight: "200px", overflow: "auto" }}
                 >
-                  {createAssetState.categories.map((item) => (
+                  {createAssetState.categories && createAssetState.categories.map((item) => (
                     <MenuItem
                       key={item.code}
                       onClick={() => changeCategoryField(item.code)}
