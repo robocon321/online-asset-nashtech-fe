@@ -11,16 +11,8 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.SET_ENABLE_SUBMIT:
       state = { ...state, enableSubmit: payload };
       break;
-    case ACTIONS.SET_FIELD_CATEGORY:
-      const category = state.categories.find((item) => item.code == payload);
-      state = {
-        ...state,
-        form: {
-          ...state.form,
-          categoryName: category.name,
-          categoryCode: category.code,
-        },
-      };
+    case ACTIONS.SET_ASSET:
+      state = { ...state, form: payload};
       break;
   
 
@@ -36,50 +28,6 @@ const reducer = (state, { type, payload }) => {
       break;
 
 
-    case ACTIONS.ADD_NEW_CATEGORY:
-      state = {
-        ...state,
-        categories: [
-          ...state.categories,
-          { id: null, name: payload.name, code: payload.code },
-        ],
-      };
-      break;
-
-
-    case ACTIONS.SET_NEW_CATEGORY_FIELD:
-      state = {
-        ...state,
-        newCategory: { ...state.newCategory, [payload.name]: payload.value },
-      };
-      break;
-    case ACTIONS.ADD_FIELD_NEW_CATEGORY_ERROR:
-      state = {
-        ...state,
-        newCategory: {
-          ...state.newCategory,
-          error: { ...state.newCategory.error, [payload.name]: payload.value }
-        }
-      };
-      break;
-    case ACTIONS.REMOVE_FIELD_NEW_CATEGORY_ERROR:
-      delete state.newCategory.error[payload];
-      state.newCategory.error = {...state.newCategory.error};
-      break;
-    case ACTIONS.RESET_NEW_CATEGORY:
-      state.newCategory = {
-        name: null,
-        code: null,
-    
-        isShowInput: false,
-        enableSubmit: false,
-        error: {}    
-      }
-      break;
-    case ACTIONS.SET_CATEGORIES:
-      state = { ...state, categories: payload};
-      break;
-      
 
     case ACTIONS.SET_LOADING:
       state = { ...state, status: { ...state.status, isLoading: payload } };

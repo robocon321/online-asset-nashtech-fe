@@ -4,25 +4,18 @@ import {
   CardContent,
   FormControl,
   FormControlLabel,
-  FormLabel,
-  MenuItem,
-  MenuList,
-  Popover,
-  Radio,
+  FormLabel, Radio,
   RadioGroup,
-  TextField,
+  TextField
 } from "@mui/material";
-import styles from "./EditAsset.module.css";
-import Title from "../../common/title/Title";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import Divider from "@mui/material/Divider";
+import Title from "../../common/title/Title";
+import styles from "./EditAsset.module.css";
 
-import DoneIcon from "@mui/icons-material/Done";
-import CloseIcon from "@mui/icons-material/Close";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { EditAssetContext } from "../../../contexts/providers/EditAssetProvider";
 
@@ -30,30 +23,14 @@ const EditAsset = (props) => {
   const {
     editAssetState,
     changeField,
-    changeNewCategoryField,
-    openNewCategoryField,
-    closeNewCategoryField,
-    addNewCategory,
-    changeCategoryField,
     submit,
     navigate
   } = useContext(EditAssetContext);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
   return (
     <>
-      <Title title="Create New Asset" />
+      <Title title="Edit Asset" />
       <Card>
         <CardContent>
           <form className={styles["create-asset"]}>
@@ -63,6 +40,7 @@ const EditAsset = (props) => {
                 className={styles["input"]}
                 id="name"
                 name="name"
+                value={editAssetState.form.name}
                 onChange={changeField}
                 inputProps={{ maxLength: 50 }}
               />
@@ -71,89 +49,13 @@ const EditAsset = (props) => {
               <FormLabel id="label-category">Category</FormLabel>
               <TextField
                 disabled
-                onClick={handleClick}
+                variant="filled"
                 value={editAssetState.form.categoryName}
                 inputProps={{
                   maxLength: 50,
                   endAdornment: <ArrowDropDownIcon />,
                 }}
               />
-              <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-              >
-                <MenuList
-                  id="category"
-                  name="category"
-                  style={{ width: "500px", maxHeight: "200px", overflow: "auto" }}
-                >
-                  {editAssetState.categories.map((item) => (
-                    <MenuItem
-                      key={item.code}
-                      onClick={() => changeCategoryField(item.code)}
-                    >
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-                <Divider />
-                <div className={styles["new-category"]}>
-                  {editAssetState.newCategory.isShowInput ? (
-                    <div className={styles["wrap-input-new-category"]}>
-                      <div className={styles["input-new-category"]}>
-                        <TextField
-                          className={styles["category-name"]}
-                          id="newCategoryName"
-                          name="name"
-                          onChange={changeNewCategoryField}
-                          value={editAssetState.newCategory.name}
-                          placeholder="Name"
-                          inputProps={{ maxLength: 50 }}
-                        />
-                        <TextField
-                          className={styles["category-code"]}
-                          id="newCategoryCode"
-                          name="code"
-                          value={editAssetState.newCategory.code}
-                          onChange={changeNewCategoryField}
-                          placeholder="Code"
-                          inputProps={{ maxLength: 4 }}
-                        />
-                      </div>
-                      <div className={styles["error"]}>{editAssetState.newCategory.error.name}</div>
-                      <div className={styles["error"]}>{editAssetState.newCategory.error.code}</div>
-                      <div className={styles["btn-new-category"]}>
-                        <Button
-                          color="success"
-                          onClick={addNewCategory}
-                          disabled={
-                            !editAssetState.newCategory
-                              .enableSubmit
-                          }
-                        >
-                          <DoneIcon />
-                        </Button>
-                        <Button color="error" onClick={closeNewCategoryField}>
-                          <CloseIcon />
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div
-                      className={styles["link-category"]}
-                      onClick={openNewCategoryField}
-                    >
-                      Add New Category
-                    </div>
-                  )}
-                </div>
-              </Popover>
             </FormControl>
             <FormControl className={styles["input"]}>
               <FormLabel id="label-specification">Specification</FormLabel>
@@ -164,6 +66,7 @@ const EditAsset = (props) => {
                 onChange={changeField}
                 multiline
                 rows={3}
+                value={editAssetState.form.specification}
                 inputProps={{ maxLength: 150 }}
               />
             </FormControl>
@@ -197,18 +100,32 @@ const EditAsset = (props) => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 id="state"
                 name="state"
-                defaultValue={"AVAILABLE"}
+                value={editAssetState.form.state}
                 onChange={changeField}
+                inputProps={{
+                  maxLength: 50,
+                  endAdornment: <ArrowDropDownIcon />,
+                }}
               >
                 <FormControlLabel
-                  value={"AVAILABLE"}
+                  value={"Available"}
                   control={<Radio />}
                   label="Available"
                 />
                 <FormControlLabel
-                  value={"NOT AVAILABLE"}
+                  value={"Not Available"}
                   control={<Radio />}
                   label="Not Available"
+                />
+                <FormControlLabel
+                  value={"Waiting for recycling"}
+                  control={<Radio />}
+                  label="Waiting for recycling"
+                />
+                <FormControlLabel
+                  value={"Recycled"}
+                  control={<Radio />}
+                  label="Recycled"
                 />
               </RadioGroup>
             </FormControl>
