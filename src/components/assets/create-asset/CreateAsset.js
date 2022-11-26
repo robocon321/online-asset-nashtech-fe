@@ -197,18 +197,18 @@ const CreateAsset = (props) => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 id="state"
                 name="state"
-                defaultValue={"AVAILABLE"}
+                defaultValue={"Available"}
                 onChange={changeField}
               >
                 <FormControlLabel
-                  value={"AVAILABLE"}
+                  value={"Available"}
                   control={<Radio />}
                   label="Available"
                 />
                 <FormControlLabel
-                  value={"NOT AVAILABLE"}
+                  value={"Not available"}
                   control={<Radio />}
-                  label="Not Available"
+                  label="Not available"
                 />
               </RadioGroup>
             </FormControl>

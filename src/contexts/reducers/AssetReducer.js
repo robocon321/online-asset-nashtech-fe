@@ -20,6 +20,20 @@ const reducer = (state, { type, payload }) => {
         };
         break;
       }
+    case ACTIONS.EDIT_ASSET:
+      const oldAsset = state.assets.find(item => item.id == payload.id);
+      if(oldAsset) {
+        payload.category = oldAsset.category;
+        state = {
+          ...state,
+          assets: [
+            payload,
+            ...state.assets.filter((item) => item.id != payload.id),
+          ],
+        };  
+      }
+      break;
+
     default:
       break;
   }

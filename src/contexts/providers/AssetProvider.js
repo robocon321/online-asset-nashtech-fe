@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
-import { addAssetAction } from "../actions/AssetAction";
+import { addAssetAction, editAssetAction } from "../actions/AssetAction";
 import AssetReducer from '../reducers/AssetReducer';
 
 const initState = {
@@ -20,9 +20,14 @@ const AssetProvider = props => {
     addAssetAction(asset)(dispatch);
   };
 
+  const editAsset = (asset) => {
+    editAssetAction(asset)(dispatch);
+  }
+
   const value = {
     assetState,
     addAsset,
+    editAsset
   }
   return (
     <AssetContext.Provider value={value}>

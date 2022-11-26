@@ -31,7 +31,7 @@ const EditAssetProvider = (props) => {
     EditAssetReducer,
     initState
   );
-  const { addAsset } = useContext(AssetContext);
+  const { editAsset } = useContext(AssetContext);
 
   const navigate = useNavigate();
   let { id } = useParams();
@@ -98,7 +98,7 @@ const EditAssetProvider = (props) => {
 
 
   const submit = () => {
-    submitAction({...editAssetState.form}, navigate, addAsset)(dispatch);
+    submitAction({...editAssetState.form}, navigate, editAsset)(dispatch);
   }
 
   const value = {

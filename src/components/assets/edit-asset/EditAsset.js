@@ -113,9 +113,9 @@ const EditAsset = (props) => {
                   label="Available"
                 />
                 <FormControlLabel
-                  value={"Not Available"}
+                  value={"Not available"}
                   control={<Radio />}
-                  label="Not Available"
+                  label="Not available"
                 />
                 <FormControlLabel
                   value={"Waiting for recycling"}
