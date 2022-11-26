@@ -15,6 +15,7 @@ import Loading from "./components/common/loading/Loading";
 import AssetLayout from "./components/assets/AssetLayout";
 import CreateAssetPage from "./pages/CreateAssetPage";
 import ListAssetPage from "./pages/ListAssetPage";
+import EditAssetPage from "./pages/EditAssetPage";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -31,7 +32,8 @@ function App() {
             </Route>
             <Route path="assets" element={<AssetLayout />}>
               <Route path="" element={<ListAssetPage />}></Route>
-              <Route path="create" element={<CreateAssetPage />} />
+              <Route path="create" element={<CreateAssetPage />} />              
+              <Route path="edit/:id" element={<EditAssetPage />} />
             </Route>
             {appState.user == null && (
               <Route path="/login" element={<LoginPage />} />
