@@ -1,19 +1,22 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   addErrorFieldAction,
   addNewCategoryAction,
   addNewCategoryErrorFieldAction,
+  loadCategoriesAction,
   removeErrorFieldAction,
   removeNewCategoryErrorFieldAction,
   resetNewCategoryAction,
   setEnableSubmitAction,
   setFieldAction,
   setFieldCategoryAction,
+  setLoadingAction,
   setNewCategoryFieldAction,
   submitAction,
 } from "../actions/CreateAssetAction";
 import CreateAssetReducer from "../reducers/CreateAssetReducer";
+import { AssetContext } from "./AssetProvider";
 
 export const CreateAssetContext = createContext();
 
@@ -44,6 +47,7 @@ const CreateAssetProvider = (props) => {
     CreateAssetReducer,
     initState
   );
+  const { addAsset } = useContext(AssetContext);
 
   const navigate = useNavigate();
 
@@ -69,6 +73,16 @@ const CreateAssetProvider = (props) => {
   useEffect(() => {
     console.log(createAssetState);
   }, [createAssetState]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    setLoadingAction(true)(dispatch);
+    await loadCategoriesAction()(dispatch);
+    setLoadingAction(false)(dispatch);
+  }
 
   const changeField = (e) => {
     const { name, value } = e.target;
@@ -204,7 +218,7 @@ const CreateAssetProvider = (props) => {
   };
 
   const submit = () => {
-    submitAction({...createAssetState.form}, navigate, () => {})(dispatch);
+    submitAction({...createAssetState.form}, navigate, addAsset)(dispatch);
   }
 
   const value = {

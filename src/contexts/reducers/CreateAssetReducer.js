@@ -76,8 +76,10 @@ const reducer = (state, { type, payload }) => {
         error: {}    
       }
       break;
-
-
+    case ACTIONS.SET_CATEGORIES:
+      state = { ...state, categories: payload};
+      break;
+      
 
     case ACTIONS.SET_LOADING:
       state = { ...state, status: { ...state.status, isLoading: payload } };
