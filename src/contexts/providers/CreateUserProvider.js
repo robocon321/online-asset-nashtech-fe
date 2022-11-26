@@ -46,7 +46,6 @@ const CreateUserProvider = (props) => {
   }, [createUserState.error]);
 
   const changeField = (e) => {
-    e.preventDefault();
     const { name, value } = e.target;
     setFieldAction(name, value)(dispatch);
     validateField(name, value);

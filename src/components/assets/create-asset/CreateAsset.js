@@ -91,7 +91,7 @@ const CreateAsset = (props) => {
                 <MenuList
                   id="category"
                   name="category"
-                  style={{ width: "500px" }}
+                  style={{ width: "500px", maxHeight: "200px", overflow: "auto" }}
                 >
                   {createAssetState.categories.map((item) => (
                     <MenuItem

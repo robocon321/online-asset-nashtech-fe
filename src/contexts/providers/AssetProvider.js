@@ -1,16 +1,28 @@
-import { createContext, useReducer } from "react"
+import { createContext, useEffect, useReducer } from "react";
+import { addAssetAction } from "../actions/AssetAction";
 import AssetReducer from '../reducers/AssetReducer';
 
 const initState = {
-  assets: []
+  assets: [],
+  categories: []
 }
 
 export const AssetContext = createContext();
 
 const AssetProvider = props => {
   const [ assetState, dispatch] = useReducer(AssetReducer, initState);
+
+  useEffect(() => {
+    console.log(assetState);
+  }, [assetState]);
+
+  const addAsset = (asset) => {
+    addAssetAction(asset)(dispatch);
+  };
+
   const value = {
-    assetState
+    assetState,
+    addAsset,
   }
   return (
     <AssetContext.Provider value={value}>
