@@ -252,7 +252,7 @@ function ListAsset() {
                   textTransform: "none",
                 }}
               >
-                Create new user
+                Create new asset
               </Button>
             </Link>
           </div>
