@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { convertDateByFormat } from "../../utils/DateUtils"
+import { convertDateByFormat, convertDateByFormatEdit } from "../../utils/DateUtils"
 
 export const ACTIONS = {
   SET_FIELD: 'SET_FIELD',
@@ -18,35 +18,28 @@ export const ACTIONS = {
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const loadAssetAction = (id) => async dispatch => {
-  // await axios.get(`${API_ENDPOINT}/v1/assets/${id}`).then(response => {
-    setTimeout(() => {
-      dispatch({
-        type: ACTIONS.SET_ASSET,
-        payload: {
-          id: 33,
-          name: "Souvernir",
-          categoryName: "Category 1",
-          specification: "Description haha",
-          installedDate: "2020-12-01",
-          state: "Available"
-        }
-      })  
-    }, 1000);
-  // }).catch(error => {
-  //   if(error.response == undefined) {
-  //     setStatusAction({
-  //       isLoading: false,
-  //       message: error.message,
-  //       success: false
-  //     })(dispatch)
-  //   } else {
-  //     setStatusAction({
-  //       isLoading: false,
-  //       message: error.response.data,
-  //       success: false
-  //     })(dispatch)
-  //   }
-  // })
+  await axios.get(`${API_ENDPOINT}/v1/assets/${id}`).then(response => {
+    if(response.data.installedDate) response.data.installedDate = convertDateByFormatEdit(response.data.installedDate, "yyyy-MM-dd");
+    dispatch({
+      type: ACTIONS.SET_ASSET,
+      payload: response.data
+    })
+  }).catch(error => {
+    console.log(error);
+    if(error.response == undefined) {
+      setStatusAction({
+        isLoading: false,
+        message: error.message,
+        success: false
+      })(dispatch)
+    } else {
+      setStatusAction({
+        isLoading: false,
+        message: error.response.data,
+        success: false
+      })(dispatch)
+    }
+  })
 }
 
 export const setFieldAction = (name, value) => (dispatch) => {
@@ -106,34 +99,35 @@ export const setSuccesAction = (success) => dispatch => {
 }
 
 
-export const submitAction = (form, navigate, addAssetFunc) => async (dispatch) => {
+export const submitAction = (form, navigate, editAssetFunc) => async (dispatch) => {
   setLoadingAction(true)(dispatch);
 
   form.installedDate = convertDateByFormat(form.installedDate, 'dd/MM/yyyy');
 
-  // await axios.put(`${API_ENDPOINT}/v1/assets/`, form).then(response => {
-  //   setStatusAction({
-  //     isLoading: false,
-  //     message: 'Successful!',
-  //     success: true
-  //   })(dispatch);
-  //   addAssetFunc(response.data);
-  //   navigate('/assets');
-  // }).catch(error => {
-  //   if(error.response == undefined) {
-  //     setStatusAction({
-  //       isLoading: false,
-  //       message: error.message,
-  //       success: false
-  //     })(dispatch)
-  //   } else {
-  //     setStatusAction({
-  //       isLoading: false,
-  //       message: error.response.data,
-  //       success: false
-  //     })(dispatch)
-  //   }
-  // })
+  await axios.put(`${API_ENDPOINT}/v1/assets/`, form).then(response => {
+    console.log(response);
+    setStatusAction({
+      isLoading: false,
+      message: 'Successful!',
+      success: true
+    })(dispatch);
+    editAssetFunc(response.data);
+    navigate('/assets');
+  }).catch(error => {
+    if(error.response == undefined) {
+      setStatusAction({
+        isLoading: false,
+        message: error.message,
+        success: false
+      })(dispatch)
+    } else {
+      setStatusAction({
+        isLoading: false,
+        message: error.response.data,
+        success: false
+      })(dispatch)
+    }
+  })
 
   setLoadingAction(false)(dispatch);
 }

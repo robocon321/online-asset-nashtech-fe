@@ -1,5 +1,6 @@
 export const ACTIONS = {
-  ADD_ASSET: "ADD_ASSET"
+  ADD_ASSET: "ADD_ASSET",
+  EDIT_ASSET: "EDIT_ASSET"
 };
 
 export const addAssetAction = (asset) => (dispatch) => {
@@ -8,3 +9,10 @@ export const addAssetAction = (asset) => (dispatch) => {
     payload: asset,
   });
 };
+
+export const editAssetAction = (asset) => (dispatch) => {
+  dispatch({
+    type: ACTIONS.EDIT_ASSET,
+    payload: asset
+  })
+}
