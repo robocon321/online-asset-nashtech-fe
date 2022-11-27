@@ -12,7 +12,7 @@ import {
   CardContent,
   Alert,
 } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -69,21 +69,26 @@ const CreateUser = (props) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   value={createUserState.form.dob}
+                  inputFormat="DD/MM/YYYY"
+                  onChange={(newValue) => {
+                    const e = {
+                      target: {
+                        name: 'dob',
+                        value: newValue == null ? '' : `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`
+                      }
+                    }
+                    changeField(e);
+                  }}
                   renderInput={(params) => {
                     return (
                       <TextField
-                        className={styles["input"]}
-                        inputProps={{ max: "9999-12-31" }}
-                        value={createUserState.form.dob}
-                        onChange={changeField}
-                        onKeyUp={changeField}
+                        {...params}
                         error={
                           createUserState.error.dob != null || params.error
                         }
                         helperText={createUserState.error.dob}
                         id="dob"
                         name="dob"
-                        type="date"
                       />
                     );
                   }}
@@ -121,22 +126,26 @@ const CreateUser = (props) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   value={createUserState.form.joinedDate}
+                  inputFormat="DD/MM/YYYY"
+                  onChange={(newValue) => {
+                    const e = {
+                      target: {
+                        name: 'joinedDate',
+                        value: newValue == null ? '' : `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`
+                      }
+                    }
+                    changeField(e);
+                  }}
                   renderInput={(params) => {
                     return (
                       <TextField
-                        inputProps={{ max: "9999-12-31" }}
-                        value={createUserState.form.joinedDate}
-                        onChange={changeField}
-                        onKeyUp={changeField}
-                        className={styles["input"]}
+                        {...params}
                         error={
-                          createUserState.error.joinedDate != null ||
-                          params.error
+                          createUserState.error.joinedDate != null || params.error
                         }
                         helperText={createUserState.error.joinedDate}
                         id="joinedDate"
                         name="joinedDate"
-                        type="date"
                       />
                     );
                   }}

@@ -173,17 +173,22 @@ const CreateAsset = (props) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   value={createAssetState.form.installedDate}
+                  inputFormat="DD/MM/YYYY"
+                  onChange={(newValue) => {
+                    const e = {
+                      target: {
+                        name: 'installedDate',
+                        value: newValue == null ? '' : `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`
+                      }
+                    }
+                    changeField(e);
+                  }}
                   renderInput={(params) => {
                     return (
                       <TextField
-                        className={styles["input"]}
+                        {...params}
                         id="installedDate"
                         name="installedDate"
-                        inputProps={{ max: "9999-12-31" }}
-                        onChange={changeField}
-                        onKeyUp={changeField}
-                        value={createAssetState.form.installedDate}
-                        type="date"
                       />
                     );
                   }}
