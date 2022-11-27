@@ -12,7 +12,7 @@ import {
   CardContent,
   Alert,
 } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -82,6 +82,7 @@ const EditUser = (props) => {
                   renderInput={(params) => {
                     return (
                       <TextField
+                        inputProps={{ max: "9999-12-31" }}
                         className={styles["input"]}
                         value={editUserState.form.dob}
                         onChange={changeField}
@@ -131,6 +132,7 @@ const EditUser = (props) => {
                   renderInput={(params) => {
                     return (
                       <TextField
+                        inputProps={{ max: "9999-12-31" }}
                         value={editUserState.form.joinedDate}
                         onChange={changeField}
                         onKeyUp={changeField}
@@ -163,7 +165,17 @@ const EditUser = (props) => {
               </Select>
             </FormControl>
             <div className={styles["btn"]}>
-              <Button variant="contained" color="error" onClick={submit}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={submit}
+                disabled={
+                  editUserState.form.joinedDate == "" ||
+                  editUserState.form.dob == "" ||
+                  editUserState.error.dob ||
+                  editUserState.error.joinedDate
+                }
+              >
                 Save
               </Button>
               <Button

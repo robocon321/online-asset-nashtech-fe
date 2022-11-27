@@ -1,21 +1,14 @@
 import axios from 'axios';
 
-import { convertDateByFormat } from "../../utils/DateUtils"
+import { convertDateByFormat, convertDateByFormatEdit } from "../../utils/DateUtils"
 
 export const ACTIONS = {
   SET_FIELD: 'SET_FIELD',
-  SET_FIELD_CATEGORY: 'SET_FIELD_CATEGORY',
   SET_ENABLE_SUBMIT: 'SET_ENABLE_SUBMIT',
   REMOVE_FIELD_ERROR: 'REMOVE_FIELD_ERROR',
-  ADD_FIELD_ERROR: 'ADD_FIELD_ERROR',
+  ADD_FIELD_ERROR: 'ADD_FIELD_ERROR',  
+  SET_ASSET: 'SET_ASSET',
 
-  SET_CATEGORIES: 'SET_CATEGORIES',
-
-  SET_NEW_CATEGORY_FIELD: 'SET_NEW_CATEGORY_FIELD',
-  ADD_NEW_CATEGORY: 'ADD_NEW_CATEGORY',
-  REMOVE_FIELD_NEW_CATEGORY_ERROR: 'REMOVE_FIELD_NEW_CATEGORY_ERROR',
-  ADD_FIELD_NEW_CATEGORY_ERROR: 'ADD_FIELD_NEW_CATEGORY_ERROR',
-  RESET_NEW_CATEGORY: 'RESET_NEW_CATEGORY',
 
   SET_LOADING: 'SET_LOADING',
   SET_MESSAGE: 'SET_MESSAGE',
@@ -24,13 +17,15 @@ export const ACTIONS = {
 }
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
-export const loadCategoriesAction = () => async (dispatch) => {
-  await axios.get(`${API_ENDPOINT}/v1/categories/`).then(response => {
+export const loadAssetAction = (id) => async dispatch => {
+  await axios.get(`${API_ENDPOINT}/v1/assets/${id}`).then(response => {
+    if(response.data.installedDate) response.data.installedDate = convertDateByFormatEdit(response.data.installedDate, "yyyy-MM-dd");
     dispatch({
-      type: ACTIONS.SET_CATEGORIES,
-      payload: response.data,        
+      type: ACTIONS.SET_ASSET,
+      payload: response.data
     })
   }).catch(error => {
+    console.log(error);
     if(error.response == undefined) {
       setStatusAction({
         isLoading: false,
@@ -44,13 +39,6 @@ export const loadCategoriesAction = () => async (dispatch) => {
         success: false
       })(dispatch)
     }
-  })
-}
-
-export const setFieldCategoryAction = (code) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_FIELD_CATEGORY,
-    payload: code
   })
 }
 
@@ -110,52 +98,20 @@ export const setSuccesAction = (success) => dispatch => {
   })
 }
 
-export const setNewCategoryFieldAction = (name, value) => dispatch => {
-  dispatch({
-    type: ACTIONS.SET_NEW_CATEGORY_FIELD,
-    payload: {name, value}
-  })
-}
 
-export const addNewCategoryAction = (name, code) => dispatch => {
-  dispatch({
-    type: ACTIONS.ADD_NEW_CATEGORY,
-    payload: {name, code}
-  })
-}
-
-export const addNewCategoryErrorFieldAction = (name, value) => dispatch => {
-  dispatch({
-    type: ACTIONS.ADD_FIELD_NEW_CATEGORY_ERROR,
-    payload: {name, value}
-  })
-}
-
-export const removeNewCategoryErrorFieldAction = (name) => dispatch => {
-  dispatch({
-    type: ACTIONS.REMOVE_FIELD_NEW_CATEGORY_ERROR,
-    payload: name
-  })
-}
-
-export const resetNewCategoryAction = () => (dispatch) => {
-  dispatch({
-    type: ACTIONS.RESET_NEW_CATEGORY
-  })
-}
-
-export const submitAction = (form, navigate, addAssetFunc) => async (dispatch) => {
+export const submitAction = (form, navigate, editAssetFunc) => async (dispatch) => {
   setLoadingAction(true)(dispatch);
 
   form.installedDate = convertDateByFormat(form.installedDate, 'dd/MM/yyyy');
 
-  await axios.post(`${API_ENDPOINT}/v1/assets/`, form).then(response => {
+  await axios.put(`${API_ENDPOINT}/v1/assets/`, form).then(response => {
+    console.log(response);
     setStatusAction({
       isLoading: false,
       message: 'Successful!',
       success: true
     })(dispatch);
-    addAssetFunc(response.data);
+    editAssetFunc(response.data);
     navigate('/assets');
   }).catch(error => {
     if(error.response == undefined) {

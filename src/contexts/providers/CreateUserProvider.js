@@ -46,7 +46,6 @@ const CreateUserProvider = (props) => {
   }, [createUserState.error]);
 
   const changeField = (e) => {
-    e.preventDefault();
     const { name, value } = e.target;
     setFieldAction(name, value)(dispatch);
     validateField(name, value);
@@ -131,34 +130,78 @@ const CreateUserProvider = (props) => {
       removeErrorFieldAction("dob")(dispatch);
     }
 
-    validateJoinedDate(createUserState.form.joinedDate);
+    const dob = value;
+    const { joinedDate } = createUserState.form;
+
+    if (dob && joinedDate) {
+      if((isDay(joinedDate, 0) || isDay(joinedDate, 6)) && isGreater(dob, joinedDate)) {
+        addErrorFieldAction(
+          "joinedDate",
+          "Joined date is not later than Date of Birth. Please select a different date. Joined date is Saturday or Sunday. Please select a different date. "
+        )(dispatch);
+        return ;
+      }
+      
+      if(isGreater(dob, joinedDate)) {
+        addErrorFieldAction(
+          "joinedDate",
+          "Joined date is not later than Date of Birth. Please select a different date"
+        )(dispatch);  
+        return ;
+      }
+
+      if((isDay(joinedDate, 0) || isDay(joinedDate, 6))) {
+        addErrorFieldAction(
+          "joinedDate",
+          "Joined date is Saturday or Sunday. Please select a different date"
+        )(dispatch);
+        return ;        
+      }
+
+      removeErrorFieldAction('joinedDate')(dispatch);
+    }
   };
 
   const validateJoinedDate = (value) => {
     const joinedDate = value;
     const { dob } = createUserState.form;
-    const { error } = createUserState;
 
-    if (dob && joinedDate && isGreater(dob, joinedDate)) {
-      addErrorFieldAction(
-        "joinedDate",
-        "Joined date is not later than Date of Birth. Please select a different date"
-      )(dispatch);
-    } else if (joinedDate && (isDay(joinedDate, 0) || isDay(joinedDate, 6))) {
-      if (error.joinedDate == null) {
-        addErrorFieldAction(
-          "joinedDate",
-          "Joined date is Saturday or Sunday. Please select a different date"
-        )(dispatch);
-      } else {
+    if (dob && joinedDate) {
+      if((isDay(joinedDate, 0) || isDay(joinedDate, 6)) && isGreater(dob, joinedDate)) {
         addErrorFieldAction(
           "joinedDate",
           "Joined date is not later than Date of Birth. Please select a different date. Joined date is Saturday or Sunday. Please select a different date. "
         )(dispatch);
+        return ;
       }
+      
+      if(isGreater(dob, joinedDate)) {
+        addErrorFieldAction(
+          "joinedDate",
+          "Joined date is not later than Date of Birth. Please select a different date"
+        )(dispatch);  
+        return ;
+      }
+
+      if((isDay(joinedDate, 0) || isDay(joinedDate, 6))) {
+        addErrorFieldAction(
+          "joinedDate",
+          "Joined date is Saturday or Sunday. Please select a different date"
+        )(dispatch);
+        return ;        
+      }
+
     } else {
-      removeErrorFieldAction("joinedDate")(dispatch);
+      if(isDay(joinedDate, 0) || isDay(joinedDate, 6)) {
+        addErrorFieldAction(
+          "joinedDate",
+          "Joined date is Saturday or Sunday. Please select a different date"
+        )(dispatch);
+
+        return ;
+      }      
     }
+    removeErrorFieldAction('joinedDate')(dispatch);
   };
 
   const isBlankField = () => {

@@ -26,6 +26,9 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.SET_LIST_ASSETS:
       state = { ...state, listAssets: payload };
       break;
+    case ACTIONS.SET_ASSET_CATE:
+      state = { ...state, assetCategory: payload };
+      break;
     case ACTIONS.default:
       break;
   }

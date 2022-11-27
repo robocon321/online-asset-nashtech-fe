@@ -73,6 +73,7 @@ const CreateUser = (props) => {
                     return (
                       <TextField
                         className={styles["input"]}
+                        inputProps={{ max: "9999-12-31" }}
                         value={createUserState.form.dob}
                         onChange={changeField}
                         onKeyUp={changeField}
@@ -123,6 +124,7 @@ const CreateUser = (props) => {
                   renderInput={(params) => {
                     return (
                       <TextField
+                        inputProps={{ max: "9999-12-31" }}
                         value={createUserState.form.joinedDate}
                         onChange={changeField}
                         onKeyUp={changeField}

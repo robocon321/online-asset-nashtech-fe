@@ -26,10 +26,11 @@ import Pagination from "@mui/material/Pagination";
 import Modal from "@mui/material/Modal";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import { useContext } from "react";
-import { ListUserContext } from "../../../contexts/providers/ListUserProvider";
+import { AssetContext } from "../../../contexts/providers/AssetProvider";
 import IconButton from "@mui/material/IconButton";
 import { UserContext } from "../../../contexts/providers/UserProvider";
 import Stack from "@mui/material/Stack";
+import { ListAssetContext } from "../../../contexts/providers/ListAssetProvider";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -103,6 +104,17 @@ function CustomPagination() {
   );
 }
 function ListAsset() {
+  const { assetState } = useContext(AssetContext);
+  const { listAssetState, handleChange, changeState, handleSearch } =
+    useContext(ListAssetContext);
+  const states = [
+    "All",
+    "Assigned",
+    "Available",
+    "Not available",
+    "Waiting",
+    "Recycled",
+  ];
   const columns = [
     {
       field: "code",
@@ -120,7 +132,7 @@ function ListAsset() {
       align: "center",
     },
     {
-      field: "fullName",
+      field: "name",
       renderHeader: () => {
         return (
           <strong style={{ display: "flex" }}>
@@ -128,20 +140,40 @@ function ListAsset() {
           </strong>
         );
       },
-      type: "number",
+      type: "name",
       width: 150,
       flex: 2,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "username",
+      field: "categoryName",
       renderHeader: () => {
         return (
           <strong>
             <h4>Category</h4>
           </strong>
         );
+      },
+      // renderCell: (params) => {
+      //   // console.log(params);
+      //   return <p>{params.row.category.name}</p>;
+      // },
+      sortComparator: (v1, v2) => {
+        // console.log(v1.row.category.name, v2);
+        const d1 = v1.split(" ");
+        const d2 = v2.split(" ");
+        let check;
+        if (!(d1[0] === d2[0])) {
+          if (d1[0] > d2[0]) {
+            return 1;
+          }
+          return -1;
+        }
+        const name1 = d1.join(",");
+        const name2 = d2.join(",");
+        check = name1.localeCompare(name2);
+        return check ? 1 : -1;
       },
       type: "string",
       width: 150,
@@ -150,7 +182,7 @@ function ListAsset() {
       align: "center",
     },
     {
-      field: "joinedDate",
+      field: "state",
       renderHeader: () => {
         return (
           <strong style={{ display: "flex" }}>
@@ -169,17 +201,37 @@ function ListAsset() {
       flex: 2,
       align: "center",
       renderCell: (params) => {
-        return (
-          <div>
-            {/* <Link to={"/users/edit/" + params.id}> */}
-            <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
-            {/* </Link> */}
-            <GridActionsCellItem
-              icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
-              label="Delete"
-            />
-          </div>
-        );
+        // console.log()
+        if (params.row.state === "Assigned") {
+          return (
+            <div>
+              {/* <Link to={"/users/edit/" + params.id}> */}
+              <GridActionsCellItem
+                disabled
+                icon={<EditRoundedIcon />}
+                label="edit"
+              />
+              {/* </Link> */}
+              <GridActionsCellItem
+                disabled
+                icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
+                label="Delete"
+              />
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              {/* <Link to={"/users/edit/" + params.id}> */}
+              <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
+              {/* </Link> */}
+              <GridActionsCellItem
+                icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
+                label="Delete"
+              />
+            </div>
+          );
+        }
       },
     },
   ];
@@ -193,33 +245,84 @@ function ListAsset() {
           justifyContent: "space-between",
         }}
       >
-        <div>
-          {/* <Box>
+        <div
+          style={{
+            // marginBottom: "20px",
+            display: "flex",
+            justifyContent: "space-between",
+            width: "25vw",
+          }}
+        >
+          <div>
+            <Box>
               <FormControl>
-                <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                <InputLabel id="demo-simple-select-label">State</InputLabel>
                 <Select
                   IconComponent={() => <FilterAltIcon />}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   multiple
-                  value={listUserState.userRole}
-                  onChange={handleChange}
-                  renderValue={() => listUserState.userRole.toString()}
-                  sx={{ width: "150px" }}
+                  value={listAssetState.assetState}
+                  onChange={changeState}
+                  renderValue={() => listAssetState.assetState.toString()}
+                  sx={{ width: "160px" }}
                 >
-                  {roles.map((userrole) => {
+                  {states.map((state) => {
+                    // const cateFilter=[]
+                    console.log(state, listAssetState.assetState);
                     return (
-                      <MenuItem key={userrole} value={userrole}>
+                      <MenuItem key={state} value={state}>
                         <Checkbox
-                          checked={listUserState.userRole.indexOf(userrole) > -1}
+                          checked={
+                            listAssetState.assetState.indexOf(state) > -1
+                          }
                         />
-                        <ListItemText primary={userrole} />
+                        <ListItemText primary={state} />
                       </MenuItem>
                     );
                   })}
                 </Select>
               </FormControl>
-            </Box> */}
+            </Box>
+          </div>
+          <div>
+            <Box>
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                <Select
+                  IconComponent={() => <FilterAltIcon />}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  multiple
+                  value={listAssetState.assetCategory}
+                  onChange={handleChange}
+                  renderValue={() => listAssetState.assetCategory.toString()}
+                  sx={{ width: "160px" }}
+                >
+                  <MenuItem value={"All"}>
+                    <Checkbox
+                      checked={listAssetState.assetCategory.indexOf("All") > -1}
+                    />
+                    <ListItemText primary={"All"} />
+                  </MenuItem>
+                  {assetState.categories.map((cate) => {
+                    // const cateFilter=[]
+                    console.log(cate, listAssetState.assetCategory);
+                    return (
+                      <MenuItem key={cate.name} value={cate.name}>
+                        <Checkbox
+                          checked={
+                            listAssetState.assetCategory.indexOf(cate.name) > -1
+                          }
+                        />
+                        <ListItemText primary={cate.name} />
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Box>
+          </div>
         </div>
         <div
           style={{
@@ -237,7 +340,7 @@ function ListAsset() {
               <StyledInputBase
                 style={{ border: "1px solid black", borderRadius: "8px" }}
                 placeholder="Search…"
-                //   onChange={handleSearch}
+                onChange={handleSearch}
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
@@ -261,7 +364,36 @@ function ListAsset() {
 
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={[]}
+          rows={assetState.assets.filter((item) => {
+            console.log(item);
+            if (
+              listAssetState.assetState.length &&
+              listAssetState.assetState[0] !== "All" &&
+              !listAssetState.assetState.includes(item.state)
+            ) {
+              return false;
+            }
+            if (
+              listAssetState.assetCategory.length &&
+              listAssetState.assetCategory[0] !== "All" &&
+              !listAssetState.assetCategory.includes(item.categoryName)
+            ) {
+              return false;
+            }
+            if (
+              !(
+                item.code
+                  .toUpperCase()
+                  .includes(listAssetState.search.toUpperCase()) ||
+                item.categoryName
+                  .toUpperCase()
+                  .includes(listAssetState.search.toUpperCase())
+              )
+            ) {
+              return false;
+            }
+            return true;
+          })}
           columns={columns}
           pageSize={20}
           // onCellClick={handleOnCellClick}

@@ -117,7 +117,6 @@ const Sidebar = (props) => {
       {appState.user.role == "ADMIN" && (
         <ListItem disablePadding sx={{ display: "block" }}>
           <Link to="#" className={path == "report" ? styles["active"] : ""}>
-            {/* className={styles['active']} */}
             <span className={styles["icon"]}>
               <PieChartOutlineIcon />
             </span>
