@@ -13,16 +13,13 @@ const reducer = (state, { type, payload }) => {
         state = {
           ...state,
           assets: [payload, ...state.assets],
-          categories: [
-            payload.category,
-            ...state.categories,
-          ],
+          categories: [payload.category, ...state.categories],
         };
         break;
       }
     case ACTIONS.EDIT_ASSET:
-      const oldAsset = state.assets.find(item => item.id == payload.id);
-      if(oldAsset) {
+      const oldAsset = state.assets.find((item) => item.id == payload.id);
+      if (oldAsset) {
         payload.category = oldAsset.category;
         state = {
           ...state,
@@ -30,10 +27,16 @@ const reducer = (state, { type, payload }) => {
             payload,
             ...state.assets.filter((item) => item.id != payload.id),
           ],
-        };  
+        };
       }
       break;
-
+    case ACTIONS.LIST_ASSET:
+      console.log(payload);
+      state = { ...state, assets: payload };
+      break;
+    case ACTIONS.LIST_CATEGORY:
+      state = { ...state, categories: payload };
+      break;
     default:
       break;
   }

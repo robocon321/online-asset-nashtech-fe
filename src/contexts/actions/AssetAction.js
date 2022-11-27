@@ -1,6 +1,10 @@
+import axios from "axios";
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 export const ACTIONS = {
   ADD_ASSET: "ADD_ASSET",
-  EDIT_ASSET: "EDIT_ASSET"
+  EDIT_ASSET: "EDIT_ASSET",
+  LIST_ASSET: "LIST_ASSET",
+  LIST_CATEGORY: "LIST_CATEGORY",
 };
 
 export const addAssetAction = (asset) => (dispatch) => {
@@ -13,6 +17,27 @@ export const addAssetAction = (asset) => (dispatch) => {
 export const editAssetAction = (asset) => (dispatch) => {
   dispatch({
     type: ACTIONS.EDIT_ASSET,
-    payload: asset
-  })
-}
+    payload: asset,
+  });
+};
+export const categoriesListAction = () => (dispatch) => {
+  axios.get(`${API_ENDPOINT}/v1/categories/`).then((res) => {
+    // console.log(res.data);
+    dispatch({
+      type: ACTIONS.LIST_CATEGORY,
+      payload: res.data,
+    });
+  });
+};
+export const assetListAction = () => (dispatch) => {
+  axios
+    .get(`${API_ENDPOINT}/v1/assets/list`)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: ACTIONS.LIST_ASSET,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err.data));
+};
