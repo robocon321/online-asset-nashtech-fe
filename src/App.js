@@ -16,6 +16,9 @@ import AssetLayout from "./components/assets/AssetLayout";
 import CreateAssetPage from "./pages/CreateAssetPage";
 import ListAssetPage from "./pages/ListAssetPage";
 import EditAssetPage from "./pages/EditAssetPage";
+import AssignmentLayout from "./components/assignments/AssignmentLayout";
+import CreateAssignment from "./components/assignments/create-assignment/CreateAssignment";
+import CreateAssignmentPage from "./pages/CreateAssignmentPage";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -35,6 +38,10 @@ function App() {
               <Route path="create" element={<CreateAssetPage />} />              
               <Route path="edit/:id" element={<EditAssetPage />} />
             </Route>
+            <Route path="assignments" element={<AssignmentLayout />}>
+              <Route path="create" element={<CreateAssignmentPage />} />              
+            </Route>
+
             {appState.user == null && (
               <Route path="/login" element={<LoginPage />} />
             )}

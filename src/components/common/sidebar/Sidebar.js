@@ -94,7 +94,7 @@ const Sidebar = (props) => {
     }
 
     <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='#' className={path == 'assignments' ? styles['active'] : ''}>
+      <Link to='/assignments' className={path == 'assignments' ? styles['active'] : ''}>
         <span className={styles['icon']}><AssignmentIcon /></span>
         <span className={styles['title']}>Manage Assignment</span>
       </Link>
