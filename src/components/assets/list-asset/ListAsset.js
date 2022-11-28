@@ -119,7 +119,7 @@ function ListAsset() {
     "Assigned",
     "Available",
     "Not available",
-    "Waiting",
+    "Waiting for recycling",
     "Recycled",
   ];
 
