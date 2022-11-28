@@ -72,3 +72,44 @@ export const setAssetDetailAction = (id) => async (dispatch) => {
       console.log(err);
     });
 };
+
+export const handleCloseAction = () => (dispatch) => {
+  dispatch({
+    type: ACTIONS.RESET_REMOVE_DIALOG,
+  });
+};
+
+export const setRemoveAssetDialogAction = (removeAssetDialog) => (dispatch) => {
+  dispatch({
+    type: ACTIONS.SET_REMOVE_ASSET_DIALOG,
+    payload: removeAssetDialog,
+  });
+};
+
+export const handleRemoveAction = (id, removeAssetFunc) => (dispatch) => {
+  axios
+    .delete(`${API_ENDPOINT}/v1/assets`, { params: { id: id } })
+    .then((res) => {
+      setFieldRemoveAssetDialogAction("open", false)(dispatch);
+      removeAssetFunc(id);
+    })
+    .catch((err) => {
+      setRemoveAssetDialogAction({
+        title: "Cannot Delete Asset",
+        content: err.response.data.message,
+        hiddenButton: true,
+        assetId: id,
+        open: true,
+      })(dispatch);
+    });
+};
+
+export const setFieldRemoveAssetDialogAction = (name, value) => (dispatch) => {
+  dispatch({
+    type: ACTIONS.SET_FIELD_REMOVE_ASSET_DIALOG,
+    payload: {
+      name,
+      value,
+    },
+  });
+};
