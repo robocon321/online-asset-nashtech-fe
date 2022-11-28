@@ -84,7 +84,7 @@ export const setUserDetailAction = (id) => async (dispatch) => {
     });
 };
 export const setDisbleUserAction = (id) => async (dispatch) => {
-  await axios.delete(`${API_ENDPOINT}/v1/users/${id}`).then((res) => {
+  await axios.delete(`${API_ENDPOINT}/v1/users?id=${id}`).then((res) => {
     dispatch({
       type: ACTIONS.SET_DISABLE_USER,
       payload: res.data,
