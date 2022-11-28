@@ -31,7 +31,7 @@ const ListUserProvider = (props) => {
     const {
       target: { value },
     } = event;
-
+    console.log(value);
     setUserRoleAction(typeof value === "string" ? value.split(",") : value)(
       dispatch
     );

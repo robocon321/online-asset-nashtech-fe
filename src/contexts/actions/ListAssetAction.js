@@ -5,13 +5,15 @@ const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 export const ACTIONS = {
   SET_CHECK: "SET_CHECK",
   SET_CHECK2: "SET_CHECK2",
-  SET_USER_ROLE: "SET_USER_ROLE",
+  SET_ASSET_STATE: "SET_ASSET_STATE",
   SET_OPEN: "SET_OPEN",
   SET_CHECK_ID: "SET_CHECK_ID",
-  SET_LIST_USERS: "SET_LIST_USERS",
-  SET_USER_DETAIL: "SET_USER_DETAIL",
+  // SET_LIST_ASSETS: "SET_LIST_ASSETS",
+  SET_ASSET_DETAIL: "SET_ASSET_DETAIL",
   SET_SEARCH: "SET_SEARCH",
-  SET_LIST_USER: "SET_LIST_USER",
+  SET_ASSET_CATE: "SET_ASSET_CATE",
+  // SET_LIST_CATE: "SET_LIST_CATE",
+  SET_LIST_ASSET_HISTORY: "SET_LIST_ASSET_HISTORY",
 };
 
 export const setCheck1Action = (check) => (dispatch) => {
@@ -20,16 +22,22 @@ export const setCheck1Action = (check) => (dispatch) => {
     payload: check,
   });
 };
+export const setAssetCategories = (assetCategory) => (dispatch) => {
+  dispatch({
+    type: ACTIONS.SET_ASSET_CATE,
+    payload: assetCategory,
+  });
+};
 export const setCheck2Action = (check2) => (dispatch) => {
   dispatch({
     type: ACTIONS.SET_CHECK2,
     payload: check2,
   });
 };
-export const setUserRoleAction = (userRole) => (dispatch) => {
+export const setAssetStateAction = (assetState) => (dispatch) => {
   dispatch({
-    type: ACTIONS.SET_USER_ROLE,
-    payload: userRole,
+    type: ACTIONS.SET_ASSET_STATE,
+    payload: assetState,
   });
 };
 export const setOpenAction = (open) => (dispatch) => {
@@ -51,17 +59,17 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
   });
 };
 
-export const setUserDetailAction = (id) => async (dispatch) => {
-  await axios
-    .get(`${API_ENDPOINT}/v1/users/id?id=${id}`)
-    .then((res) => {
-      console.log(res.data);
-      dispatch({
-        type: ACTIONS.SET_USER_DETAIL,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export const setAssetDetailAction = (id) => async (dispatch) => {
+  // await axios
+  //   .get(`${API_ENDPOINT}/v1/asset/id?id=${id}`)
+  //   .then((res) => {
+  //     console.log(res.data);
+  //     dispatch({
+  //       type: ACTIONS.SET_ASSET_DETAIL,
+  //       payload: res.data,
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 };
