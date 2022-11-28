@@ -25,7 +25,7 @@ const initState = {
     name: null,
     specification: null,
     installedDate: null,
-    state: "AVAILABLE",
+    state: "Available",
     categoryName: null,
     categoryCode: null,
   },
