@@ -48,7 +48,6 @@ const ListAssetProvider = (props) => {
     const {
       target: { value },
     } = event;
-    console.log(value);
 
     setAssetCategories(typeof value === "string" ? value.split(",") : value)(
       dispatch
@@ -59,7 +58,6 @@ const ListAssetProvider = (props) => {
     const {
       target: { value },
     } = event;
-    console.log(value);
 
     setAssetStateAction(typeof value === "string" ? value.split(",") : value)(
       dispatch
