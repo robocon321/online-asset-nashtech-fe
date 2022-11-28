@@ -5,6 +5,7 @@ export const ACTIONS = {
   EDIT_ASSET: "EDIT_ASSET",
   LIST_ASSET: "LIST_ASSET",
   LIST_CATEGORY: "LIST_CATEGORY",
+  // REMOVE_ASSET: "REMOVE_ASSET",
 };
 
 export const addAssetAction = (asset) => (dispatch) => {
@@ -40,4 +41,20 @@ export const assetListAction = () => (dispatch) => {
       });
     })
     .catch((err) => console.log(err.data));
+};
+
+export const removeAssetAction = (id) => (dispatch) => {
+  axios
+    .delete(`${API_ENDPOINT}/v1/assets`, { params: id })
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: ACTIONS.REMOVE_ASSET,
+        payload: res.data
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  console.log("ID: " + id);
 };
