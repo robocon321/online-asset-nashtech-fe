@@ -37,7 +37,6 @@ const ListUserProvider = (props) => {
     const {
       target: { value },
     } = event;
-    console.log(value);
     setUserRoleAction(typeof value === "string" ? value.split(",") : value)(
       dispatch
     );
@@ -45,7 +44,6 @@ const ListUserProvider = (props) => {
   };
 
   useEffect(() => {
-    console.log(listUserState);
   }, [listUserState]);
 
   useEffect(() => {
@@ -70,7 +68,6 @@ const ListUserProvider = (props) => {
   };
   const handleOnCellClickEdit = (params) => {
     setCheckIdAction(params.id)(dispatch);
-    console.log(listUserState.checkId);
   };
   const hanldeClickDelete = (id) => {
     setCheckDeleteAction(id)(dispatch);

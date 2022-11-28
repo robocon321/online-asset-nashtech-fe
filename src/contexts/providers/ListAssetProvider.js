@@ -1,5 +1,6 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   setAssetStateAction,
@@ -8,9 +9,13 @@ import {
   setAssetDetailAction,
   setAssetCategories,
   setSearchAction,
+  handleCloseAction,
+  handleRemoveAction,
+  setFieldRemoveAssetDialogAction,
 } from "../actions/ListAssetAction";
 
 import ListAssetReducer from "../reducers/ListAssetReducer";
+import { AssetContext } from "./AssetProvider";
 
 export const ListAssetContext = createContext();
 
@@ -26,16 +31,23 @@ const initState = {
   listCategory: [],
   assetCategory: [],
   listAssetHistory: [],
+  removeAssetDialog: {
+    title: "Are you sure?",
+    content: "Do you want to delete this asset?",
+    hiddenButton: false,
+    assetId: 0,
+    open: false,
+  },
 };
 
 const ListAssetProvider = (props) => {
+  const { removeAsset } = useContext(AssetContext)
   const [listAssetState, dispatch] = useReducer(ListAssetReducer, initState);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    console.log(value);
 
     setAssetCategories(typeof value === "string" ? value.split(",") : value)(
       dispatch
@@ -46,7 +58,6 @@ const ListAssetProvider = (props) => {
     const {
       target: { value },
     } = event;
-    console.log(value);
 
     setAssetStateAction(typeof value === "string" ? value.split(",") : value)(
       dispatch
@@ -86,11 +97,35 @@ const ListAssetProvider = (props) => {
   useEffect(() => {
     setAssetDetailAction(listAssetState.checkId)(dispatch);
   }, [listAssetState.checkId]);
+
+  const handleClose = () => {
+    handleCloseAction()(dispatch);
+  };
+
+  const handleRemove = () => {
+    handleRemoveAction(
+      listAssetState.removeAssetDialog.assetId,      
+      removeAsset
+    )(dispatch);
+  };
+
+  const openRemoveDialog = () => {
+    setFieldRemoveAssetDialogAction("open", true)(dispatch);
+  };
+
+  const selectRemoveIdDialog = (id) => {
+    setFieldRemoveAssetDialogAction("assetId", id)(dispatch);
+  };
+
   const value = {
     listAssetState,
     handleChange,
     changeState,
     handleSearch,
+    handleClose,
+    handleRemove,
+    openRemoveDialog,
+    selectRemoveIdDialog,
   };
 
   return (

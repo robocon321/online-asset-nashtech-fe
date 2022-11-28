@@ -72,7 +72,7 @@ export const setCheckDeleteAction = (id) => (dispatch) => {
 };
 export const setUserDetailAction = (id) => async (dispatch) => {
   await axios
-    .get(`${API_ENDPOINT}/v1/users/id?id=${id}`)
+    .get(`${API_ENDPOINT}/v1/users/${id}`)
     .then((res) => {
       dispatch({
         type: ACTIONS.SET_USER_DETAIL,

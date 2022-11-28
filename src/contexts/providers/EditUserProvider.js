@@ -41,7 +41,6 @@ const EditUserProvider = (props) => {
   const [editUserState, dispatch] = useReducer(EditUserReducer, initState);
 
   useEffect(() => {
-    console.log(editUserState);
   }, [editUserState]);
 
   useEffect(() => {
@@ -85,7 +84,6 @@ const EditUserProvider = (props) => {
   };
 
   const validateFirstName = (value) => {
-    console.log(value);
     const slug = changeToSlug(value);
 
     if (!Validate.validateFirstName(slug)) {

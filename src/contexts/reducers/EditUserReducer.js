@@ -35,7 +35,6 @@ const reducer = (state, { type, payload }) => {
       break;
     case ACTIONS.SET_USER_DETAIL:
       state = { ...state, form: payload };
-      // console.log(payload.dob);
       break;
     default:
       break;

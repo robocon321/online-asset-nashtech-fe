@@ -83,7 +83,6 @@ const AppProvider = (props) => {
   }, [appState.modalChangePassword.newPassword]);
 
   useEffect(() => {
-    console.log(appState);
   }, [appState]);
 
   const loadUser = () => {

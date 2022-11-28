@@ -4,7 +4,7 @@ const reducer = (state, { type, payload }) => {
   switch (type) {
     case ACTIONS.ADD_ASSET:
       const category = state.categories.find(
-        (item) => item.id == payload.category.id
+        (item) => item.name == payload.categoryName
       );
       if (category) {
         state = { ...state, assets: [payload, ...state.assets] };
@@ -13,7 +13,7 @@ const reducer = (state, { type, payload }) => {
         state = {
           ...state,
           assets: [payload, ...state.assets],
-          categories: [payload.category, ...state.categories],
+          categories: [{id: null, name: payload.categoryName, code: null}, ...state.categories],
         };
         break;
       }
@@ -30,8 +30,10 @@ const reducer = (state, { type, payload }) => {
         };
       }
       break;
+    case ACTIONS.REMOVE_ASSET:
+      state = { ...state, assets: state.assets.filter(item => item.id != payload)};
+      break;
     case ACTIONS.LIST_ASSET:
-      console.log(payload);
       state = { ...state, assets: payload };
       break;
     case ACTIONS.LIST_CATEGORY:
