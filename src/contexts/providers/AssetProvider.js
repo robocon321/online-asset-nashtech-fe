@@ -4,6 +4,7 @@ import {
   editAssetAction,
   assetListAction,
   categoriesListAction,
+  removeAssetAction
 } from "../actions/AssetAction";
 import AssetReducer from "../reducers/AssetReducer";
 
@@ -34,10 +35,16 @@ const AssetProvider = (props) => {
   };
   // const assetList = ()
 
+  // const removeAsset = (e) => {
+  //   removeAssetAction("id", e.target.value)(dispatch);
+  //   console.log("Provider id: " + e.target.value);
+  // }
+
   const value = {
     assetState,
     addAsset,
     editAsset,
+    // removeAsset
   };
   return (
     <AssetContext.Provider value={value}>

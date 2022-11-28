@@ -31,6 +31,7 @@ import IconButton from "@mui/material/IconButton";
 import { UserContext } from "../../../contexts/providers/UserProvider";
 import Stack from "@mui/material/Stack";
 import { ListAssetContext } from "../../../contexts/providers/ListAssetProvider";
+import RemoveAsset from "../../common/dialog/removeAssets/RemoveAsset";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -105,8 +106,14 @@ function CustomPagination() {
 }
 function ListAsset() {
   const { assetState } = useContext(AssetContext);
-  const { listAssetState, handleChange, changeState, handleSearch } =
-    useContext(ListAssetContext);
+  const {
+    listAssetState,
+    handleChange,
+    changeState,
+    handleSearch,
+    openRemoveDialog,
+    selectRemoveIdDialog,
+  } = useContext(ListAssetContext);
   const states = [
     "All",
     "Assigned",
@@ -115,6 +122,11 @@ function ListAsset() {
     "Waiting",
     "Recycled",
   ];
+
+  // Remove asset
+  const [open, setOpen] = React.useState(false);
+  const [id, setId] = React.useState("");
+
   const columns = [
     {
       field: "code",
@@ -228,6 +240,10 @@ function ListAsset() {
               <GridActionsCellItem
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
                 label="Delete"
+                onClick={() => {
+                  openRemoveDialog();
+                  selectRemoveIdDialog(params.row.id);
+                }}
               />
             </div>
           );
@@ -403,6 +419,8 @@ function ListAsset() {
           }}
         ></DataGrid>
       </Box>
+
+      <RemoveAsset open={open} setOpen={setOpen} id={id} />
     </div>
   );
 }
