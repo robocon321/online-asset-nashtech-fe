@@ -63,7 +63,7 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
 
 export const setAssetDetailAction = (id) => async (dispatch) => {
   await axios
-    .get(`${API_ENDPOINT}/v1/assets/detail/${id}`)
+    .get(`${API_ENDPOINT}/v1/assets/${id}`)
     .then((res) => {
       dispatch({
         type: ACTIONS.SET_ASSET_DETAIL,

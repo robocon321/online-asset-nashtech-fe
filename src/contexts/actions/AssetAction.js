@@ -31,7 +31,7 @@ export const categoriesListAction = () => (dispatch) => {
 };
 export const assetListAction = () => (dispatch) => {
   axios
-    .get(`${API_ENDPOINT}/v1/assets/list`)
+    .get(`${API_ENDPOINT}/v1/assets`)
     .then((res) => {
       dispatch({
         type: ACTIONS.LIST_ASSET,

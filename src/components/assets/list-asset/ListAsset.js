@@ -549,10 +549,13 @@ function ListAsset() {
           <Box sx={{ height: 400, width: "100%" }}>
             <DataGrid
               rows={
-                Object.keys(listAssetState.assetDetails).length > 0
+                // []
+
+                listAssetState.assetDetails.assignments
                   ? listAssetState.assetDetails.assignments
                   : []
               }
+              getRowId={(r) => r.assignedTo}
               columns={columnDetail}
               components={{
                 NoRowsOverlay: NoRowsDetailOverlay,
