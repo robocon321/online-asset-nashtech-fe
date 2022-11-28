@@ -25,7 +25,7 @@ export const ACTIONS = {
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const loadCategoriesAction = () => async (dispatch) => {
-  await axios.get(`${API_ENDPOINT}/v1/categories/`).then(response => {
+  await axios.get(`${API_ENDPOINT}/v1/categories`).then(response => {
     dispatch({
       type: ACTIONS.SET_CATEGORIES,
       payload: response.data,        
@@ -149,7 +149,7 @@ export const submitAction = (form, navigate, addAssetFunc) => async (dispatch) =
 
   form.installedDate = convertDateByFormat(form.installedDate, 'dd/MM/yyyy');
 
-  await axios.post(`${API_ENDPOINT}/v1/assets/`, form).then(response => {
+  await axios.post(`${API_ENDPOINT}/v1/assets`, form).then(response => {
     setStatusAction({
       isLoading: false,
       message: 'Successful!',

@@ -92,7 +92,7 @@ export const setRemoveAssetDialogAction = (removeAssetDialog) => (dispatch) => {
 
 export const handleRemoveAction = (id, removeAssetFunc) => (dispatch) => {
   axios
-    .delete(`${API_ENDPOINT}/v1/assets/`, { params: { id: id } })
+    .delete(`${API_ENDPOINT}/v1/assets`, { params: { id: id } })
     .then((res) => {
       setFieldRemoveAssetDialogAction("open", false)(dispatch);
       removeAssetFunc(id);
