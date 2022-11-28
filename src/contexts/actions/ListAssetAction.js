@@ -13,6 +13,7 @@ export const ACTIONS = {
   SET_SEARCH: "SET_SEARCH",
   SET_ASSET_CATE: "SET_ASSET_CATE",
   // SET_LIST_CATE: "SET_LIST_CATE",
+  SET_OPEN_DELETE: "SET_OPEN_DELETE",
   SET_LIST_ASSET_HISTORY: "SET_LIST_ASSET_HISTORY",
 };
 
@@ -46,6 +47,7 @@ export const setOpenAction = (open) => (dispatch) => {
     payload: open,
   });
 };
+
 export const setSearchAction = (search) => (dispatch) => {
   dispatch({
     type: ACTIONS.SET_SEARCH,

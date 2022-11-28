@@ -26,6 +26,15 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.SET_SEARCH:
       state = { ...state, search: payload };
       break;
+    case ACTIONS.SET_CHECK_DELETE_USER:
+      state = { ...state, checkDelete: payload };
+      break;
+    case ACTIONS.SET_OPEN_DELETE:
+      state = { ...state, openDelete: payload };
+      break;
+    case ACTIONS.SET_DISABLE_USER:
+      state = { ...state, messageDelete: payload };
+      break;
     default:
       break;
   }

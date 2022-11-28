@@ -102,6 +102,9 @@ function ListUser() {
     handleClose,
     handleSearch,
     handleOnCellClickEdit,
+    hanldeClickDelete,
+    handleCloseDelete,
+    disableUser,
   } = useContext(ListUserContext);
   const { userState } = useContext(UserContext);
   function CustomPagination() {
@@ -223,13 +226,15 @@ function ListUser() {
       width: 110,
       flex: 2,
       align: "center",
+      disableClickEventBubbling: true,
       renderCell: (params) => {
         return (
-          <div>
+          <div style={{ zIndex: "9" }}>
             <Link to={"/users/edit/" + params.id}>
               <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
             </Link>
             <GridActionsCellItem
+              onClick={() => hanldeClickDelete(params.id)}
               icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
               label="Delete"
             />
@@ -402,6 +407,86 @@ function ListUser() {
             </div>
           </div>
         </Box>
+      </Modal>
+      <Modal
+        keepMounted
+        open={listUserState.openDelete}
+        onClose={handleCloseDelete}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        {listUserState.checkDelete === 1 ? (
+          <Box sx={style} style={{ borderRadius: "20px" }}>
+            <div
+              style={{
+                display: "flex",
+                borderBottom: "1px solid black",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Title title="Can not disable user" />
+              <IconButton onClick={handleCloseDelete}>
+                <DisabledByDefaultOutlinedIcon
+                  sx={{ fontSize: 40 }}
+                  style={{ color: "#e30613" }}
+                />
+              </IconButton>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div>
+                <p>There are valid assignments belonging to the user.</p>
+                <p>Please close all assignments before disabling user.</p>
+              </div>
+            </div>
+          </Box>
+        ) : (
+          <Box sx={style} style={{ borderRadius: "20px" }}>
+            <div
+              style={{
+                display: "flex",
+                borderBottom: "1px solid black",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Title title="Are you sure?" />
+              {/* <IconButton onClick={handleClose}>
+                <DisabledByDefaultOutlinedIcon
+                  sx={{ fontSize: 40 }}
+                  style={{ color: "#e30613" }}
+                />
+              </IconButton> */}
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div>
+                <p>Do you want to disable this user?</p>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => disableUser(listUserState.checkId)}
+                    style={{ fontSize: "15px" }}
+                  >
+                    Disable
+                  </Button>
+                  <Button
+                    onClick={handleCloseDelete}
+                    variant="contained"
+                    color="success"
+                    style={{ marginRight: "100px", fontSize: "15px" }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Box>
+        )}
       </Modal>
     </div>
   );

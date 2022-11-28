@@ -8,6 +8,9 @@ import {
   setCheckIdAction,
   setUserDetailAction,
   setSearchAction,
+  setCheckDeleteAction,
+  setOpenDeleteAction,
+  setDisbleUserAction,
 } from "../actions/ListUserAction";
 import ListUserReducer from "../reducers/ListUserReducer";
 
@@ -22,6 +25,9 @@ const initState = {
   listUser: [],
   userDetail: [],
   search: "",
+  checkDelete: "",
+  openDelete: false,
+  messageDelete: "",
 };
 
 const ListUserProvider = (props) => {
@@ -58,7 +64,7 @@ const ListUserProvider = (props) => {
     setUserDetailAction(listUserState.checkId)(dispatch);
   }, [listUserState.checkId]);
 
-  const handleOnCellClick = (params) => {
+  const handleOnCellClick = (params, event, details) => {
     setCheckIdAction(params.id)(dispatch);
     setOpenAction(true)(dispatch);
   };
@@ -66,6 +72,21 @@ const ListUserProvider = (props) => {
     setCheckIdAction(params.id)(dispatch);
     console.log(listUserState.checkId);
   };
+  const hanldeClickDelete = (id) => {
+    setCheckDeleteAction(id)(dispatch);
+    setOpenDeleteAction(true)(dispatch);
+  };
+  const handleCloseDelete = () => {
+    setOpenDeleteAction(false)(dispatch);
+  };
+  const disableUser = (id) => {
+    setDisbleUserAction(id)(dispatch);
+    setOpenDeleteAction(false)(dispatch);
+    console.log(listUserState);
+  };
+  useEffect(() => {
+    setOpenAction(false)(dispatch);
+  }, [listUserState.openDelete]);
   const handleSearch = (e) => {
     setSearchAction(e.target.value.toUpperCase())(dispatch);
   };
@@ -74,10 +95,6 @@ const ListUserProvider = (props) => {
     setOpenAction(false)(dispatch);
   };
 
-  // useEffect(() =>{
-  //   setSearchAction(listUserState.search)(dispatch);
-  // },[listUserState.search])
-
   const value = {
     listUserState,
     handleChange,
@@ -85,6 +102,9 @@ const ListUserProvider = (props) => {
     handleClose,
     handleSearch,
     handleOnCellClickEdit,
+    hanldeClickDelete,
+    handleCloseDelete,
+    disableUser,
   };
 
   return (

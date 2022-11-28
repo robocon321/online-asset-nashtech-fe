@@ -53,6 +53,7 @@ const ListAssetProvider = (props) => {
     );
     setCheck1Action(!listAssetState.check)(dispatch);
   };
+
   useEffect(() => {
     setAssetStateAction(["Assigned", "Available", "Not available"])(dispatch);
   }, []);
