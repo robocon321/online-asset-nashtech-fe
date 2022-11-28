@@ -35,6 +35,7 @@ function App() {
               <Route path="create" element={<CreateAssetPage />} />              
               <Route path="edit/:id" element={<EditAssetPage />} />
             </Route>
+
             {appState.user == null && (
               <Route path="/login" element={<LoginPage />} />
             )}

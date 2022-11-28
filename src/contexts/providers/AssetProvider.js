@@ -4,6 +4,7 @@ import {
   editAssetAction,
   assetListAction,
   categoriesListAction,
+  removeAssetAction
 } from "../actions/AssetAction";
 import AssetReducer from "../reducers/AssetReducer";
 
@@ -18,7 +19,6 @@ const AssetProvider = (props) => {
   const [assetState, dispatch] = useReducer(AssetReducer, initState);
 
   useEffect(() => {
-    console.log(assetState);
   }, [assetState]);
   useEffect(() => {
     assetListAction()(dispatch);
@@ -32,12 +32,16 @@ const AssetProvider = (props) => {
   const editAsset = (asset) => {
     editAssetAction(asset)(dispatch);
   };
-  // const assetList = ()
+
+  const removeAsset = (id) => {
+    removeAssetAction(id)(dispatch);
+  }
 
   const value = {
     assetState,
     addAsset,
     editAsset,
+    removeAsset
   };
   return (
     <AssetContext.Provider value={value}>

@@ -46,7 +46,6 @@ const EditAssetProvider = (props) => {
 
 
   useEffect(() => {
-    console.log(editAssetState);
   }, [editAssetState]);
 
   useEffect(() => {
@@ -63,13 +62,34 @@ const EditAssetProvider = (props) => {
     const { name, value } = e.target;
     if(name == 'state' && editAssetState.form.state == 'Assigned') return ;
     setFieldAction(name, value)(dispatch);
-    validateField(name, value);
+    validate(name, value);
   };
 
-  const validateField = (name, value) => {
+  const validate = (name, value) => {
+    switch(name) {
+      case 'installedDate':
+        validateInstalledDate(value);
+        break;
+      default:
+        validateDefault(name, value);
+        break;
+    }
+  };
+
+  const validateInstalledDate = (value) => {
+    const installedDate = new Date(value);
+    const currentDate = new Date();
+    if(installedDate > currentDate) {
+      addErrorFieldAction('installedDate', 'Select only current or past date for Installed Date')(dispatch);
+    } else {
+      removeErrorFieldAction('installedDate')(dispatch);
+    }
+  }
+
+  const validateDefault = (name, value) => {
     if (value == null || value.trim() == "") addErrorFieldAction(name, `Field ${name} is not blank`)(dispatch);
     else removeErrorFieldAction(name)(dispatch);
-  };
+  }
 
 
   const isBlankField = () => {

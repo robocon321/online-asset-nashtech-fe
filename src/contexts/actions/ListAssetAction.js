@@ -63,8 +63,6 @@ export const setAssetDetailAction = (id) => async (dispatch) => {
   await axios
     .get(`${API_ENDPOINT}/v1/assets/detail/${id}`)
     .then((res) => {
-      console.log("hello");
-      console.log(res.data);
       dispatch({
         type: ACTIONS.SET_ASSET_DETAIL,
         payload: res.data,

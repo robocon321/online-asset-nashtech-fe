@@ -25,7 +25,6 @@ export const loadAssetAction = (id) => async dispatch => {
       payload: response.data
     })
   }).catch(error => {
-    console.log(error);
     if(error.response == undefined) {
       setStatusAction({
         isLoading: false,
@@ -104,8 +103,7 @@ export const submitAction = (form, navigate, editAssetFunc) => async (dispatch) 
 
   form.installedDate = convertDateByFormat(form.installedDate, 'dd/MM/yyyy');
 
-  await axios.put(`${API_ENDPOINT}/v1/assets/`, form).then(response => {
-    console.log(response);
+  await axios.put(`${API_ENDPOINT}/v1/assets`, form).then(response => {
     setStatusAction({
       isLoading: false,
       message: 'Successful!',

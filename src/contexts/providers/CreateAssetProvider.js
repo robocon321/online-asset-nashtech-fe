@@ -25,7 +25,7 @@ const initState = {
     name: null,
     specification: null,
     installedDate: null,
-    state: "AVAILABLE",
+    state: "Available",
     categoryName: null,
     categoryCode: null,
   },
@@ -71,7 +71,6 @@ const CreateAssetProvider = (props) => {
   }, [createAssetState.newCategory.error]);
 
   useEffect(() => {
-    console.log(createAssetState);
   }, [createAssetState]);
 
   useEffect(() => {
@@ -87,13 +86,34 @@ const CreateAssetProvider = (props) => {
   const changeField = (e) => {
     const { name, value } = e.target;
     setFieldAction(name, value)(dispatch);
-    validateField(name, value);
+    validate(name, value);
   };
 
-  const validateField = (name, value) => {
+  const validate = (name, value) => {
+    switch(name) {
+      case 'installedDate':
+        validateInstalledDate(value);
+        break;
+      default:
+        validateDefault(name, value);
+        break;
+    }
+  };
+
+  const validateInstalledDate = (value) => {
+    const installedDate = new Date(value);
+    const currentDate = new Date();
+    if(installedDate > currentDate) {
+      addErrorFieldAction('installedDate', 'Select only current or past date for Installed Date')(dispatch);
+    } else {
+      removeErrorFieldAction('installedDate')(dispatch);
+    }
+  }
+
+  const validateDefault = (name, value) => {
     if (value == null || value.trim() == "") addErrorFieldAction(name, `Field ${name} is not blank`)(dispatch);
     else removeErrorFieldAction(name)(dispatch);
-  };
+  }
 
   const changeCategoryField = (code) => {
     if (code == null || code.trim() == "") addErrorFieldAction('code', `Field category is not blank`)(dispatch);

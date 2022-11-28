@@ -5,6 +5,7 @@ export const ACTIONS = {
   EDIT_ASSET: "EDIT_ASSET",
   LIST_ASSET: "LIST_ASSET",
   LIST_CATEGORY: "LIST_CATEGORY",
+  REMOVE_ASSET: "REMOVE_ASSET"
 };
 
 export const addAssetAction = (asset) => (dispatch) => {
@@ -21,8 +22,7 @@ export const editAssetAction = (asset) => (dispatch) => {
   });
 };
 export const categoriesListAction = () => (dispatch) => {
-  axios.get(`${API_ENDPOINT}/v1/categories/`).then((res) => {
-    // console.log(res.data);
+  axios.get(`${API_ENDPOINT}/v1/categories`).then((res) => {
     dispatch({
       type: ACTIONS.LIST_CATEGORY,
       payload: res.data,
@@ -31,13 +31,19 @@ export const categoriesListAction = () => (dispatch) => {
 };
 export const assetListAction = () => (dispatch) => {
   axios
-    .get(`${API_ENDPOINT}/v1/assets/list`)
+    .get(`${API_ENDPOINT}/v1/assets`)
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: ACTIONS.LIST_ASSET,
         payload: res.data,
       });
     })
     .catch((err) => console.log(err.data));
+};
+
+export const removeAssetAction = (id) => (dispatch) => {
+  dispatch({
+    type: ACTIONS.REMOVE_ASSET,
+    payload: id
+  })
 };

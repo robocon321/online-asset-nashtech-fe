@@ -92,6 +92,11 @@ const EditAsset = (props) => {
                         {...params}
                         id="installedDate"
                         name="installedDate"
+                        error={
+                          editAssetState.error.installedDate != null || params.error
+                        }
+                        helperText={editAssetState.error.installedDate}
+
                       />
                     );
                   }}

@@ -31,6 +31,7 @@ import IconButton from "@mui/material/IconButton";
 import { UserContext } from "../../../contexts/providers/UserProvider";
 import Stack from "@mui/material/Stack";
 import { ListAssetContext } from "../../../contexts/providers/ListAssetProvider";
+import RemoveAsset from "../../common/dialog/removeAssets/RemoveAsset";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -120,13 +121,15 @@ function ListAsset() {
     handleSearch,
     handleClose,
     handleOnCellClick,
+    openRemoveDialog,
+    selectRemoveIdDialog,
   } = useContext(ListAssetContext);
   const states = [
     "All",
     "Assigned",
     "Available",
     "Not available",
-    "Waiting",
+    "Waiting for recycling",
     "Recycled",
   ];
 
@@ -207,6 +210,9 @@ function ListAsset() {
       align: "center",
     },
   ];
+  // Remove asset
+  const [open, setOpen] = React.useState(false);
+  const [id, setId] = React.useState("");
 
   const columns = [
     {
@@ -248,12 +254,7 @@ function ListAsset() {
           </strong>
         );
       },
-      // renderCell: (params) => {
-      //   // console.log(params);
-      //   return <p>{params.row.category.name}</p>;
-      // },
       sortComparator: (v1, v2) => {
-        // console.log(v1.row.category.name, v2);
         const d1 = v1.split(" ");
         const d2 = v2.split(" ");
         let check;
@@ -294,17 +295,16 @@ function ListAsset() {
       flex: 2,
       align: "center",
       renderCell: (params) => {
-        // console.log()
         if (params.row.state === "Assigned") {
           return (
             <div>
-              {/* <Link to={"/users/edit/" + params.id}> */}
-              <GridActionsCellItem
-                disabled
-                icon={<EditRoundedIcon />}
-                label="edit"
-              />
-              {/* </Link> */}
+              <Link to={"/assets/edit/" + params.id}>
+                <GridActionsCellItem
+                  disabled
+                  icon={<EditRoundedIcon />}
+                  label="edit"
+                />
+              </Link>
               <GridActionsCellItem
                 disabled
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
@@ -315,12 +315,16 @@ function ListAsset() {
         } else {
           return (
             <div>
-              {/* <Link to={"/users/edit/" + params.id}> */}
-              <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
-              {/* </Link> */}
+              <Link to={"/assets/edit/" + params.id}>
+                <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
+              </Link>
               <GridActionsCellItem
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
                 label="Delete"
+                onClick={() => {
+                  openRemoveDialog();
+                  selectRemoveIdDialog(params.row.id);
+                }}
               />
             </div>
           );
@@ -362,7 +366,6 @@ function ListAsset() {
                 >
                   {states.map((state) => {
                     // const cateFilter=[]
-                    console.log(state, listAssetState.assetState);
                     return (
                       <MenuItem key={state} value={state}>
                         <Checkbox
@@ -399,8 +402,6 @@ function ListAsset() {
                     <ListItemText primary={"All"} />
                   </MenuItem>
                   {assetState.categories.map((cate) => {
-                    // const cateFilter=[]
-                    console.log(cate, listAssetState.assetCategory);
                     return (
                       <MenuItem key={cate.name} value={cate.name}>
                         <Checkbox
@@ -458,7 +459,6 @@ function ListAsset() {
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={assetState.assets.filter((item) => {
-            console.log(item);
             if (
               listAssetState.assetState.length &&
               listAssetState.assetState[0] !== "All" &&
@@ -562,6 +562,7 @@ function ListAsset() {
           </Box>
         </Box>
       </Modal>
+      <RemoveAsset open={open} setOpen={setOpen} id={id} />
     </div>
   );
 }
