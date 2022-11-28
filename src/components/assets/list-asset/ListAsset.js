@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
@@ -55,6 +55,14 @@ function NoRowsOverlay() {
     </Stack>
   );
 }
+function NoRowsDetailOverlay() {
+  return (
+    <Stack height="100%" alignItems="center" justifyContent="center">
+      Empty
+    </Stack>
+  );
+}
+
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
@@ -105,8 +113,14 @@ function CustomPagination() {
 }
 function ListAsset() {
   const { assetState } = useContext(AssetContext);
-  const { listAssetState, handleChange, changeState, handleSearch } =
-    useContext(ListAssetContext);
+  const {
+    listAssetState,
+    handleChange,
+    changeState,
+    handleSearch,
+    handleClose,
+    handleOnCellClick,
+  } = useContext(ListAssetContext);
   const states = [
     "All",
     "Assigned",
@@ -115,6 +129,85 @@ function ListAsset() {
     "Waiting",
     "Recycled",
   ];
+
+  // let [assignments, setAssignments] = useState([]);
+  // useEffect(() => {
+  //   if (listAssetState.open == true)
+  //     setAssignments(
+  //       listAssetState.assetDetails
+  //         ? listAssetState.assetDetails.assignments
+  //         : []
+  //     );
+  //   else setAssignments([]);
+  // }, [listAssetState.open]);
+
+  // useEffect(() => {
+  //   console.log(assignments);
+  // }, [assignments]);
+
+  const columnDetail = [
+    {
+      field: "assignedDate",
+      renderHeader: () => {
+        return (
+          <strong style={{ display: "flex" }}>
+            <h4>Date</h4>
+          </strong>
+        );
+      },
+      type: "code",
+      width: 90,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "assignedTo",
+      renderHeader: () => {
+        return (
+          <strong style={{ display: "flex" }}>
+            <h4>Assigned to</h4>
+          </strong>
+        );
+      },
+      type: "code",
+      width: 90,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "assignedBy",
+      renderHeader: () => {
+        return (
+          <strong style={{ display: "flex" }}>
+            <h4>Assigned by</h4>
+          </strong>
+        );
+      },
+      type: "code",
+      width: 90,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "returnDate",
+      renderHeader: () => {
+        return (
+          <strong style={{ display: "flex" }}>
+            <h4>Returned Date</h4>
+          </strong>
+        );
+      },
+      type: "code",
+      width: 90,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+    },
+  ];
+
   const columns = [
     {
       field: "code",
@@ -396,13 +489,79 @@ function ListAsset() {
           })}
           columns={columns}
           pageSize={20}
-          // onCellClick={handleOnCellClick}
+          onCellClick={handleOnCellClick}
           components={{
             Pagination: CustomPagination,
             NoRowsOverlay,
           }}
         ></DataGrid>
       </Box>
+
+      <Modal
+        keepMounted
+        open={listAssetState.open}
+        onClose={handleClose}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style} style={{ borderRadius: "20px" }}>
+          <div
+            style={{
+              display: "flex",
+              borderBottom: "1px solid black",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title title="Detailed User Information" />
+            <IconButton onClick={handleClose}>
+              <DisabledByDefaultOutlinedIcon
+                sx={{ fontSize: 40 }}
+                style={{ color: "#e30613" }}
+              />
+            </IconButton>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <p>Asset Code</p>
+              <p>Asset Name</p>
+              <p>Category</p>
+              <p>Installed Date </p>
+              <p>State </p>
+              <p>Location </p>
+              <p>Specification</p>
+            </div>
+            <div>
+              <p> {listAssetState.assetDetails.code}</p>
+              <p> {listAssetState.assetDetails.name}</p>
+              <p> {listAssetState.assetDetails.categoryName}</p>
+              <p>
+                {listAssetState.assetDetails.installedDate
+                  ? listAssetState.assetDetails.installedDate
+                  : "N/A"}
+              </p>
+              <p> {listAssetState.assetDetails.state}</p>
+              <p> {listAssetState.assetDetails.location}</p>
+              <p> {listAssetState.assetDetails.specification}</p>
+            </div>
+          </div>
+          <Box sx={{ height: 400, width: "100%" }}>
+            <DataGrid
+              rows={
+                Object.keys(listAssetState.assetDetails).length > 0
+                  ? listAssetState.assetDetails.assignments
+                  : []
+              }
+              columns={columnDetail}
+              components={{
+                NoRowsOverlay: NoRowsDetailOverlay,
+              }}
+              hideFooter
+            ></DataGrid>
+          </Box>
+        </Box>
+      </Modal>
     </div>
   );
 }

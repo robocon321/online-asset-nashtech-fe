@@ -8,6 +8,8 @@ import {
   setAssetDetailAction,
   setAssetCategories,
   setSearchAction,
+  setOpenAction,
+  setCheckIdAction,
 } from "../actions/ListAssetAction";
 
 import ListAssetReducer from "../reducers/ListAssetReducer";
@@ -21,7 +23,7 @@ const initState = {
   open: false,
   checkId: "",
   listAssets: [],
-  assetDetails: [],
+  assetDetails: {},
   search: "",
   listCategory: [],
   assetCategory: [],
@@ -30,6 +32,19 @@ const initState = {
 
 const ListAssetProvider = (props) => {
   const [listAssetState, dispatch] = useReducer(ListAssetReducer, initState);
+
+  useEffect(() => {
+    console.log(1, listAssetState);
+  }, [listAssetState]);
+
+  const handleClose = () => {
+    setOpenAction(false)(dispatch);
+  };
+
+  const handleOnCellClick = (params) => {
+    setCheckIdAction(params.id)(dispatch);
+    setOpenAction(true)(dispatch);
+  };
 
   const handleChange = (event) => {
     const {
@@ -53,9 +68,11 @@ const ListAssetProvider = (props) => {
     );
     setCheck1Action(!listAssetState.check)(dispatch);
   };
+
   useEffect(() => {
     setAssetStateAction(["Assigned", "Available", "Not available"])(dispatch);
   }, []);
+
   useEffect(() => {
     if (
       listAssetState.assetState[listAssetState.assetState.length - 1] === "All"
@@ -67,6 +84,7 @@ const ListAssetProvider = (props) => {
       setCheck2Action(!listAssetState.check2)(dispatch);
     }
   }, [listAssetState.check]);
+
   useEffect(() => {
     if (
       listAssetState.assetCategory[listAssetState.assetCategory.length - 1] ===
@@ -79,17 +97,22 @@ const ListAssetProvider = (props) => {
       setCheck2Action(!listAssetState.check2)(dispatch);
     }
   }, [listAssetState.check]);
+
   const handleSearch = (e) => {
     setSearchAction(e.target.value.toUpperCase())(dispatch);
   };
+
   useEffect(() => {
     setAssetDetailAction(listAssetState.checkId)(dispatch);
   }, [listAssetState.checkId]);
+
   const value = {
     listAssetState,
     handleChange,
     changeState,
     handleSearch,
+    handleOnCellClick,
+    handleClose,
   };
 
   return (
