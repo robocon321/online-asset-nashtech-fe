@@ -9,6 +9,8 @@ import {
   setAssetDetailAction,
   setAssetCategories,
   setSearchAction,
+  setOpenAction,
+  setCheckIdAction,
   handleCloseAction,
   handleRemoveAction,
   setFieldRemoveAssetDialogAction,
@@ -26,7 +28,7 @@ const initState = {
   open: false,
   checkId: "",
   listAssets: [],
-  assetDetails: [],
+  assetDetails: {},
   search: "",
   listCategory: [],
   assetCategory: [],
@@ -41,8 +43,21 @@ const initState = {
 };
 
 const ListAssetProvider = (props) => {
-  const { removeAsset } = useContext(AssetContext)
+  const { removeAsset } = useContext(AssetContext);
   const [listAssetState, dispatch] = useReducer(ListAssetReducer, initState);
+
+  useEffect(() => {
+    console.log(1, listAssetState);
+  }, [listAssetState]);
+
+  const handleClose = () => {
+    setOpenAction(false)(dispatch);
+  };
+
+  const handleOnCellClick = (params) => {
+    setCheckIdAction(params.id)(dispatch);
+    setOpenAction(true)(dispatch);
+  };
 
   const handleChange = (event) => {
     const {
@@ -68,6 +83,7 @@ const ListAssetProvider = (props) => {
   useEffect(() => {
     setAssetStateAction(["Assigned", "Available", "Not available"])(dispatch);
   }, []);
+
   useEffect(() => {
     if (
       listAssetState.assetState[listAssetState.assetState.length - 1] === "All"
@@ -79,6 +95,7 @@ const ListAssetProvider = (props) => {
       setCheck2Action(!listAssetState.check2)(dispatch);
     }
   }, [listAssetState.check]);
+
   useEffect(() => {
     if (
       listAssetState.assetCategory[listAssetState.assetCategory.length - 1] ===
@@ -91,20 +108,18 @@ const ListAssetProvider = (props) => {
       setCheck2Action(!listAssetState.check2)(dispatch);
     }
   }, [listAssetState.check]);
+
   const handleSearch = (e) => {
     setSearchAction(e.target.value.toUpperCase())(dispatch);
   };
+
   useEffect(() => {
     setAssetDetailAction(listAssetState.checkId)(dispatch);
   }, [listAssetState.checkId]);
 
-  const handleClose = () => {
-    handleCloseAction()(dispatch);
-  };
-
   const handleRemove = () => {
     handleRemoveAction(
-      listAssetState.removeAssetDialog.assetId,      
+      listAssetState.removeAssetDialog.assetId,
       removeAsset
     )(dispatch);
   };
@@ -122,6 +137,7 @@ const ListAssetProvider = (props) => {
     handleChange,
     changeState,
     handleSearch,
+    handleOnCellClick,
     handleClose,
     handleRemove,
     openRemoveDialog,
