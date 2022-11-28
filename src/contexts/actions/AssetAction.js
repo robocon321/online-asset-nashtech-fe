@@ -5,7 +5,7 @@ export const ACTIONS = {
   EDIT_ASSET: "EDIT_ASSET",
   LIST_ASSET: "LIST_ASSET",
   LIST_CATEGORY: "LIST_CATEGORY",
-  REMOVE_ASSET: "REMOVE_ASSET"
+  REMOVE_ASSET: "REMOVE_ASSET",
 };
 
 export const addAssetAction = (asset) => (dispatch) => {
@@ -31,7 +31,7 @@ export const categoriesListAction = () => (dispatch) => {
 };
 export const assetListAction = () => (dispatch) => {
   axios
-    .get(`${API_ENDPOINT}/v1/assets`)
+    .get(`${API_ENDPOINT}/v1/assets/list`)
     .then((res) => {
       dispatch({
         type: ACTIONS.LIST_ASSET,
@@ -44,6 +44,6 @@ export const assetListAction = () => (dispatch) => {
 export const removeAssetAction = (id) => (dispatch) => {
   dispatch({
     type: ACTIONS.REMOVE_ASSET,
-    payload: id
-  })
+    payload: id,
+  });
 };
