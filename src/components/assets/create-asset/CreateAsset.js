@@ -189,6 +189,11 @@ const CreateAsset = (props) => {
                         {...params}
                         id="installedDate"
                         name="installedDate"
+                        error={
+                          createAssetState.error.installedDate != null || params.error
+                        }
+                        helperText={createAssetState.error.installedDate}
+
                       />
                     );
                   }}

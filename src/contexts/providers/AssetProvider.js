@@ -33,18 +33,16 @@ const AssetProvider = (props) => {
   const editAsset = (asset) => {
     editAssetAction(asset)(dispatch);
   };
-  // const assetList = ()
 
-  // const removeAsset = (e) => {
-  //   removeAssetAction("id", e.target.value)(dispatch);
-  //   console.log("Provider id: " + e.target.value);
-  // }
+  const removeAsset = (id) => {
+    removeAssetAction(id)(dispatch);
+  }
 
   const value = {
     assetState,
     addAsset,
     editAsset,
-    // removeAsset
+    removeAsset
   };
   return (
     <AssetContext.Provider value={value}>

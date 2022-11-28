@@ -30,6 +30,9 @@ const reducer = (state, { type, payload }) => {
         };
       }
       break;
+    case ACTIONS.REMOVE_ASSET:
+      state = { ...state, assets: state.assets.filter(item => item.id != payload)};
+      break;
     case ACTIONS.LIST_ASSET:
       state = { ...state, assets: payload };
       break;

@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,7 @@ import {
 } from "../actions/ListAssetAction";
 
 import ListAssetReducer from "../reducers/ListAssetReducer";
+import { AssetContext } from "./AssetProvider";
 
 export const ListAssetContext = createContext();
 
@@ -40,8 +41,8 @@ const initState = {
 };
 
 const ListAssetProvider = (props) => {
+  const { removeAsset } = useContext(AssetContext)
   const [listAssetState, dispatch] = useReducer(ListAssetReducer, initState);
-  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const {
@@ -104,8 +105,8 @@ const ListAssetProvider = (props) => {
 
   const handleRemove = () => {
     handleRemoveAction(
-      listAssetState.removeAssetDialog.assetId,
-      navigate
+      listAssetState.removeAssetDialog.assetId,      
+      removeAsset
     )(dispatch);
   };
 
