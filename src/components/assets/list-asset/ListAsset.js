@@ -217,13 +217,13 @@ function ListAsset() {
         if (params.row.state === "Assigned") {
           return (
             <div>
-              {/* <Link to={"/users/edit/" + params.id}> */}
+              <Link to={"/assets/edit/" + params.id}>
               <GridActionsCellItem
                 disabled
                 icon={<EditRoundedIcon />}
                 label="edit"
               />
-              {/* </Link> */}
+              </Link>
               <GridActionsCellItem
                 disabled
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
@@ -234,9 +234,9 @@ function ListAsset() {
         } else {
           return (
             <div>
-              {/* <Link to={"/users/edit/" + params.id}> */}
+              <Link to={"/assets/edit/" + params.id}>
               <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
-              {/* </Link> */}
+              </Link>
               <GridActionsCellItem
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
                 label="Delete"

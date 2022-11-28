@@ -90,12 +90,12 @@ export const setRemoveAssetDialogAction = (removeAssetDialog) => (dispatch) => {
   });
 };
 
-export const handleRemoveAction = (id, navigate) => (dispatch) => {
+export const handleRemoveAction = (id, removeAssetFunc) => (dispatch) => {
   axios
     .delete(`${API_ENDPOINT}/v1/assets/`, { params: { id: id } })
     .then((res) => {
       setFieldRemoveAssetDialogAction("open", false)(dispatch);
-      navigate("/assets");
+      removeAssetFunc(id);
     })
     .catch((err) => {
       setRemoveAssetDialogAction({
@@ -104,26 +104,9 @@ export const handleRemoveAction = (id, navigate) => (dispatch) => {
         hiddenButton: true,
         assetId: id,
         open: true,
-      }) (dispatch);
-      console.log(err.response.data.message);
+      })(dispatch);
     });
 };
-//   if (
-//     err.response.data.message ===
-//     "Cannot delete the asset because it belongs to one or more historical assignments."
-//   ) {
-//     setTitle("Cannot Delete Asset");
-//     setContent(
-//       <p>
-//         Cannot delete the asset because it belongs to one or more
-//         historical assignments. If the asset is not able to be used
-//         anymore, please update its state in{" "}
-//         <a href={"/assets/edit/" + id}>Edit Asset page</a>
-//       </p>
-//     );
-//     setHidden(true);
-//   }
-// });
 
 export const setFieldRemoveAssetDialogAction = (name, value) => (dispatch) => {
   dispatch({
