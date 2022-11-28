@@ -46,7 +46,6 @@ const EditAssetProvider = (props) => {
 
 
   useEffect(() => {
-    console.log(editAssetState);
   }, [editAssetState]);
 
   useEffect(() => {

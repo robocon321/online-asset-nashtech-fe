@@ -167,12 +167,7 @@ function ListAsset() {
           </strong>
         );
       },
-      // renderCell: (params) => {
-      //   // console.log(params);
-      //   return <p>{params.row.category.name}</p>;
-      // },
       sortComparator: (v1, v2) => {
-        // console.log(v1.row.category.name, v2);
         const d1 = v1.split(" ");
         const d2 = v2.split(" ");
         let check;
@@ -213,7 +208,6 @@ function ListAsset() {
       flex: 2,
       align: "center",
       renderCell: (params) => {
-        // console.log()
         if (params.row.state === "Assigned") {
           return (
             <div>
@@ -285,7 +279,6 @@ function ListAsset() {
                 >
                   {states.map((state) => {
                     // const cateFilter=[]
-                    console.log(state, listAssetState.assetState);
                     return (
                       <MenuItem key={state} value={state}>
                         <Checkbox
@@ -322,8 +315,6 @@ function ListAsset() {
                     <ListItemText primary={"All"} />
                   </MenuItem>
                   {assetState.categories.map((cate) => {
-                    // const cateFilter=[]
-                    console.log(cate, listAssetState.assetCategory);
                     return (
                       <MenuItem key={cate.name} value={cate.name}>
                         <Checkbox
@@ -381,7 +372,6 @@ function ListAsset() {
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={assetState.assets.filter((item) => {
-            console.log(item);
             if (
               listAssetState.assetState.length &&
               listAssetState.assetState[0] !== "All" &&

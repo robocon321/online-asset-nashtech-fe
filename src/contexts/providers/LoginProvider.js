@@ -29,7 +29,6 @@ const LoginProvider = props => {
   const { appState ,loadUser } = useContext(AppContext);
 
   useEffect(() => {
-    console.log(loginState);
   }, [loginState]);
 
   useEffect(() => {

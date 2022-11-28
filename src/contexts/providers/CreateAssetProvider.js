@@ -71,7 +71,6 @@ const CreateAssetProvider = (props) => {
   }, [createAssetState.newCategory.error]);
 
   useEffect(() => {
-    console.log(createAssetState);
   }, [createAssetState]);
 
   useEffect(() => {

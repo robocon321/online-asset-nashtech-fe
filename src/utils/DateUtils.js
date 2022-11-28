@@ -49,18 +49,12 @@ export const convertDateByFormatEdit = (dateString, format) => {
   const day = dateString.substr(0, 2);
   const month = dateString.substr(3, 2);
   const year = dateString.substr(6, 4);
-  // console.log(day);
-  // console.log(month);
-  // console.log(year);
   format = format.replace("MM", month.toString().padStart(2, "0"));
-  // console.log(format);
   if (format.indexOf("yyyy") > -1) {
     format = format.replace("yyyy", year.toString());
   } else if (format.indexOf("yy") > -1) {
     format = format.replace("yy", year.toString().substr(2, 2));
   }
-  // console.log(format);
   format = format.replace("dd", day.toString().padStart(2, "0"));
-  // console.log(format);
   return format;
 };
