@@ -44,9 +44,7 @@ const ListUserProvider = (props) => {
     setCheck1Action(!listUserState.check)(dispatch);
   };
 
-  useEffect(() => {
-    console.log(listUserState);
-  }, [listUserState]);
+  useEffect(() => {}, [listUserState]);
 
   useEffect(() => {
     if (listUserState.userRole[listUserState.userRole.length - 1] === "ALL") {
@@ -81,7 +79,7 @@ const ListUserProvider = (props) => {
   const disableUser = (id) => {
     setDisbleUserAction(id, deleUser)(dispatch);
     setOpenDeleteAction(false)(dispatch);
-    console.log(listUserState);
+    // console.log(listUserState);
   };
   useEffect(() => {
     setOpenAction(false)(dispatch);
