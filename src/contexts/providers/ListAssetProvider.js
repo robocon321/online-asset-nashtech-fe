@@ -46,9 +46,7 @@ const ListAssetProvider = (props) => {
   const { removeAsset } = useContext(AssetContext);
   const [listAssetState, dispatch] = useReducer(ListAssetReducer, initState);
 
-  useEffect(() => {
-    console.log(1, listAssetState);
-  }, [listAssetState]);
+  useEffect(() => {}, [listAssetState]);
 
   const handleClose = () => {
     setOpenAction(false)(dispatch);
