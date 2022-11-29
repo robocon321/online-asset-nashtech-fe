@@ -321,13 +321,11 @@ function ListAsset() {
         if (params.row.state === "Assigned") {
           return (
             <div>
-              <Link to={"/assets/edit/" + params.id}>
                 <GridActionsCellItem
                   disabled
                   icon={<EditRoundedIcon />}
                   label="edit"
                 />
-              </Link>
               <GridActionsCellItem
                 disabled
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
