@@ -18,6 +18,7 @@ import ListAssetPage from "./pages/ListAssetPage";
 import EditAssetPage from "./pages/EditAssetPage";
 import AssignmentLayout from "./components/assignments/AssignmentLayout";
 import CreateAssignmentPage from "./pages/CreateAssignmentPage";
+import EditAssignmentPage from "./pages/EditAssignmentPage";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -38,7 +39,8 @@ function App() {
               <Route path="edit/:id" element={<EditAssetPage />} />
             </Route>
             <Route path="assignments" element={<AssignmentLayout />}>
-              <Route path="create" element={<CreateAssignmentPage />} />              
+              <Route path="create" element={<CreateAssignmentPage />} />            
+              <Route path="edit/:id" element={<EditAssignmentPage />} />
             </Route>
             {appState.user == null && (
               <Route path="/login" element={<LoginPage />} />
