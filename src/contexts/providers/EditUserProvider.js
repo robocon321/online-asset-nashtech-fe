@@ -14,6 +14,7 @@ import {
 import EditUserReducer from "../reducers/EditUserReducer";
 import { useParams } from "react-router-dom";
 import { UserContext } from "./UserProvider";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 export const EditUserContext = createContext();
 const initState = {
@@ -56,7 +57,7 @@ const EditUserProvider = (props) => {
   }, [editUserState.error]);
 
   const changeField = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     const { name, value } = e.target;
     setFieldAction(name, value)(dispatch);
     validateField(name, value);
@@ -166,6 +167,16 @@ const EditUserProvider = (props) => {
         "Joined date is Saturday or Sunday. Please select a different date"
       )(dispatch);
     } else removeErrorFieldAction("joinedDate")(dispatch);
+
+    const date = new Date("2099-12-31");
+    const dateJoin = new Date(joinedDate);
+    if (dateJoin > date) {
+      addErrorFieldAction(
+        "joinedDate",
+        "Joined date max is 31/12/2099"
+      )(dispatch);
+    }
+    else removeErrorFieldAction("joinedDate")(dispatch);
   };
 
   // const validateJoinedDate = (value) => {
