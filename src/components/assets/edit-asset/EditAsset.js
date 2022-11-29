@@ -53,6 +53,8 @@ const EditAsset = (props) => {
                 value={editAssetState.form.categoryName}
                 inputProps={{
                   maxLength: 50,
+                }}
+                InputProps={{
                   endAdornment: <ArrowDropDownIcon />,
                 }}
               />
