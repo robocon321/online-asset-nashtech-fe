@@ -133,6 +133,16 @@ function ListUser() {
           </strong>
         );
       },
+      renderCell: (params) => {
+        return (
+          <div
+            style={{ width: "100%", height: "100%", textAlign: "center" }}
+            onClick={() => handleOnCellClick(params.id)}
+          >
+            <p>{params.row.code}</p>
+          </div>
+        );
+      },
       type: "code",
       width: 90,
       // sortComparator: (v1, v2) => v1.code.localeCompare(v2.code),
@@ -147,6 +157,16 @@ function ListUser() {
           <strong style={{ display: "flex" }}>
             <h4>Full Name</h4>
           </strong>
+        );
+      },
+      renderCell: (params) => {
+        return (
+          <div
+            style={{ width: "100%", height: "100%", textAlign: "center" }}
+            onClick={() => handleOnCellClick(params.id)}
+          >
+            <p>{params.row.fullName}</p>
+          </div>
         );
       },
       sortComparator: (v1, v2) => {
@@ -178,6 +198,16 @@ function ListUser() {
           </strong>
         );
       },
+      renderCell: (params) => {
+        return (
+          <div
+            style={{ width: "100%", height: "100%", textAlign: "center" }}
+            onClick={() => handleOnCellClick(params.id)}
+          >
+            <p>{params.row.username}</p>
+          </div>
+        );
+      },
 
       type: "username",
       width: 150,
@@ -193,6 +223,16 @@ function ListUser() {
           <strong style={{ display: "flex" }}>
             <h4>Joined Date</h4>
           </strong>
+        );
+      },
+      renderCell: (params) => {
+        return (
+          <div
+            style={{ width: "100%", height: "100%", textAlign: "center" }}
+            onClick={() => handleOnCellClick(params.id)}
+          >
+            <p>{params.row.joinedDate}</p>
+          </div>
         );
       },
       width: 110,
@@ -214,6 +254,16 @@ function ListUser() {
           <strong style={{ display: "flex" }}>
             <h4>Type</h4>
           </strong>
+        );
+      },
+      renderCell: (params) => {
+        return (
+          <div
+            style={{ width: "100%", height: "100%", textAlign: "center" }}
+            onClick={() => handleOnCellClick(params.id)}
+          >
+            <p>{params.row.role}</p>
+          </div>
         );
       },
       disableSelectionOnClick: false,
@@ -352,7 +402,7 @@ function ListUser() {
           })}
           columns={columns}
           pageSize={20}
-          onCellClick={handleOnCellClick}
+          // onCellClick={handleOnCellClick}
           components={{
             Pagination: CustomPagination,
             NoRowsOverlay,

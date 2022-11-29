@@ -79,19 +79,30 @@ const EditUser = (props) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   value={editUserState.form.dob}
+                  inputFormat="DD/MM/YYYY"
+                  onChange={(newValue) => {
+                    const e = {
+                      target: {
+                        name: 'dob',
+                        value: newValue == null ? '' : `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`
+                      }
+                    }
+                    changeField(e);
+                  }}
                   renderInput={(params) => {
                     return (
                       <TextField
-                        inputProps={{ max: "9999-12-31" }}
-                        className={styles["input"]}
-                        value={editUserState.form.dob}
-                        onChange={changeField}
-                        onKeyUp={changeField}
+                        {...params}
+                        //inputProps={{ max: "9999-12-31" }}
+                        //className={styles["input"]}
+                        //value={editUserState.form.dob}
+                        //onChange={changeField}
+                        //onKeyUp={changeField}
                         error={editUserState.error.dob != null || params.error}
                         helperText={editUserState.error.dob}
                         id="dob"
                         name="dob"
-                        type="date"
+                      //type="date"
                       />
                     );
                   }}
@@ -129,21 +140,32 @@ const EditUser = (props) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   value={editUserState.form.joinedDate}
+                  inputFormat="DD/MM/YYYY"
+                  onChange={(newValue) => {
+                    const e = {
+                      target: {
+                        name: 'joinedDate',
+                        value: newValue == null ? '' : `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`
+                      }
+                    }
+                    changeField(e);
+                  }}
                   renderInput={(params) => {
                     return (
                       <TextField
-                        inputProps={{ max: "9999-12-31" }}
-                        value={editUserState.form.joinedDate}
-                        onChange={changeField}
-                        onKeyUp={changeField}
-                        className={styles["input"]}
+                        {...params}
+                        //inputProps={{ max: "9999-12-31" }}
+                        //value={editUserState.form.joinedDate}
+                        //onChange={changeField}
+                        //onKeyUp={changeField}
+                        //className={styles["input"]}
                         error={
                           editUserState.error.joinedDate != null || params.error
                         }
                         helperText={editUserState.error.joinedDate}
                         id="joinedDate"
                         name="joinedDate"
-                        type="date"
+                      //type="date"
                       />
                     );
                   }}

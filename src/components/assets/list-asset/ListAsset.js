@@ -134,21 +134,6 @@ function ListAsset() {
     "Recycled",
   ];
 
-  // let [assignments, setAssignments] = useState([]);
-  // useEffect(() => {
-  //   if (listAssetState.open == true)
-  //     setAssignments(
-  //       listAssetState.assetDetails
-  //         ? listAssetState.assetDetails.assignments
-  //         : []
-  //     );
-  //   else setAssignments([]);
-  // }, [listAssetState.open]);
-
-  // useEffect(() => {
-  //   console.log(assignments);
-  // }, [assignments]);
-
   const columnDetail = [
     {
       field: "assignedDate",
@@ -225,6 +210,17 @@ function ListAsset() {
           </strong>
         );
       },
+      renderCell: (params) => {
+        console.log(params.id);
+        return (
+          <div
+            style={{ width: "100%", height: "100%", textAlign: "center" }}
+            onClick={() => handleOnCellClick(params.id)}
+          >
+            <p>{params.row.code}</p>
+          </div>
+        );
+      },
       type: "code",
       width: 90,
       flex: 2,
@@ -240,6 +236,16 @@ function ListAsset() {
           </strong>
         );
       },
+      renderCell: (params) => {
+        return (
+          <div
+            style={{ width: "100%", height: "100%", textAlign: "center" }}
+            onClick={() => handleOnCellClick(params.id)}
+          >
+            <p>{params.row.name}</p>
+          </div>
+        );
+      },
       type: "name",
       width: 150,
       flex: 2,
@@ -253,6 +259,16 @@ function ListAsset() {
           <strong>
             <h4>Category</h4>
           </strong>
+        );
+      },
+      renderCell: (params) => {
+        return (
+          <div
+            style={{ width: "100%", height: "100%", textAlign: "center" }}
+            onClick={() => handleOnCellClick(params.id)}
+          >
+            <p>{params.row.categoryName}</p>
+          </div>
         );
       },
       sortComparator: (v1, v2) => {
@@ -283,6 +299,16 @@ function ListAsset() {
           <strong style={{ display: "flex" }}>
             <h4>State</h4>
           </strong>
+        );
+      },
+      renderCell: (params) => {
+        return (
+          <div
+            style={{ width: "100%", height: "100%", textAlign: "center" }}
+            onClick={() => handleOnCellClick(params.id)}
+          >
+            <p>{params.row.state}</p>
+          </div>
         );
       },
       type: "date",
@@ -323,8 +349,8 @@ function ListAsset() {
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
                 label="Delete"
                 onClick={() => {
-                  openRemoveDialog();
                   selectRemoveIdDialog(params.row.id);
+                  openRemoveDialog();
                 }}
               />
             </div>
