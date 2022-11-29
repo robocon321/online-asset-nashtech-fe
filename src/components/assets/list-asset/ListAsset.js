@@ -91,7 +91,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 600,
+  height: 700,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -514,7 +515,7 @@ function ListAsset() {
               justifyContent: "space-between",
             }}
           >
-            <Title title="Detailed User Information" />
+            <Title title="Detailed Asset Information" />
             <IconButton onClick={handleClose}>
               <DisabledByDefaultOutlinedIcon
                 sx={{ fontSize: 40 }}
@@ -522,7 +523,7 @@ function ListAsset() {
               />
             </IconButton>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: "flex" }}>
             <div>
               <p>Asset Code</p>
               <p>Asset Name</p>
@@ -532,7 +533,7 @@ function ListAsset() {
               <p>Location </p>
               <p>Specification</p>
             </div>
-            <div>
+            <div style={{ paddingLeft: "15px" }}>
               <p> {listAssetState.assetDetails.code}</p>
               <p> {listAssetState.assetDetails.name}</p>
               <p> {listAssetState.assetDetails.categoryName}</p>
@@ -546,25 +547,31 @@ function ListAsset() {
               <p> {listAssetState.assetDetails.specification}</p>
             </div>
           </div>
-          <Box sx={{ height: 400, width: "100%" }}>
-            <DataGrid
-              rows={
-                // []
+          <div style={{ display: "flex" }}>
+            <div>
+              <p>History</p>
+            </div>
+            <Box sx={{ height: 300, width: "100%" }}>
+              <DataGrid
+                rows={
+                  // []
 
-                listAssetState.assetDetails.assignments
-                  ? listAssetState.assetDetails.assignments
-                  : []
-              }
-              getRowId={(r) => r.assignedTo}
-              columns={columnDetail}
-              components={{
-                NoRowsOverlay: NoRowsDetailOverlay,
-              }}
-              hideFooter
-            ></DataGrid>
-          </Box>
+                  listAssetState.assetDetails.assignments
+                    ? listAssetState.assetDetails.assignments
+                    : []
+                }
+                getRowId={(r) => r.assignedTo}
+                columns={columnDetail}
+                components={{
+                  NoRowsOverlay: NoRowsDetailOverlay,
+                }}
+                hideFooter
+              ></DataGrid>
+            </Box>
+          </div>
         </Box>
       </Modal>
+
       <RemoveAsset open={open} setOpen={setOpen} id={id} />
     </div>
   );

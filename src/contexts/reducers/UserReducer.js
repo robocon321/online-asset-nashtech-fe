@@ -17,6 +17,15 @@ const reducer = (state, { type, payload }) => {
         ],
       };
       break;
+    case ACTIONS.DELETE_USER:
+      console.log(payload);
+      state = {
+        ...state,
+        users: [
+          // payload,
+          ...state.users.filter((item) => item.id != payload),
+        ],
+      };
     default:
       break;
   }
