@@ -55,6 +55,9 @@ const EditAsset = (props) => {
                   maxLength: 50,
                   endAdornment: <ArrowDropDownIcon />,
                 }}
+                InputProps={{
+                  endAdornment: <ArrowDropDownIcon />,
+                }}
               />
             </FormControl>
             <FormControl className={styles["input"]}>

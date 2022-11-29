@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
-import { addNewAssignmentAction } from "../actions/AssignmentAction";
+import { addNewAssignmentAction, editAssignmentAction } from "../actions/AssignmentAction";
 import AssignmentReducer from '../reducers/AssignmentReducer';
 
 const initState = {
@@ -19,9 +19,14 @@ const AssignmentProvider = props => {
     addNewAssignmentAction(assignment)(dispatch);
   }
 
+  const editAssignment = (assignment) => {
+    editAssignmentAction(assignment)(dispatch);
+  }
+
   const value = {
     assignmentState,
-    addNewAssignment
+    addNewAssignment,
+    editAssignment
   }
   return (
     <AssignmentContext.Provider value={value}>
