@@ -74,7 +74,9 @@ const CreateAsset = (props) => {
                 onClick={handleClick}
                 value={createAssetState.form.categoryName}
                 inputProps={{
-                  maxLength: 50,
+                  maxLength: 50                  
+                }}
+                InputProps={{
                   endAdornment: <ArrowDropDownIcon />,
                 }}
               />
