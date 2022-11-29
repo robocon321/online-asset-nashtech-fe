@@ -39,16 +39,13 @@ export default function AlertDialogSlide() {
           style={{ color: "black" }}
         >
           <p>
-            {listAssetState.removeAssetDialog.content}{" "}
-            {listAssetState.removeAssetDialog.hiddenButton && (
-              <a
-                href={
-                  "/assets/edit/" + listAssetState.removeAssetDialog.assetId
-                }
-              >
-                Edit Asset page
-              </a>
-            )}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: listAssetState.removeAssetDialog.content,
+              }}
+            />
+            {/* {listAssetState.removeAssetDialog.content}{" "} */}
+            {listAssetState.removeAssetDialog.hiddenButton}
           </p>
         </DialogContentText>
       </DialogContent>
