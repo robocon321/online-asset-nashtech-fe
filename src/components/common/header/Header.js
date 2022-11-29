@@ -97,7 +97,6 @@ const Header = (props) => {
 
   const handleCloseNoti = (event, reason) => {
     if (reason === "backdropClick") {
-      console.log(reason);
     } else setOpenNoti(false);
   };
 

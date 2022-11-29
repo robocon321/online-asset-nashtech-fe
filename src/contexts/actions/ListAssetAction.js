@@ -13,10 +13,8 @@ export const ACTIONS = {
   SET_SEARCH: "SET_SEARCH",
   SET_ASSET_CATE: "SET_ASSET_CATE",
   // SET_LIST_CATE: "SET_LIST_CATE",
+  SET_OPEN_DELETE: "SET_OPEN_DELETE",
   SET_LIST_ASSET_HISTORY: "SET_LIST_ASSET_HISTORY",
-  RESET_REMOVE_DIALOG: "RESET_REMOVE_DIALOG",
-  SET_REMOVE_ASSET_DIALOG: "SET_REMOVE_ASSET_DIALOG",
-  SET_FIELD_REMOVE_ASSET_DIALOG: "SET_FIELD_REMOVE_ASSET_DIALOG",
 };
 
 export const setCheck1Action = (check) => (dispatch) => {
@@ -49,6 +47,7 @@ export const setOpenAction = (open) => (dispatch) => {
     payload: open,
   });
 };
+
 export const setSearchAction = (search) => (dispatch) => {
   dispatch({
     type: ACTIONS.SET_SEARCH,
@@ -63,18 +62,17 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
 };
 
 export const setAssetDetailAction = (id) => async (dispatch) => {
-  // await axios
-  //   .get(`${API_ENDPOINT}/v1/asset/id?id=${id}`)
-  //   .then((res) => {
-  //     console.log(res.data);
-  //     dispatch({
-  //       type: ACTIONS.SET_ASSET_DETAIL,
-  //       payload: res.data,
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  await axios
+    .get(`${API_ENDPOINT}/v1/assets/${id}`)
+    .then((res) => {
+      dispatch({
+        type: ACTIONS.SET_ASSET_DETAIL,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const handleCloseAction = () => (dispatch) => {

@@ -4,6 +4,7 @@ export const ACTIONS = {
   SET_USERS: "SET_USERS",
   ADD_USER: "ADD_USER",
   EDIT_USER: "EDIT_USER",
+  DELETE_USER: "DELETE_USER",
 };
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
@@ -28,5 +29,11 @@ export const editUserAction = (user) => (dispatch) => {
   dispatch({
     type: ACTIONS.EDIT_USER,
     payload: user,
+  });
+};
+export const setDisbleUserAction = (userId) => async (dispatch) => {
+  dispatch({
+    type: ACTIONS.DELETE_USER,
+    payload: userId,
   });
 };

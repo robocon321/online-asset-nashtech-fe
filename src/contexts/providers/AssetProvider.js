@@ -19,7 +19,6 @@ const AssetProvider = (props) => {
   const [assetState, dispatch] = useReducer(AssetReducer, initState);
 
   useEffect(() => {
-    console.log(assetState);
   }, [assetState]);
   useEffect(() => {
     assetListAction()(dispatch);

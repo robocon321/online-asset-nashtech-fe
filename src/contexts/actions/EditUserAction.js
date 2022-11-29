@@ -40,15 +40,13 @@ export const setLoadingAction = (isLoading) => (dispatch) => {
 
 export const setUserDetailAction = (id) => async (dispatch) => {
   await axios
-    .get(`${API_ENDPOINT}/v1/users/id`, { params: { id } })
+    .get(`${API_ENDPOINT}/v1/users/${id}`)
     .then((res) => {
-      // console.log(res.data.dob);
       res.data.dob = convertDateByFormatEdit(res.data.dob, "yyyy-MM-dd");
       res.data.joinedDate = convertDateByFormatEdit(
         res.data.joinedDate,
         "yyyy-MM-dd"
       );
-      // console.log(res.data.dob);
       dispatch({
         type: ACTIONS.SET_USER_DETAIL,
         payload: res.data,
@@ -64,7 +62,7 @@ export const submitAction =
     form.joinedDate = convertDateByFormat(form.joinedDate, "dd/MM/yyyy");
 
     await axios
-      .put(`${API_ENDPOINT}/v1/users/update`, form)
+      .put(`${API_ENDPOINT}/v1/users`, form)
       .then((response) => {
         setStatusAction({
           isLoading: false,

@@ -1,4 +1,4 @@
-import { ACTIONS } from "../actions/EditUserAction";
+import { ACTIONS } from "../actions/CreateAssignmentAction";
 
 const reducer = (state, { type, payload }) => {
   switch (type) {
@@ -11,6 +11,7 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.SET_ENABLE_SUBMIT:
       state = { ...state, enableSubmit: payload };
       break;
+
     case ACTIONS.REMOVE_FIELD_ERROR:
       delete state.error[payload];
       state = { ...state, error: { ...state.error } };
@@ -21,6 +22,7 @@ const reducer = (state, { type, payload }) => {
         error: { ...state.error, [payload.name]: payload.value },
       };
       break;
+
     case ACTIONS.SET_LOADING:
       state = { ...state, status: { ...state.status, isLoading: payload } };
       break;
@@ -33,9 +35,21 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.SET_STATUS:
       state = { ...state, status: payload };
       break;
-    case ACTIONS.SET_USER_DETAIL:
-      state = { ...state, form: payload };
+
+
+    case ACTIONS.SET_FIELD_POPUP_ASSET:
+      state = { ...state, popupAsset: {
+        ...state.popupAsset,
+        [payload.name]: payload.value
+      }};
       break;
+    case ACTIONS.SET_FIELD_POPUP_USER:
+      state = { ...state, popupUser: {
+        ...state.popupUser,
+        [payload.name]: payload.value
+      }};
+      break;
+  
     default:
       break;
   }

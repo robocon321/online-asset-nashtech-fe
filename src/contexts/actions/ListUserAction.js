@@ -12,6 +12,9 @@ export const ACTIONS = {
   SET_USER_DETAIL: "SET_USER_DETAIL",
   SET_SEARCH: "SET_SEARCH",
   SET_LIST_USER: "SET_LIST_USER",
+  SET_CHECK_DELETE_USER: "SET_CHECK_DELETE_USER",
+  SET_OPEN_DELETE: "SET_OPEN_DELETE",
+  SET_DISABLE_USER: "SET_DISABLE_USER",
 };
 
 export const setCheck1Action = (check) => (dispatch) => {
@@ -50,7 +53,32 @@ export const setCheckIdAction = (checkId) => (dispatch) => {
     payload: checkId,
   });
 };
+export const setOpenDeleteAction = (openDelete) => (dispatch) => {
+  dispatch({
+    type: ACTIONS.SET_OPEN_DELETE,
+    payload: openDelete,
+  });
+};
+export const setCheckDeleteAction = (id) => (dispatch) => {
+  dispatch({
+    type: ACTIONS.SET_OPEN,
+    payload: false,
+  });
+  axios
+    .get(`${API_ENDPOINT}/v1/users/check-assignment?userId=${id}`)
+    .then((res) => {
+      console.log(res.data);
 
+      dispatch({
+        type: ACTIONS.SET_CHECK_DELETE_USER,
+        payload: res.data,
+      });
+      dispatch({
+        type: ACTIONS.SET_OPEN_DELETE,
+        payload: true,
+      });
+    });
+};
 export const setUserDetailAction = (id) => async (dispatch) => {
   await axios
     .get(`${API_ENDPOINT}/v1/users/${id}`)
@@ -63,4 +91,13 @@ export const setUserDetailAction = (id) => async (dispatch) => {
     .catch((err) => {
       console.log(err);
     });
+};
+export const setDisbleUserAction = (id, disableAction) => async (dispatch) => {
+  await axios.delete(`${API_ENDPOINT}/v1/users?id=${id}`).then((res) => {
+    dispatch({
+      type: ACTIONS.SET_DISABLE_USER,
+      payload: res.data,
+    });
+    disableAction(id);
+  });
 };
