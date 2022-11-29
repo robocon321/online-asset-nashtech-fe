@@ -211,7 +211,6 @@ function ListAsset() {
         );
       },
       renderCell: (params) => {
-        console.log(params.id);
         return (
           <div
             style={{ width: "100%", height: "100%", textAlign: "center" }}
@@ -574,10 +573,10 @@ function ListAsset() {
             </div>
           </div>
           <div style={{ display: "flex" }}>
-            <div>
+            <div style={{ paddingRight: "10px" }}>
               <p>History</p>
             </div>
-            <Box sx={{ height: 300, width: "100%" }}>
+            <Box sx={{ height: 200, width: "100%", paddingTop: "20px" }}>
               <DataGrid
                 rows={
                   // []
