@@ -71,7 +71,7 @@ const ListUserProvider = (props) => {
   };
   const hanldeClickDelete = (id) => {
     setCheckDeleteAction(id)(dispatch);
-    // setOpenDeleteAction(true)(dispatch);
+    setCheckIdAction(id)(dispatch);
   };
   const handleCloseDelete = () => {
     setOpenDeleteAction(false)(dispatch);
@@ -79,7 +79,7 @@ const ListUserProvider = (props) => {
   const disableUser = (id) => {
     setDisbleUserAction(id, deleUser)(dispatch);
     setOpenDeleteAction(false)(dispatch);
-    console.log(listUserState);
+    // console.log(listUserState);
   };
   useEffect(() => {
     setOpenAction(false)(dispatch);

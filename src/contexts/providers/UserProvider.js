@@ -28,6 +28,7 @@ const UserProvider = (props) => {
     editUserAction(user)(dispatch);
   };
   const deleUser = (userId) => {
+    console.log(userId);
     setDisbleUserAction(userId)(dispatch);
   };
 
