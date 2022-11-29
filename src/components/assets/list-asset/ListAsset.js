@@ -197,9 +197,6 @@ function ListAsset() {
     },
   ];
   // Remove asset
-  const [open, setOpen] = React.useState(false);
-  const [id, setId] = React.useState("");
-
   const columns = [
     {
       field: "code",
@@ -516,7 +513,6 @@ function ListAsset() {
           })}
           columns={columns}
           pageSize={20}
-          onCellClick={handleOnCellClick}
           components={{
             Pagination: CustomPagination,
             NoRowsOverlay,
@@ -598,7 +594,7 @@ function ListAsset() {
         </Box>
       </Modal>
 
-      <RemoveAsset open={open} setOpen={setOpen} id={id} />
+      <RemoveAsset />
     </div>
   );
 }
