@@ -80,7 +80,7 @@ const EditAssetProvider = (props) => {
   const validateInstalledDate = (value) => {
     const installedDate = new Date(value);
     if(!validateDate(installedDate)) {
-      addErrorFieldAction('installedDate', 'Invalidate format date')(dispatch); 
+      addErrorFieldAction('installedDate', '')(dispatch); 
       return ;   
     } else {
       const currentDate = new Date();
