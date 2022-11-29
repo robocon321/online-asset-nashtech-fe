@@ -62,8 +62,8 @@ const ListUserProvider = (props) => {
     setUserDetailAction(listUserState.checkId)(dispatch);
   }, [listUserState.checkId]);
 
-  const handleOnCellClick = (params) => {
-    setCheckIdAction(params.id)(dispatch);
+  const handleOnCellClick = (id) => {
+    setCheckIdAction(id)(dispatch);
     setOpenAction(true)(dispatch);
   };
   const handleOnCellClickEdit = (params) => {

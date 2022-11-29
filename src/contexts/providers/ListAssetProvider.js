@@ -54,8 +54,9 @@ const ListAssetProvider = (props) => {
     setOpenAction(false)(dispatch);
   };
 
-  const handleOnCellClick = (params) => {
-    setCheckIdAction(params.id)(dispatch);
+  const handleOnCellClick = (id) => {
+    // console.log("id", id.id);
+    setCheckIdAction(id)(dispatch);
     setOpenAction(true)(dispatch);
   };
 
