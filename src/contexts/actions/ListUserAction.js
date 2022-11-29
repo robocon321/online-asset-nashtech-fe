@@ -15,6 +15,7 @@ export const ACTIONS = {
   SET_CHECK_DELETE_USER: "SET_CHECK_DELETE_USER",
   SET_OPEN_DELETE: "SET_OPEN_DELETE",
   SET_DISABLE_USER: "SET_DISABLE_USER",
+  // SET_CHECK_ID_DE
 };
 
 export const setCheck1Action = (check) => (dispatch) => {
@@ -60,10 +61,6 @@ export const setOpenDeleteAction = (openDelete) => (dispatch) => {
   });
 };
 export const setCheckDeleteAction = (id) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_OPEN,
-    payload: false,
-  });
   axios
     .get(`${API_ENDPOINT}/v1/users/check-assignment?userId=${id}`)
     .then((res) => {

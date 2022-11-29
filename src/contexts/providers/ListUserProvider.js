@@ -44,7 +44,9 @@ const ListUserProvider = (props) => {
     setCheck1Action(!listUserState.check)(dispatch);
   };
 
-  useEffect(() => {}, [listUserState]);
+  useEffect(() => {
+    console.log(listUserState);
+  }, [listUserState]);
 
   useEffect(() => {
     if (listUserState.userRole[listUserState.userRole.length - 1] === "ALL") {
@@ -71,7 +73,7 @@ const ListUserProvider = (props) => {
   };
   const hanldeClickDelete = (id) => {
     setCheckDeleteAction(id)(dispatch);
-    // setOpenDeleteAction(true)(dispatch);
+    setCheckIdAction(id)(dispatch);
   };
   const handleCloseDelete = () => {
     setOpenDeleteAction(false)(dispatch);
