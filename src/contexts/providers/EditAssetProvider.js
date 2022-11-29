@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { validateDate } from "../../utils/Validate";
 import {
   addErrorFieldAction,
   loadAssetAction,
@@ -78,11 +79,16 @@ const EditAssetProvider = (props) => {
 
   const validateInstalledDate = (value) => {
     const installedDate = new Date(value);
-    const currentDate = new Date();
-    if(installedDate > currentDate) {
-      addErrorFieldAction('installedDate', 'Select only current or past date for Installed Date')(dispatch);
+    if(!validateDate(installedDate)) {
+      addErrorFieldAction('installedDate', 'Invalidate format date')(dispatch); 
+      return ;   
     } else {
-      removeErrorFieldAction('installedDate')(dispatch);
+      const currentDate = new Date();
+      if(installedDate > currentDate) {
+        addErrorFieldAction('installedDate', 'Select only current or past date for Installed Date')(dispatch);
+      } else {
+        removeErrorFieldAction('installedDate')(dispatch);
+      }  
     }
   }
 

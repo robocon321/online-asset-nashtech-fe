@@ -65,6 +65,9 @@ const CreateAsset = (props) => {
                 name="name"
                 onChange={changeField}
                 inputProps={{ maxLength: 50 }}
+                error={
+                  createAssetState.error.name != null
+                }
               />
             </FormControl>
             <FormControl className={styles["input"]}>
@@ -167,6 +170,9 @@ const CreateAsset = (props) => {
                 multiline
                 rows={3}
                 inputProps={{ maxLength: 150 }}
+                error={
+                  createAssetState.error.specification != null
+                }
               />
             </FormControl>
 
