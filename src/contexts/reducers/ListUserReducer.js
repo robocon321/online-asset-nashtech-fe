@@ -35,6 +35,8 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.SET_DISABLE_USER:
       state = { ...state, messageDelete: payload };
       break;
+    // case: ACTIONS.SET_LOADING_CHECK:
+    //   state =
     default:
       break;
   }

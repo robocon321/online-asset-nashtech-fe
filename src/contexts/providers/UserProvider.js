@@ -5,6 +5,7 @@ import {
   addUserAction,
   setUsersAction,
   editUserAction,
+  setDisbleUserAction,
 } from "../actions/UserAction";
 import { AppContext } from "./AppProvider";
 export const UserContext = createContext();
@@ -26,11 +27,15 @@ const UserProvider = (props) => {
   const editUser = (user) => {
     editUserAction(user)(dispatch);
   };
+  const deleUser = (userId) => {
+    setDisbleUserAction(userId)(dispatch);
+  };
 
   const value = {
     userState,
     addUser,
     editUser,
+    deleUser,
   };
 
   return (

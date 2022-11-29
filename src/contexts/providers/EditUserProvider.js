@@ -40,8 +40,7 @@ const EditUserProvider = (props) => {
   const navigate = useNavigate();
   const [editUserState, dispatch] = useReducer(EditUserReducer, initState);
 
-  useEffect(() => {
-  }, [editUserState]);
+  useEffect(() => {}, [editUserState]);
 
   useEffect(() => {
     setUserDetailAction(id)(dispatch);

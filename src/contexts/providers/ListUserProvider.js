@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { useEffect } from "react";
 import {
   setCheck1Action,
@@ -13,7 +13,7 @@ import {
   setDisbleUserAction,
 } from "../actions/ListUserAction";
 import ListUserReducer from "../reducers/ListUserReducer";
-
+import { UserContext } from "./UserProvider";
 export const ListUserContext = createContext();
 
 const initState = {
@@ -32,6 +32,7 @@ const initState = {
 
 const ListUserProvider = (props) => {
   const [listUserState, dispatch] = useReducer(ListUserReducer, initState);
+  const { deleUser } = useContext(UserContext);
 
   const handleChange = (event) => {
     const {
@@ -43,8 +44,7 @@ const ListUserProvider = (props) => {
     setCheck1Action(!listUserState.check)(dispatch);
   };
 
-  useEffect(() => {
-  }, [listUserState]);
+  useEffect(() => {}, [listUserState]);
 
   useEffect(() => {
     if (listUserState.userRole[listUserState.userRole.length - 1] === "ALL") {
@@ -62,7 +62,7 @@ const ListUserProvider = (props) => {
     setUserDetailAction(listUserState.checkId)(dispatch);
   }, [listUserState.checkId]);
 
-  const handleOnCellClick = (params, event, details) => {
+  const handleOnCellClick = (params) => {
     setCheckIdAction(params.id)(dispatch);
     setOpenAction(true)(dispatch);
   };
@@ -71,13 +71,13 @@ const ListUserProvider = (props) => {
   };
   const hanldeClickDelete = (id) => {
     setCheckDeleteAction(id)(dispatch);
-    setOpenDeleteAction(true)(dispatch);
+    // setOpenDeleteAction(true)(dispatch);
   };
   const handleCloseDelete = () => {
     setOpenDeleteAction(false)(dispatch);
   };
   const disableUser = (id) => {
-    setDisbleUserAction(id)(dispatch);
+    setDisbleUserAction(id, deleUser)(dispatch);
     setOpenDeleteAction(false)(dispatch);
     console.log(listUserState);
   };

@@ -60,13 +60,22 @@ export const setOpenDeleteAction = (openDelete) => (dispatch) => {
   });
 };
 export const setCheckDeleteAction = (id) => (dispatch) => {
+  dispatch({
+    type: ACTIONS.SET_OPEN,
+    payload: false,
+  });
   axios
     .get(`${API_ENDPOINT}/v1/users/check-assignment?userId=${id}`)
     .then((res) => {
       console.log(res.data);
+
       dispatch({
         type: ACTIONS.SET_CHECK_DELETE_USER,
         payload: res.data,
+      });
+      dispatch({
+        type: ACTIONS.SET_OPEN_DELETE,
+        payload: true,
       });
     });
 };
@@ -83,11 +92,12 @@ export const setUserDetailAction = (id) => async (dispatch) => {
       console.log(err);
     });
 };
-export const setDisbleUserAction = (id) => async (dispatch) => {
+export const setDisbleUserAction = (id, disableAction) => async (dispatch) => {
   await axios.delete(`${API_ENDPOINT}/v1/users?id=${id}`).then((res) => {
     dispatch({
       type: ACTIONS.SET_DISABLE_USER,
       payload: res.data,
     });
+    disableAction(id);
   });
 };

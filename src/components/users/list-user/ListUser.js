@@ -178,6 +178,7 @@ function ListUser() {
           </strong>
         );
       },
+
       type: "username",
       width: 150,
       flex: 2,
@@ -194,7 +195,6 @@ function ListUser() {
           </strong>
         );
       },
-      // type: "date",
       width: 110,
       flex: 2,
       sortComparator: (v1, v2) => {
@@ -216,6 +216,7 @@ function ListUser() {
           </strong>
         );
       },
+      disableSelectionOnClick: false,
       type: "role",
       width: 110,
       flex: 2,
@@ -408,14 +409,14 @@ function ListUser() {
           </div>
         </Box>
       </Modal>
-      <Modal
-        keepMounted
-        open={listUserState.openDelete}
-        onClose={handleCloseDelete}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-      >
-        {listUserState.checkDelete === 1 ? (
+      {listUserState.checkDelete === 1 ? (
+        <Modal
+          keepMounted
+          open={listUserState.openDelete}
+          onClose={handleCloseDelete}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
           <Box sx={style} style={{ borderRadius: "20px" }}>
             <div
               style={{
@@ -441,7 +442,15 @@ function ListUser() {
               </div>
             </div>
           </Box>
-        ) : (
+        </Modal>
+      ) : (
+        <Modal
+          keepMounted
+          open={listUserState.openDelete}
+          onClose={handleCloseDelete}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
           <Box sx={style} style={{ borderRadius: "20px" }}>
             <div
               style={{
@@ -453,12 +462,6 @@ function ListUser() {
               }}
             >
               <Title title="Are you sure?" />
-              {/* <IconButton onClick={handleClose}>
-                <DisabledByDefaultOutlinedIcon
-                  sx={{ fontSize: 40 }}
-                  style={{ color: "#e30613" }}
-                />
-              </IconButton> */}
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <div>
@@ -486,8 +489,8 @@ function ListUser() {
               </div>
             </div>
           </Box>
-        )}
-      </Modal>
+        </Modal>
+      )}
     </div>
   );
 }
