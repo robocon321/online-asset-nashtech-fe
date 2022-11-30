@@ -155,7 +155,7 @@ const EditAssignment = (props) => {
                 name="user"
                 disabled
                 value={
-                  editAssignmentState.form.userId
+                  editAssignmentState.form.userId != null
                     ? editAssignmentState.popupUser.users.find(
                         (item) => item.id == editAssignmentState.form.userId
                       ).name
@@ -244,7 +244,7 @@ const EditAssignment = (props) => {
                 name="asset"
                 disabled
                 value={
-                  editAssignmentState.form.assetId
+                  editAssignmentState.form.assetId != null
                     ? editAssignmentState.popupAsset.assets.find(
                         (item) => item.id == editAssignmentState.form.assetId
                       ).name

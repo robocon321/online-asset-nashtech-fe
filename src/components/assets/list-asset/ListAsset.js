@@ -322,13 +322,11 @@ function ListAsset() {
         if (params.row.state === "Assigned") {
           return (
             <div>
-              <Link to={"/assets/edit/" + params.id}>
-                <GridActionsCellItem
-                  disabled
-                  icon={<EditRoundedIcon />}
-                  label="edit"
-                />
-              </Link>
+              <GridActionsCellItem
+                disabled
+                icon={<EditRoundedIcon />}
+                label="edit"
+              />
               <GridActionsCellItem
                 disabled
                 icon={<HighlightOffRoundedIcon style={{ color: "#ECAFB6" }} />}
@@ -483,6 +481,7 @@ function ListAsset() {
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={assetState.assets.filter((item) => {
+            console.log(item);
             if (
               listAssetState.assetState.length &&
               listAssetState.assetState[0] !== "All" &&
@@ -502,7 +501,7 @@ function ListAsset() {
                 item.code
                   .toUpperCase()
                   .includes(listAssetState.search.toUpperCase()) ||
-                item.categoryName
+                item.name
                   .toUpperCase()
                   .includes(listAssetState.search.toUpperCase())
               )
@@ -527,7 +526,7 @@ function ListAsset() {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box sx={style} style={{ borderRadius: "20px" }}>
+        <Box sx={style} style={{ borderRadius: "20px", width: "700px" }}>
           <div
             style={{
               display: "flex",
@@ -573,7 +572,14 @@ function ListAsset() {
             <div style={{ paddingRight: "10px" }}>
               <p>History</p>
             </div>
-            <Box sx={{ height: 200, width: "100%", paddingTop: "20px" }}>
+            <Box
+              sx={{
+                height: 200,
+                width: "100%",
+                paddingTop: "20px",
+                paddingLeft: "15px",
+              }}
+            >
               <DataGrid
                 rows={
                   // []
