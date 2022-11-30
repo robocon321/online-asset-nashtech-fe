@@ -122,8 +122,9 @@ function ListAsset() {
     handleSearch,
     handleClose,
     handleOnCellClick,
-    openRemoveDialog,
-    selectRemoveIdDialog,
+    // openRemoveDialog,
+    openCheckAssignmentDialog,
+    // selectRemoveIdDialog,
   } = useContext(ListAssetContext);
   const states = [
     "All",
@@ -343,8 +344,8 @@ function ListAsset() {
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
                 label="Delete"
                 onClick={() => {
-                  selectRemoveIdDialog(params.row.id);
-                  openRemoveDialog();
+                  // selectRemoveIdDialog(params.row.id);
+                  openCheckAssignmentDialog(params.row.id);
                 }}
               />
             </div>
