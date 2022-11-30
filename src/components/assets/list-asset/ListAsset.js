@@ -530,7 +530,7 @@ function ListAsset() {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box sx={style} style={{ borderRadius: "20px" }}>
+        <Box sx={style} style={{ borderRadius: "20px", width: "700px" }}>
           <div
             style={{
               display: "flex",
@@ -576,7 +576,14 @@ function ListAsset() {
             <div style={{ paddingRight: "10px" }}>
               <p>History</p>
             </div>
-            <Box sx={{ height: 200, width: "100%", paddingTop: "20px" }}>
+            <Box
+              sx={{
+                height: 200,
+                width: "100%",
+                paddingTop: "20px",
+                paddingLeft: "15px",
+              }}
+            >
               <DataGrid
                 rows={
                   // []
