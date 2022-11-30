@@ -8,6 +8,8 @@ import Slide from "@mui/material/Slide";
 import * as React from "react";
 import { useContext } from "react";
 import { ListAssetContext } from "../../../../contexts/providers/ListAssetProvider";
+import IconButton from "@mui/material/IconButton";
+import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -32,6 +34,22 @@ export default function AlertDialogSlide() {
     >
       <DialogTitle sx={{ ml: 3 }}>
         {listAssetState.removeAssetDialog.title}
+
+        <IconButton
+          onClick={handleClose}
+          style={{
+            float: "right",
+            padding: "0px",
+            display: !listAssetState.removeAssetDialog.hiddenButton
+              ? "none"
+              : "",
+          }}
+        >
+          <DisabledByDefaultOutlinedIcon
+            sx={{ fontSize: 35 }}
+            style={{ color: "#e30613", float: "right", marginTop: "0px" }}
+          />
+        </IconButton>
       </DialogTitle>
       <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
         <DialogContentText

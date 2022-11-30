@@ -449,17 +449,20 @@ function ListAsset() {
         >
           <div>
             {" "}
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                style={{ border: "1px solid black", borderRadius: "8px" }}
-                placeholder="Search…"
-                onChange={handleSearch}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
+            <form autoComplete="off">
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  style={{ border: "1px solid black", borderRadius: "8px" }}
+                  placeholder="Search…"
+                  type="search"
+                  onChange={handleSearch}
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+            </form>
           </div>
           <div>
             <Link to={"create"} style={{ textDecoration: "none" }}>

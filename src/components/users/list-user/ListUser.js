@@ -279,16 +279,26 @@ function ListUser() {
       align: "center",
       disableClickEventBubbling: true,
       renderCell: (params) => {
+        // console.log(localStorage.getItem("username"));
         return (
-          <div style={{ zIndex: "9" }}>
+          <div>
             <Link to={"/users/edit/" + params.id}>
               <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
             </Link>
-            <GridActionsCellItem
-              onClick={() => hanldeClickDelete(params.id)}
-              icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
-              label="Delete"
-            />
+            {params.row.username === localStorage.getItem("username") ? (
+              <GridActionsCellItem
+                // onClick={() => hanldeClickDelete(params.id)}
+                disabled
+                icon={<HighlightOffRoundedIcon style={{ color: "EAA2AB" }} />}
+                label="Delete"
+              />
+            ) : (
+              <GridActionsCellItem
+                onClick={() => hanldeClickDelete(params.id)}
+                icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
+                label="Delete"
+              />
+            )}
           </div>
         );
       },
@@ -343,17 +353,22 @@ function ListUser() {
         >
           <div>
             {" "}
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                style={{ border: "1px solid black", borderRadius: "8px" }}
-                placeholder="Search…"
-                onChange={handleSearch}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
+            <form autoComplete="off">
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  style={{ border: "1px solid black", borderRadius: "8px" }}
+                  placeholder="Search…"
+                  type="search"
+                  onChange={handleSearch}
+                  inputProps={{
+                    "aria-label": "search",
+                  }}
+                />
+              </Search>
+            </form>
           </div>
           <div>
             <Link to={"create"} style={{ textDecoration: "none" }}>
