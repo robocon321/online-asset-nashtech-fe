@@ -13,7 +13,7 @@ import {
   setCheckIdAction,
   handleCloseAction,
   handleRemoveAction,
-  setFieldRemoveAssetDialogAction,
+  handleCheckRemoveAction,
 } from "../actions/ListAssetAction";
 
 import ListAssetReducer from "../reducers/ListAssetReducer";
@@ -34,8 +34,8 @@ const initState = {
   assetCategory: [],
   listAssetHistory: [],
   removeAssetDialog: {
-    title: "Are you sure?",
-    content: "Do you want to delete this asset?",
+    title: "",
+    content: "",
     hiddenButton: false,
     assetId: 0,
     open: false,
@@ -54,7 +54,6 @@ const ListAssetProvider = (props) => {
   };
 
   const handleOnCellClick = (id) => {
-    // console.log("id", id.id);
     setCheckIdAction(id)(dispatch);
     setOpenAction(true)(dispatch);
   };
@@ -117,20 +116,24 @@ const ListAssetProvider = (props) => {
     setAssetDetailAction(listAssetState.checkId)(dispatch);
   }, [listAssetState.checkId]);
 
+
+  // Delete asset
   const handleRemove = () => {
-    handleRemoveAction(
-      listAssetState.removeAssetDialog.assetId,
-      removeAsset
-    )(dispatch);
-    
+    handleRemoveAction(listAssetState.removeAssetDialog.assetId)(dispatch);
+    removeAsset(listAssetState.removeAssetDialog.assetId);
+    handleClose();
   };
 
-  const openRemoveDialog = () => {
-    setFieldRemoveAssetDialogAction("open", true)(dispatch);
-  };
+  // const openRemoveDialog = () => {
+  //   setFieldRemoveAssetDialogAction("open", true)(dispatch);
+  // };
 
-  const selectRemoveIdDialog = (id) => {
-    setFieldRemoveAssetDialogAction("assetId", id)(dispatch);
+  // const selectRemoveIdDialog = (id) => {
+  //   setFieldRemoveAssetDialogAction("assetId", id)(dispatch);
+  // };
+
+  const openCheckAssignmentDialog = (id) => {
+    handleCheckRemoveAction(id)(dispatch);
   };
 
   const value = {
@@ -141,8 +144,9 @@ const ListAssetProvider = (props) => {
     handleOnCellClick,
     handleClose,
     handleRemove,
-    openRemoveDialog,
-    selectRemoveIdDialog,
+    // openRemoveDialog,
+    openCheckAssignmentDialog,
+    // selectRemoveIdDialog,
   };
 
   return (
