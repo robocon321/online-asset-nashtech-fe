@@ -197,9 +197,6 @@ function ListAsset() {
     },
   ];
   // Remove asset
-  const [open, setOpen] = React.useState(false);
-  const [id, setId] = React.useState("");
-
   const columns = [
     {
       field: "code",
@@ -324,13 +321,11 @@ function ListAsset() {
         if (params.row.state === "Assigned") {
           return (
             <div>
-              <Link to={"/assets/edit/" + params.id}>
                 <GridActionsCellItem
                   disabled
                   icon={<EditRoundedIcon />}
                   label="edit"
                 />
-              </Link>
               <GridActionsCellItem
                 disabled
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
@@ -515,7 +510,6 @@ function ListAsset() {
           })}
           columns={columns}
           pageSize={20}
-          // onCellClick={handleOnCellClick}
           components={{
             Pagination: CustomPagination,
             NoRowsOverlay,
@@ -604,7 +598,7 @@ function ListAsset() {
         </Box>
       </Modal>
 
-      <RemoveAsset open={open} setOpen={setOpen} id={id} />
+      <RemoveAsset />
     </div>
   );
 }

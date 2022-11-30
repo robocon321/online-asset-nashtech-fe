@@ -13,7 +13,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide(props) {
+export default function AlertDialogSlide() {
   const { listAssetState, handleClose, handleRemove } =
     useContext(ListAssetContext);
 
@@ -39,16 +39,13 @@ export default function AlertDialogSlide(props) {
           style={{ color: "black" }}
         >
           <p>
-            {listAssetState.removeAssetDialog.content}{" "}
-            {listAssetState.removeAssetDialog.hiddenButton && (
-              <a
-                href={
-                  "/assets/edit/" + listAssetState.removeAssetDialog.assetId
-                }
-              >
-                Edit Asset page
-              </a>
-            )}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: listAssetState.removeAssetDialog.content,
+              }}
+            />
+            {/* {listAssetState.removeAssetDialog.content}{" "} */}
+            {listAssetState.removeAssetDialog.hiddenButton}
           </p>
         </DialogContentText>
       </DialogContent>

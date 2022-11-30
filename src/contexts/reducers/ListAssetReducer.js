@@ -29,6 +29,7 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.SET_ASSET_CATE:
       state = { ...state, assetCategory: payload };
       break;
+      
     case ACTIONS.RESET_REMOVE_DIALOG:
       state = {
         ...state,
@@ -53,6 +54,7 @@ const reducer = (state, { type, payload }) => {
         },
       };
       break;
+
     default:
       break;
   }

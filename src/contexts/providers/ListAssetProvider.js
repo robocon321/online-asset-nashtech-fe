@@ -50,6 +50,7 @@ const ListAssetProvider = (props) => {
 
   const handleClose = () => {
     setOpenAction(false)(dispatch);
+    handleCloseAction()(dispatch);
   };
 
   const handleOnCellClick = (id) => {
@@ -121,6 +122,7 @@ const ListAssetProvider = (props) => {
       listAssetState.removeAssetDialog.assetId,
       removeAsset
     )(dispatch);
+    
   };
 
   const openRemoveDialog = () => {

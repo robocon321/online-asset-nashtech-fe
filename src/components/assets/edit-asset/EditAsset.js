@@ -43,6 +43,10 @@ const EditAsset = (props) => {
                 value={editAssetState.form.name}
                 onChange={changeField}
                 inputProps={{ maxLength: 50 }}
+                error={
+                  editAssetState.error.name != null
+                }
+
               />
             </FormControl>
             <FormControl className={styles["input"]}>
@@ -53,6 +57,8 @@ const EditAsset = (props) => {
                 value={editAssetState.form.categoryName}
                 inputProps={{
                   maxLength: 50,
+                }}
+                InputProps={{
                   endAdornment: <ArrowDropDownIcon />,
                 }}
               />
@@ -68,6 +74,10 @@ const EditAsset = (props) => {
                 rows={3}
                 value={editAssetState.form.specification}
                 inputProps={{ maxLength: 150 }}
+                error={
+                  editAssetState.error.specification != null
+                }
+
               />
             </FormControl>
 
@@ -116,6 +126,9 @@ const EditAsset = (props) => {
                   maxLength: 50,
                   endAdornment: <ArrowDropDownIcon />,
                 }}
+                error={
+                  editAssetState.error.name != null
+                }
               >
                 <FormControlLabel
                   value={"Available"}

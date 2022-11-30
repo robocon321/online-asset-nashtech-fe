@@ -12,3 +12,7 @@ export const validatePassword = (value) => {
   var re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
   return re.test(value);
 }
+
+export const validateDate = (date) => {
+  return date instanceof Date && !isNaN(date);
+}
