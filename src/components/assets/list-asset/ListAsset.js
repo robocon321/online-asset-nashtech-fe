@@ -328,7 +328,7 @@ function ListAsset() {
                 />
               <GridActionsCellItem
                 disabled
-                icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
+                icon={<HighlightOffRoundedIcon style={{ color: "#ECAFB6" }} />}
                 label="Delete"
               />
             </div>
