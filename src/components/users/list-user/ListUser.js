@@ -487,7 +487,7 @@ function ListUser() {
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <div>
-                <p>There are valid assignments belonging to the user.</p>
+                <p>There are valid assignments belonging to this user.</p>
                 <p>Please close all assignments before disabling user.</p>
               </div>
             </div>
