@@ -191,12 +191,7 @@ const EditUser = (props) => {
                 variant="contained"
                 color="error"
                 onClick={submit}
-                disabled={
-                  editUserState.form.joinedDate == "" ||
-                  editUserState.form.dob == "" ||
-                  editUserState.error.dob ||
-                  editUserState.error.joinedDate
-                }
+                disabled={!editUserState.enableSubmit}
               >
                 Save
               </Button>
