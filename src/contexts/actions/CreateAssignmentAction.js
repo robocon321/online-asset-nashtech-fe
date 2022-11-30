@@ -18,33 +18,44 @@ export const ACTIONS = {
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const loadAssetAction = () => async dispatch => {
-  await setTimeout(() => {
-    const assets = [];
-    for(var i = 0; i < 20; i ++) {
-      assets.push({
-        id: i,
-        name: 'Name ' + i,
-        code: 'Code ' + i,
-        categoryName: 'Category ' + i
-      })
+  await axios.get(`${API_ENDPOINT}/v1/assets`).then(response => {
+    setFieldPopupAssetAction('assets', response.data)(dispatch);
+  }).catch(error => {
+    if(error.response == undefined) {
+      setStatusAction({
+        isLoading: false,
+        message: error.message,
+        success: false
+      })(dispatch)
+    } else {
+      setStatusAction({
+        isLoading: false,
+        message: error.response.data,
+        success: false
+      })(dispatch)
     }
-    setFieldPopupAssetAction('assets', assets)(dispatch);
-  }, 1000)
+  });
+
 }
 
 export const loadUserAction = () => async dispatch => {
-  await setTimeout(() => {
-    const users = [];
-    for(var i = 0; i < 20; i ++) {
-      users.push({
-        id: i,
-        name: 'Name ' + i,
-        code: 'Code ' + i,
-        type: i % 2 ? 'STAFF' : 'ADMIN'
-      })
+  await axios.get(`${API_ENDPOINT}/v1/users`).then(response => {
+    setFieldPopupUserAction('users', response.data)(dispatch);
+  }).catch(error => {
+    if(error.response == undefined) {
+      setStatusAction({
+        isLoading: false,
+        message: error.message,
+        success: false
+      })(dispatch)
+    } else {
+      setStatusAction({
+        isLoading: false,
+        message: error.response.data,
+        success: false
+      })(dispatch)
     }
-    setFieldPopupUserAction('users', users)(dispatch);
-  }, 1000)
+  });
 }
 
 export const setFieldAction = (name, value) => (dispatch) => {
