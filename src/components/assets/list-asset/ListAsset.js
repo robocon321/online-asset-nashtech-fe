@@ -321,11 +321,11 @@ function ListAsset() {
         if (params.row.state === "Assigned") {
           return (
             <div>
-                <GridActionsCellItem
-                  disabled
-                  icon={<EditRoundedIcon />}
-                  label="edit"
-                />
+              <GridActionsCellItem
+                disabled
+                icon={<EditRoundedIcon />}
+                label="edit"
+              />
               <GridActionsCellItem
                 disabled
                 icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
@@ -480,6 +480,7 @@ function ListAsset() {
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={assetState.assets.filter((item) => {
+            console.log(item);
             if (
               listAssetState.assetState.length &&
               listAssetState.assetState[0] !== "All" &&
@@ -499,7 +500,7 @@ function ListAsset() {
                 item.code
                   .toUpperCase()
                   .includes(listAssetState.search.toUpperCase()) ||
-                item.categoryName
+                item.name
                   .toUpperCase()
                   .includes(listAssetState.search.toUpperCase())
               )
