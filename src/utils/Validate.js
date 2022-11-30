@@ -14,5 +14,15 @@ export const validatePassword = (value) => {
 }
 
 export const validateDate = (date) => {
+  const oneDay=1000*60*60*24;
+
+
+  const minDate = new Date('1900-01-01');
+  const maxDate = new Date('2100-01-01');
+
+  const diffMinDate = Math.round((minDate.getTime()-date.getTime())/oneDay)
+  const diffMaxDate = Math.round((maxDate.getTime()-date.getTime())/oneDay)
+
+  if(diffMinDate > 0 || diffMaxDate <= 0) return false;
   return date instanceof Date && !isNaN(date);
 }

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import { validateDate } from "../../utils/Validate";
 import {
   addErrorFieldAction,
   loadAssetAction,
@@ -108,7 +109,7 @@ const CreateAssignmentProvider = (props) => {
   };
 
   const validate = (name, value) => {
-    if (name == "assignedDate") validateDate(value);
+    if (name == "assignedDate") validateAssignedTime(value);
     else {
       if (name != "note") {
         validateDefault(name, value);
@@ -122,18 +123,25 @@ const CreateAssignmentProvider = (props) => {
     else removeErrorFieldAction(name)(dispatch);
   };
 
-  const validateDate = (value) => {
-    const currentTime = new Date();
+  const validateAssignedTime = (value) => {
     const assignedTime = new Date(value);
-    const oneDay=1000*60*60*24
-    const diff = Math.round((currentTime.getTime()-assignedTime.getTime())/oneDay)
-    if (diff > 1) {
-      addErrorFieldAction(
-        "assignedDate",
-        "Select only current or future date for Assigned Date"
-      )(dispatch);
+    if(!validateDate
+    (assignedTime)) {
+      addErrorFieldAction('assignedDate', '')(dispatch); 
+      return ;   
     } else {
-      removeErrorFieldAction("assignedDate")(dispatch);
+      const currentTime = new Date();
+      const oneDay=1000*60*60*24
+      const diff = Math.round((currentTime.getTime()-assignedTime.getTime())/oneDay)
+      if (diff > 1) {
+        addErrorFieldAction(
+          "assignedDate",
+          "Select only current or future date for Assigned Date"
+        )(dispatch);
+      } else {
+        removeErrorFieldAction("assignedDate")(dispatch);
+      }
+      
     }
   };
 
