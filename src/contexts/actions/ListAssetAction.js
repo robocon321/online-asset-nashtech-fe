@@ -92,14 +92,36 @@ export const setRemoveAssetDialogAction = (removeAssetDialog) => (dispatch) => {
   });
 };
 
-export const handleRemoveAction = (id, removeAssetFunc) => (dispatch) => {
+export const handleCheckRemoveAction = (id) => (dispatch) => {
   axios
-    .delete(`${API_ENDPOINT}/v1/assets`, { params: { id: id } })
+    .delete(`${API_ENDPOINT}/v1/assets/checkHasExistAssignment`, { params: { id: id } })
     .then((res) => {
-      setFieldRemoveAssetDialogAction("open", false)(dispatch);
-      removeAssetFunc(id);
+      console.log(res.data);
+      if (res.data === true) {
+        console.log("OPEN DIALOG");
+        setRemoveAssetDialogAction({
+          title: "Cannot Delete Asset",
+          content:
+            "Cannot delete the asset because it belongs to one or more historical assignments. If the asset is not able to be used anymore, please update its state in <a href=/assets/edit/" +
+            id +
+            "> Edit Asset page </a>",
+          hiddenButton: true,
+          assetId: id,
+          open: true,
+        })(dispatch);
+      }
+      else{
+        setRemoveAssetDialogAction({
+          title: "Are you sure?",
+          content:"Are you sure you want to delete this asset?",
+          hiddenButton: false,
+          assetId: id,
+          open: true,
+        })(dispatch);
+      }
     })
     .catch((err) => {
+      console.log(err);
       setRemoveAssetDialogAction({
         title: "Cannot Delete Asset",
         content: err.response.data.message,
@@ -110,12 +132,21 @@ export const handleRemoveAction = (id, removeAssetFunc) => (dispatch) => {
     });
 };
 
-export const setFieldRemoveAssetDialogAction = (name, value) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_FIELD_REMOVE_ASSET_DIALOG,
-    payload: {
-      name,
-      value,
-    },
-  });
+export const handleRemoveAction = (id) => (dispatch) => {
+  axios
+    .delete(`${API_ENDPOINT}/v1/assets`, { params: { id: id } })
+    .then((res) => {
+      console.log(res.data);
+      // setOpenAction(false)(dispatch);
+    })
+    .catch((err) => {
+      console.log(err);
+      setRemoveAssetDialogAction({
+        title: "Cannot Delete Asset",
+        content: err.response.data.message,
+        hiddenButton: true,
+        assetId: id,
+        open: true,
+      })(dispatch);
+    });
 };
