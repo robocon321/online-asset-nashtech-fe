@@ -116,7 +116,6 @@ const ListAssetProvider = (props) => {
     setAssetDetailAction(listAssetState.checkId)(dispatch);
   }, [listAssetState.checkId]);
 
-
   // Delete asset
   const handleRemove = () => {
     handleRemoveAction(listAssetState.removeAssetDialog.assetId)(dispatch);
