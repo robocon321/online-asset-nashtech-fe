@@ -158,7 +158,7 @@ const CreateAssignmentProvider = (props) => {
 
   const submit = () => {
     if (createAssignmentState.enableSubmit) {
-      submitAction(createAssignmentState.form, navigate, addNewAssignment)(dispatch);
+      submitAction({...createAssignmentState.form}, navigate, addNewAssignment)(dispatch);
     }
   };
 
