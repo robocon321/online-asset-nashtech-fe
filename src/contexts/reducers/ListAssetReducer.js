@@ -29,15 +29,12 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.SET_ASSET_CATE:
       state = { ...state, assetCategory: payload };
       break;
-      
+
     case ACTIONS.RESET_REMOVE_DIALOG:
       state = {
         ...state,
         removeAssetDialog: {
-          title: "Are you sure?",
-          content: "Do you want to delete this asset?",
-          hiddenButton: false,
-          assetId: 0,
+          ...state.removeAssetDialog,
           open: false,
         },
       };

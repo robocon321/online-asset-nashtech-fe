@@ -98,7 +98,6 @@ export const handleCheckRemoveAction = (id) => (dispatch) => {
     .then((res) => {
       console.log(res.data);
       if (res.data === true) {
-        console.log("OPEN DIALOG");
         setRemoveAssetDialogAction({
           title: "Cannot Delete Asset",
           content:
