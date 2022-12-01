@@ -6,7 +6,6 @@ import MainLayout from "./components/common/MainLayout";
 import { AppContext } from "./contexts/providers/AppProvider";
 import CreateUserPage from "./pages/CreateUserPage";
 import HomePage from "./pages/HomePage";
-// import ListUserPage from "./pages/ListUserPage";
 import NewListUserPage from "./pages/NewListUserPage";
 import EditUserPage from "./pages/EditUserPage";
 import LoginPage from "./pages/LoginPage";
@@ -19,6 +18,7 @@ import EditAssetPage from "./pages/EditAssetPage";
 import AssignmentLayout from "./components/assignments/AssignmentLayout";
 import CreateAssignmentPage from "./pages/CreateAssignmentPage";
 import EditAssignmentPage from "./pages/EditAssignmentPage";
+import ListAssignmentPage from "./pages/ListAssignmentPage";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -39,6 +39,7 @@ function App() {
               <Route path="edit/:id" element={<EditAssetPage />} />
             </Route>
             <Route path="assignments" element={<AssignmentLayout />}>
+              <Route path="" element={<ListAssignmentPage />}></Route>
               <Route path="create" element={<CreateAssignmentPage />} />            
               <Route path="edit/:id" element={<EditAssignmentPage />} />
             </Route>

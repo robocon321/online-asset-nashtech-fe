@@ -1,9 +1,14 @@
 import { createContext, useEffect, useReducer } from "react";
-import { addNewAssignmentAction, editAssignmentAction } from "../actions/AssignmentAction";
+import { addNewAssignmentAction, editAssignmentAction, loadAssignmentAction, setLoadingAction } from "../actions/AssignmentAction";
 import AssignmentReducer from '../reducers/AssignmentReducer';
 
 const initState = {
-  assignments: []
+  assignments: [],
+  status: {
+    isLoading: false,
+    success: true,
+    message: ''
+  }
 }
 
 export const AssignmentContext = createContext();
@@ -14,6 +19,16 @@ const AssignmentProvider = props => {
   useEffect(() => {
     console.log(assignmentState);
   }, [assignmentState]);
+  
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    setLoadingAction(true)(dispatch);
+    await loadAssignmentAction()(dispatch);
+    setLoadingAction(false)(dispatch);
+  }
 
   const addNewAssignment = (assignment) => {
     addNewAssignmentAction(assignment)(dispatch);

@@ -24,3 +24,7 @@ export const changeToSlug = (text) => {
   
   return slug;
 }
+
+export const reverse = (s) => {
+  return [...s].reverse().join("");
+}
