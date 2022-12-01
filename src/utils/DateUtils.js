@@ -58,3 +58,25 @@ export const convertDateByFormatEdit = (dateString, format) => {
   format = format.replace("dd", day.toString().padStart(2, "0"));
   return format;
 };
+
+export const convertDateByFormatEdit_v2 = (dateString, format) => {
+  const dateSplit = dateString.split('/');
+  const day = dateSplit[0];
+  const month = dateSplit[1];
+  const year = dateSplit[2];
+
+  format = format.replace("MM", month.toString().padStart(2, "0"));
+  if (format.indexOf("yyyy") > -1) {
+    format = format.replace("yyyy", year.toString());
+  } else if (format.indexOf("yy") > -1) {
+    format = format.replace("yy", year.toString().substr(2, 2));
+  }
+  format = format.replace("dd", day.toString().padStart(2, "0"));
+  return format;
+};
+
+export const compareDate = (date1, date2) => {
+  const oneDay=1000*60*60*24;
+  return Math.round((date1.getTime()-date2.getTime())/oneDay) == 0;
+
+}
