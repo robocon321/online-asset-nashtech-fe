@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { convertDateByFormat } from '../../utils/DateUtils';
 
 
 export const ACTIONS = {
@@ -114,15 +115,34 @@ export const setSuccesAction = (success) => dispatch => {
   })
 }
 
-export const submitAction = (form, navigate, addAssetFunc) => async (dispatch) => {
+export const submitAction = (form, navigate, addNewAssignmentFunc) => async (dispatch) => {
   setLoadingAction(true)(dispatch);
 
-  setTimeout(() => {
-    addAssetFunc(form);   
-    navigate("/assignments");
-  }, 1000);
+  form.assignedDate = convertDateByFormat(form.assignedDate, 'dd/MM/yyyy');
 
-  setLoadingAction(false)(dispatch);
+  await axios.post(`${API_ENDPOINT}/v1/assignments`, form).then(response => {
+    setStatusAction({
+      isLoading: false,
+      message: 'Successful!',
+      success: true
+    })(dispatch);
+    addNewAssignmentFunc(response.data);
+    navigate('/assignments');
+  }).catch(error => {
+    if(error.response == undefined) {
+      setStatusAction({
+        isLoading: false,
+        message: error.message,
+        success: false
+      })(dispatch)
+    } else {
+      setStatusAction({
+        isLoading: false,
+        message: error.response.data,
+        success: false
+      })(dispatch)
+    }
+  })
 }
 
 export const setFieldPopupAssetAction = (name, value) => dispatch => {

@@ -6,6 +6,7 @@ import {
   FormLabel,
   Popover,
   Radio,
+  Stack,
   TextField,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -87,13 +88,13 @@ const CreateAssignment = (props) => {
       flex: 2,
     },
     {
-      field: "name",
+      field: "fullName",
       headerName: "Full Name",
       minWidth: 100,
       flex: 1.5,
     },
     {
-      field: "type",
+      field: "role",
       headerName: "Type",
       minWidth: 150,
       flex: 1.5,
@@ -141,6 +142,23 @@ const CreateAssignment = (props) => {
     },
   ];
 
+  function AssetNoRowsOverlay() {
+    return (
+      <Stack height="100%" alignItems="center" justifyContent="center">
+        No Asset Found
+      </Stack>
+    );
+  }
+
+  function UserNoRowsOverlay() {
+    return (
+      <Stack height="100%" alignItems="center" justifyContent="center">
+        No User Found
+      </Stack>
+    );
+  }
+
+
   return (
     <>
       <Title title="Create New Assignment" />
@@ -158,7 +176,7 @@ const CreateAssignment = (props) => {
                   createAssignmentState.form.userId  != null
                     ? createAssignmentState.popupUser.users.find(
                         (item) => item.id == createAssignmentState.form.userId
-                      ).name
+                      ).fullName
                     : ""
                 }
                 InputProps={{
@@ -190,6 +208,7 @@ const CreateAssignment = (props) => {
                       id="search-user"
                       label="Search"
                       variant="outlined"
+                      value={createAssignmentState.popupUser.search}
                       onChange={(e) => changeSearchUser(e.target.value)}
                       InputProps={{
                         endAdornment: <SearchIcon />,
@@ -201,12 +220,13 @@ const CreateAssignment = (props) => {
                       rows={createAssignmentState.popupUser.users.filter(
                         (item) => {
                           const code = item.code.toUpperCase();
-                          const name = item.name.toUpperCase();
+                          const fullName = item.fullName.toUpperCase();
                           const search =
                             createAssignmentState.popupUser.search.toUpperCase();
-                          return code.includes(search) || name.includes(search);
+                          return code.includes(search) || fullName.includes(search);
                         }
                       )}
+                      components={{ NoRowsOverlay: UserNoRowsOverlay }}
                       columns={userColumns}
                       hideFooter
                     />
@@ -279,6 +299,7 @@ const CreateAssignment = (props) => {
                       id="search-asset"
                       label="Search"
                       variant="outlined"
+                      value={createAssignmentState.popupAsset.search}
                       onChange={(e) => changeSearchAsset(e.target.value)}
                       InputProps={{
                         endAdornment: <SearchIcon />,
@@ -296,6 +317,7 @@ const CreateAssignment = (props) => {
                           return code.includes(search) || name.includes(search);
                         }
                       )}
+                      components={{ NoRowsOverlay: AssetNoRowsOverlay }}
                       columns={assetColumns}
                       hideFooter
                     />
