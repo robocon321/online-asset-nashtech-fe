@@ -14,6 +14,10 @@ import {
   useGridSelector,
 } from "@mui/x-data-grid";
 
+import AcceptDialog from "./AcceptDialog";
+import DeclineDialog from "./DeclineDialog";
+import ReturnDialog from "./ReturnDialog";
+
 function AssignmentNoRowsOverlay() {
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
@@ -23,14 +27,20 @@ function AssignmentNoRowsOverlay() {
 }
 
 const ListAssignment = (props) => {
-  const { homeState, showDetailAssignment } =
-    useContext(HomeContext);
+  const {
+    homeState,
+    showDetailAssignment,
+
+    // Action
+    acceptAssignment,
+    declineAssignment,
+    returnAssignment,
+  } = useContext(HomeContext);
 
     function CustomPagination() {
       const apiRef = useGridApiContext();
       const page = useGridSelector(apiRef, gridPageSelector);
       const pageCount = useGridSelector(apiRef, gridPageCountSelector);
-      // const page = 0;
       return (
         <Pagination
           color="primary"
@@ -183,15 +193,18 @@ const ListAssignment = (props) => {
                 disabled
                 label="Accept"
                 icon={<CheckRoundedIcon />}
-                style={{ color: "#B1B1B1" }}
+                style={{ color: "#F6B4B8" }}
               />
               <GridActionsCellItem
                 disabled
                 label="Decline"
-                icon={<HighlightOffRoundedIcon style={{ color: "#F6B4B8" }} />}
+                icon={<HighlightOffRoundedIcon style={{ color: "#B1B1B1" }} />}
               />
               <GridActionsCellItem
                 label="Return"
+                onClick={() => {
+                  returnAssignment(params.row.id);
+                }}
                 icon={<ReplayRoundedIcon style={{ color: "blue" }} />}
               />
             </div>
@@ -199,10 +212,19 @@ const ListAssignment = (props) => {
         } else {
           return (
             <div>
-              <GridActionsCellItem label="Accept" icon={<CheckRoundedIcon />} />
+              <GridActionsCellItem
+                label="Accept"
+                icon={<CheckRoundedIcon style={{ color: "red" }} />}
+                onClick={() => {
+                  acceptAssignment(params.row.id);
+                }}
+              />
               <GridActionsCellItem
                 label="Decline"
-                icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
+                onClick={() => {
+                  declineAssignment(params.row.id);
+                }}
+                icon={<HighlightOffRoundedIcon style={{ color: "black" }} />}
               />
               <GridActionsCellItem
                 disabled
@@ -239,6 +261,10 @@ const ListAssignment = (props) => {
           }}
         />
       </Box>
+
+      <AcceptDialog />
+      <DeclineDialog />
+      <ReturnDialog />
     </>
   );
 };
