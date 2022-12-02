@@ -39,9 +39,11 @@ const reducer = (state, { type, payload }) => {
         },
       };
       break;
+    
     case ACTIONS.SET_REMOVE_ASSET_DIALOG:
       state = { ...state, removeAssetDialog: payload };
       break;
+    
     case ACTIONS.SET_FIELD_REMOVE_ASSET_DIALOG:
       state = {
         ...state,
