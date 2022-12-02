@@ -5,7 +5,9 @@ import "./App.css";
 import MainLayout from "./components/common/MainLayout";
 import { AppContext } from "./contexts/providers/AppProvider";
 import CreateUserPage from "./pages/CreateUserPage";
+
 import HomePage from "./pages/HomePage";
+
 import NewListUserPage from "./pages/NewListUserPage";
 import EditUserPage from "./pages/EditUserPage";
 import LoginPage from "./pages/LoginPage";
@@ -29,6 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route path="" element={<HomePage />} />
+
             <Route path="users" element={<UserLayout />}>
               <Route path="" element={<NewListUserPage />} />
               <Route path="create" element={<CreateUserPage />} />
@@ -36,12 +39,12 @@ function App() {
             </Route>
             <Route path="assets" element={<AssetLayout />}>
               <Route path="" element={<ListAssetPage />}></Route>
-              <Route path="create" element={<CreateAssetPage />} />              
+              <Route path="create" element={<CreateAssetPage />} />
               <Route path="edit/:id" element={<EditAssetPage />} />
             </Route>
             <Route path="assignments" element={<AssignmentLayout />}>
               <Route path="" element={<ListAssignmentPage />}></Route>
-              <Route path="create" element={<CreateAssignmentPage />} />            
+              <Route path="create" element={<CreateAssignmentPage />} />
               <Route path="edit/:id" element={<EditAssignmentPage />} />
             </Route>
             <Route path="/returnings" element={<RequestReturningPage />} />

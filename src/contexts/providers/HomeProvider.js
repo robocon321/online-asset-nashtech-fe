@@ -1,28 +1,71 @@
 import { createContext, useEffect, useReducer } from "react";
-import { setTitleAction } from "../actions/HomeAction";
+import {
+  loadHomeAction,
+  acceptAssignmentAction,
+  declineAssignmentAction,
+  returnRequestAssignmentAction,
+  setFieldModalAction,
+  detailAssignmentAction,
+} from "../actions/HomeAction";
 
 import HomeReducer from "../reducers/HomeReducer";
 
 export const HomeContext = createContext();
 
 const initState = {
-  title: "Home page",
+  listAssignment: [],
+  modalDetail: {
+    data: {},
+    open: false,
+  },
 };
 
-const HomeProvider = (props) => {
+const HomeAssignmentProvider = (props) => {
   const [homeState, dispatch] = useReducer(HomeReducer, initState);
 
-  const changeTitle = () => {
-    setTitleAction("Change title")(dispatch);
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    loadHomeAction()(dispatch);
   };
+
+  const changeOpenModalStatus = (value) => {
+    setFieldModalAction("open", value)(dispatch);
+  };
+
+  const showDetailAssignment = (id) => {
+    detailAssignmentAction(id)(dispatch);
+    changeOpenModalStatus(true);
+  };
+
+  const acceptAssignment = (id) => {
+    acceptAssignmentAction(id)(dispatch);
+  };
+
+  const declineAssignment = (id) => {
+    declineAssignmentAction(id)(dispatch);
+  };
+
+  const returnRequestAssignment = (id) => {
+    returnRequestAssignmentAction(id)(dispatch);
+  };
+
   const value = {
     homeState,
-    changeTitle,
+    acceptAssignment,
+    declineAssignment,
+    returnRequestAssignment,
+    changeOpenModalStatus,
+    showDetailAssignment,
   };
 
   return (
-    <HomeContext.Provider value={value}>{props.children}</HomeContext.Provider>
+    <HomeContext.Provider value={value}>
+      {props.children}
+    </HomeContext.Provider>
   );
 };
 
-export default HomeProvider;
+export default HomeAssignmentProvider;
