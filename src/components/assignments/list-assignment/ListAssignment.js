@@ -32,6 +32,7 @@ import {
   convertDateByFormatEdit_v2,
 } from "../../../utils/DateUtils";
 import ModalDetail from "./ModalDetail";
+import CustomPagination from "../../common/pagination/CustomPagination";
 
 const columns = [
   {
@@ -142,7 +143,7 @@ const ListAssignment = (props) => {
         <div>
           <Box>
             <FormControl>
-              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+              <InputLabel id="demo-simple-select-label">State</InputLabel>
               <Select
                 IconComponent={() => <FilterAltIcon />}
                 labelId="demo-simple-select-label"
@@ -156,14 +157,13 @@ const ListAssignment = (props) => {
               >
                 {states.map((item, index) => {
                   return (
-                    <MenuItem key={index} value={item}>
+                    <MenuItem key={index} value={item} onClick={() => changeTypeCondition(item)}>
                       <Checkbox
                         name="state"
                         value={item}
                         checked={listAssignmentState.conditions.states.includes(
                           item
-                        )}
-                        onChange={(e) => changeTypeCondition(e.target.value)}
+                        )}                        
                       />
                       <ListItemText primary={item} />
                     </MenuItem>
@@ -272,7 +272,7 @@ const ListAssignment = (props) => {
             );
           })}
           columns={columns}
-          components={{ NoRowsOverlay: AssignmentNoRowsOverlay }}
+          components={{ NoRowsOverlay: AssignmentNoRowsOverlay, Pagination: CustomPagination }}
           pageSize={10}
           disableSelectionOnClick
           onRowClick={() => changeOpenModalStatus(true)        

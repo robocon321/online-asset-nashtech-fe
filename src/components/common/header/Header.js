@@ -10,8 +10,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import Snackbar from "@mui/material/Snackbar";
-import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import styles from "./Header.module.css";
 import ChangePassword from "../dialog/changepassword/Changepassword";
@@ -23,6 +21,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 const drawerWidth = 300;
 
 const AppBar = styled(MuiAppBar, {
@@ -45,6 +45,39 @@ const AppBar = styled(MuiAppBar, {
 
 const Header = (props) => {
   const { appState } = React.useContext(AppContext);
+  const { pathname } = useLocation();
+  const [title, setTitle] = useState("NASHTECH");
+  
+  useEffect(() => {
+    setTitle(pathname);
+    if(pathname == '/users') {
+      setTitle("Manage User")
+    } else if(pathname == '/users/create') {
+      setTitle("Manage User > Create New User")
+    } else if(pathname.includes('/users/edit')) {
+      setTitle("Manage User > Edit User");
+    } else if(pathname == '/assets') {
+      setTitle("Manage Asset")
+    } else if(pathname == '/assets/create') {
+      setTitle("Manage Asset > Create New Asset")
+    } else if(pathname.includes('/assets/edit')) {
+      setTitle("Manage Asset > Edit Asset");
+    } else if(pathname == '/assignments') {
+      setTitle("Manage Assignment")
+    } else if(pathname == '/assignments/create') {
+      setTitle("Manage Assignment > Create New Assignment")
+    } else if(pathname.includes('/assignments/edit')) {
+      setTitle("Manage Assignment > Edit Assignment");
+    } else if(pathname.includes('/returnings')) {
+      setTitle("Request for Returning")
+    } else if(pathname.includes('/report')) {
+      setTitle("Report");
+    } else {
+      setTitle("NASHTECH")
+    }
+
+
+  }, [pathname]);
 
   const [open, setOpen] = React.useState(false);
   const [logout, setLogout] = React.useState(false);
@@ -151,7 +184,7 @@ const Header = (props) => {
           component="div"
           sx={{ display: { xs: "none", sm: "block" } }}
         >
-          NASHTECH
+          {title}
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: { md: "flex" } }}>

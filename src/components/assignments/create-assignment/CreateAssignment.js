@@ -18,6 +18,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useContext, useState } from "react";
 import { CreateAssignmentContext } from "../../../contexts/providers/CreateAssignmentProvider";
 import { DataGrid } from "@mui/x-data-grid";
+import CustomPagination from "../../common/pagination/CustomPagination";
 
 const CreateAssignment = (props) => {
   const {
@@ -209,6 +210,9 @@ const CreateAssignment = (props) => {
                       label="Search"
                       variant="outlined"
                       value={createAssignmentState.popupUser.search}
+                      inputProps={{
+                        maxLength: 50,
+                      }}
                       onChange={(e) => changeSearchUser(e.target.value)}
                       InputProps={{
                         endAdornment: <SearchIcon />,
@@ -226,9 +230,9 @@ const CreateAssignment = (props) => {
                           return code.includes(search) || fullName.includes(search);
                         }
                       )}
-                      components={{ NoRowsOverlay: UserNoRowsOverlay }}
                       columns={userColumns}
-                      hideFooter
+                      components={{ NoRowsOverlay: UserNoRowsOverlay, Pagination: CustomPagination }}
+                      pageSize={10}
                     />
                   </div>
                   <div className={styles["footer-popup"] + " " + styles["btn"]}>
@@ -301,6 +305,9 @@ const CreateAssignment = (props) => {
                       variant="outlined"
                       value={createAssignmentState.popupAsset.search}
                       onChange={(e) => changeSearchAsset(e.target.value)}
+                      inputProps={{
+                        maxLength: 50,
+                      }}
                       InputProps={{
                         endAdornment: <SearchIcon />,
                       }}
@@ -317,9 +324,9 @@ const CreateAssignment = (props) => {
                           return code.includes(search) || name.includes(search);
                         }
                       )}
-                      components={{ NoRowsOverlay: AssetNoRowsOverlay }}
                       columns={assetColumns}
-                      hideFooter
+                      components={{ NoRowsOverlay: AssetNoRowsOverlay, Pagination: CustomPagination }}
+                      pageSize={10}
                     />
                   </div>
                   <div className={styles["footer-popup"] + " " + styles["btn"]}>
