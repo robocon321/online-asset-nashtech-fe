@@ -6,6 +6,9 @@ import {
   returnRequestAssignmentAction,
   setFieldModalAction,
   detailAssignmentAction,
+  setFieldDialogAcceptAction,
+  setFieldDialogDeclineAction,
+  setFieldDialogReturnAction,
 } from "../actions/HomeAction";
 
 import HomeReducer from "../reducers/HomeReducer";
@@ -14,7 +17,23 @@ export const HomeContext = createContext();
 
 const initState = {
   listAssignment: [],
+
   modalDetail: {
+    data: {},
+    open: false,
+  },
+
+  dialogAccept: {
+    data: {},
+    open: false,
+  },
+
+  dialogDecline: {
+    data: {},
+    open: false,
+  },
+
+  dialogReturn: {
     data: {},
     open: false,
   },
@@ -35,6 +54,18 @@ const HomeAssignmentProvider = (props) => {
     setFieldModalAction("open", value)(dispatch);
   };
 
+  const changeOpenDialogAcceptStatus = (value) => {
+    setFieldDialogAcceptAction("open", value)(dispatch);
+  };
+
+  const changeOpenDialogDeclineStatus = (value) => {
+    setFieldDialogDeclineAction("open", value)(dispatch);
+  };
+
+  const changeOpenDialogReturnStatus = (value) => {
+    setFieldDialogReturnAction("open", value)(dispatch);
+  };
+
   const showDetailAssignment = (id) => {
     detailAssignmentAction(id)(dispatch);
     changeOpenModalStatus(true);
@@ -42,23 +73,29 @@ const HomeAssignmentProvider = (props) => {
 
   const acceptAssignment = (id) => {
     acceptAssignmentAction(id)(dispatch);
+    changeOpenDialogAcceptStatus(true);
   };
 
   const declineAssignment = (id) => {
     declineAssignmentAction(id)(dispatch);
+    changeOpenDialogDeclineStatus(true);
   };
 
-  const returnRequestAssignment = (id) => {
+  const returnAssignment = (id) => {
     returnRequestAssignmentAction(id)(dispatch);
+    changeOpenDialogReturnStatus(true);
   };
 
   const value = {
     homeState,
     acceptAssignment,
     declineAssignment,
-    returnRequestAssignment,
-    changeOpenModalStatus,
+    returnAssignment,
     showDetailAssignment,
+    changeOpenModalStatus,
+    changeOpenDialogAcceptStatus,
+    changeOpenDialogDeclineStatus,
+    changeOpenDialogReturnStatus,
   };
 
   return (
