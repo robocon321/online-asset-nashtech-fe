@@ -237,7 +237,6 @@ const ListAssignment = (props) => {
             Pagination: CustomPagination,
             NoRowsOverlay: AssignmentNoRowsOverlay,
           }}
-          // onRowClick={() => showDetailAssignment(params.row.id)}
         />
       </Box>
     </>
