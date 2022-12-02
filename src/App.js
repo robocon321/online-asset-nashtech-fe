@@ -19,6 +19,7 @@ import AssignmentLayout from "./components/assignments/AssignmentLayout";
 import CreateAssignmentPage from "./pages/CreateAssignmentPage";
 import EditAssignmentPage from "./pages/EditAssignmentPage";
 import ListAssignmentPage from "./pages/ListAssignmentPage";
+import RequestReturningPage from "./pages/RequestReturningPage";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -43,6 +44,7 @@ function App() {
               <Route path="create" element={<CreateAssignmentPage />} />            
               <Route path="edit/:id" element={<EditAssignmentPage />} />
             </Route>
+            <Route path="/returnings" element={<RequestReturningPage />} />
             {appState.user == null && (
               <Route path="/login" element={<LoginPage />} />
             )}
