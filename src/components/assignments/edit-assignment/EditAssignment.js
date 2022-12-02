@@ -6,6 +6,7 @@ import {
   FormLabel,
   Popover,
   Radio,
+  Stack,
   TextField,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -141,9 +142,25 @@ const EditAssignment = (props) => {
     },
   ];
 
+  function AssetNoRowsOverlay() {
+    return (
+      <Stack height="100%" alignItems="center" justifyContent="center">
+        No Asset Found
+      </Stack>
+    );
+  }
+
+  function UserNoRowsOverlay() {
+    return (
+      <Stack height="100%" alignItems="center" justifyContent="center">
+        No User Found
+      </Stack>
+    );
+  }
+
   return (
     <>
-      <Title title="Edit New Assignment" />
+      <Title title="Edit Assignment" />
       <Card>
         <CardContent>
           <form className={styles["edit-assignment"]}>
@@ -155,10 +172,10 @@ const EditAssignment = (props) => {
                 name="user"
                 disabled
                 value={
-                  editAssignmentState.form.userId != null
+                  editAssignmentState.form.userId  != null
                     ? editAssignmentState.popupUser.users.find(
                         (item) => item.id == editAssignmentState.form.userId
-                      ).name
+                      ).fullName
                     : ""
                 }
                 InputProps={{
@@ -201,12 +218,13 @@ const EditAssignment = (props) => {
                       rows={editAssignmentState.popupUser.users.filter(
                         (item) => {
                           const code = item.code.toUpperCase();
-                          const name = item.name.toUpperCase();
+                          const fullName = item.fullName.toUpperCase();
                           const search =
-                            editAssignmentState.popupUser.search.toUpperCase();
-                          return code.includes(search) || name.includes(search);
+                          editAssignmentState.popupUser.search.toUpperCase();
+                          return code.includes(search) || fullName.includes(search);
                         }
                       )}
+                      components={{ NoRowsOverlay: UserNoRowsOverlay }}
                       columns={userColumns}
                       hideFooter
                     />
@@ -296,6 +314,7 @@ const EditAssignment = (props) => {
                           return code.includes(search) || name.includes(search);
                         }
                       )}
+                      components={{ NoRowsOverlay: AssetNoRowsOverlay }}
                       columns={assetColumns}
                       hideFooter
                     />
