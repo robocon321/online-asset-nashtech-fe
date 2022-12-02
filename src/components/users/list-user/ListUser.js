@@ -30,6 +30,7 @@ import { ListUserContext } from "../../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
 import { UserContext } from "../../../contexts/providers/UserProvider";
 import Stack from "@mui/material/Stack";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -45,6 +46,7 @@ const Search = styled("div")(({ theme }) => ({
     width: "auto",
   },
 }));
+
 function NoRowsOverlay() {
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
@@ -72,6 +74,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",

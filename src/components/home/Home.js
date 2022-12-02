@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Pagination, Stack } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { useContext } from "react";
 import Title from "../common/title/Title";
@@ -7,6 +7,12 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
 import {HomeContext} from "../../contexts/providers/HomeProvider";
+import {
+  gridPageCountSelector,
+  gridPageSelector,
+  useGridApiContext,
+  useGridSelector,
+} from "@mui/x-data-grid";
 
 function AssignmentNoRowsOverlay() {
   return (
@@ -19,6 +25,23 @@ function AssignmentNoRowsOverlay() {
 const ListAssignment = (props) => {
   const { homeState, showDetailAssignment } =
     useContext(HomeContext);
+
+    function CustomPagination() {
+      const apiRef = useGridApiContext();
+      const page = useGridSelector(apiRef, gridPageSelector);
+      const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+      // const page = 0;
+      return (
+        <Pagination
+          color="primary"
+          count={pageCount}
+          page={page + 1}
+          onChange={(event, value) => apiRef.current.setPage(value - 1)}
+          showFirstButton
+          showLastButton
+        />
+      );
+    }
 
   const columns = [
     {
@@ -204,13 +227,16 @@ const ListAssignment = (props) => {
           justifyContent: "space-between",
         }}
       ></div>
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={homeState.listAssignment}
           columns={columns}
           pageSize={10}
           disableSelectionOnClick
-          components={{ NoRowsOverlay: AssignmentNoRowsOverlay }}
+          components={{
+            Pagination: CustomPagination,
+            NoRowsOverlay: AssignmentNoRowsOverlay,
+          }}
           // onRowClick={() => showDetailAssignment(params.row.id)}
         />
       </Box>
