@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { convertDateByFormat, convertDateByFormatEdit } from '../../utils/DateUtils';
 
 
 export const ACTIONS = {
@@ -14,44 +15,67 @@ export const ACTIONS = {
   SET_STATUS: 'SET_STATUS',
 
   SET_FIELD_POPUP_ASSET: 'SET_FIELD_POPUP_ASSET',
+  ADD_ASSET_POPUP_ASSET: 'ADD_ASSET_POPUP_ASSET',
+
   SET_FIELD_POPUP_USER: 'SET_FIELD_POPUP_USER'
 }
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const loadAssignmentAction = (id) => async dispatch => {
-  await setTimeout(() => {
-    const now = new Date();
+  await axios.get(`${API_ENDPOINT}/v1/assignments/update/${id}`).then(response => {
+    let { id, user, asset, assignedDate, note } = response.data;
+    if(assignedDate) assignedDate = convertDateByFormatEdit(assignedDate, "yyyy-MM-dd");
+
     dispatch({
       type: ACTIONS.SET_ASSIGNMENT,
       payload: {
-        id: id,
-        userId: null,
-        assetId: null,
-        assignedDate: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
-        note: "Nothing"    
-      }
-    })
+        id,
+        userId: user.id,
+        assetId: asset.id,
+        assignedDate,
+        note,
+      },
+    });
+
+    dispatch({
+      type: ACTIONS.ADD_ASSET_POPUP_ASSET,
+      payload: asset
+    });
 
     dispatch({
       type: ACTIONS.SET_FIELD_POPUP_USER,
       payload: {
         name: 'selected',
-        value: 10
+        value: user.id
       }
-    })
+    });
 
     dispatch({
       type: ACTIONS.SET_FIELD_POPUP_ASSET,
       payload: {
         name: 'selected',
-        value: 12
+        value: asset.id
       }
     });
-  }, 1000)
+  }).catch(error => {
+    if(error.response == undefined) {
+      setStatusAction({
+        isLoading: false,
+        message: error.message,
+        success: false
+      })(dispatch)
+    } else {
+      setStatusAction({
+        isLoading: false,
+        message: error.response.data,
+        success: false
+      })(dispatch)
+    }
+  })
 }
 
 export const loadAssetAction = () => async dispatch => {
-  await axios.get(`${API_ENDPOINT}/v1/assets`).then(response => {
+  await axios.get(`${API_ENDPOINT}/v1/assets/getByStateAndUser`).then(response => {
     setFieldPopupAssetAction('assets', response.data)(dispatch);
   }).catch(error => {
     if(error.response == undefined) {
@@ -150,12 +174,32 @@ export const setSuccesAction = (success) => dispatch => {
 export const submitAction = (form, navigate, editAssignmentFunc) => async (dispatch) => {
   setLoadingAction(true)(dispatch);
 
-  setTimeout(() => {
-    editAssignmentFunc(form);   
-    navigate("/assignments");
-  }, 1000);
+  form.assignedDate = convertDateByFormat(form.assignedDate, 'dd/MM/yyyy');
 
-  setLoadingAction(false)(dispatch);
+  await axios.post(`${API_ENDPOINT}/v1/assignments`, form).then(response => {
+    setStatusAction({
+      isLoading: false,
+      message: 'Successful!',
+      success: true
+    })(dispatch);
+    editAssignmentFunc(response.data);
+    navigate('/assignments');
+  }).catch(error => {
+    if(error.response == undefined) {
+      setStatusAction({
+        isLoading: false,
+        message: error.message,
+        success: false
+      })(dispatch)
+    } else {
+      setStatusAction({
+        isLoading: false,
+        message: error.response.data,
+        success: false
+      })(dispatch)
+    }
+  })
+
 }
 
 export const setFieldPopupAssetAction = (name, value) => dispatch => {

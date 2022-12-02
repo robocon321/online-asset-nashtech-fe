@@ -164,7 +164,7 @@ const EditAssignmentProvider = (props) => {
 
   const submit = () => {
     if (editAssignmentState.enableSubmit) {
-      submitAction(editAssignmentState.form, navigate, editAssignment)(dispatch);
+      submitAction({...editAssignmentState.form}, navigate, editAssignment)(dispatch);
     }
   };
 
