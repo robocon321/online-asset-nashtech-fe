@@ -19,7 +19,7 @@ export const ACTIONS = {
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const loadAssetAction = () => async dispatch => {
-  await axios.get(`${API_ENDPOINT}/v1/assets`).then(response => {
+  await axios.get(`${API_ENDPOINT}/v1/assets/getByStateAndUser`).then(response => {
     setFieldPopupAssetAction('assets', response.data)(dispatch);
   }).catch(error => {
     if(error.response == undefined) {

@@ -13,6 +13,7 @@ import { Link, useLocation } from "react-router-dom";
 import styles from "./Sidebar.module.css";
 import { AppContext } from "../../../contexts/providers/AppProvider";
 import { useContext } from "react";
+import Title from "../title/Title";
 
 const drawerWidth = 300;
 
@@ -60,6 +61,7 @@ const Sidebar = (props) => {
         <div className={styles["wrap-logo"]}>
           <img className={styles["logo"]} src="/logo.png" alt="Not found" />
         </div>
+        <Title title="Online Asset Management" />
       </ListItem>
 
       <ListItem disablePadding sx={{ display: "block" }}>
@@ -97,19 +99,25 @@ const Sidebar = (props) => {
       )
     }
 
-    <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/assignments' className={path == 'assignments' ? styles['active'] : ''}>
-        <span className={styles['icon']}><AssignmentIcon /></span>
-        <span className={styles['title']}>Manage Assignment</span>
-      </Link>
-    </ListItem>
+    {
+      appState.user.role == 'ADMIN' && (
+      <ListItem disablePadding sx={{ display: 'block' }}>
+        <Link to='/assignments' className={path == 'assignments' ? styles['active'] : ''}>
+          <span className={styles['icon']}><AssignmentIcon /></span>
+          <span className={styles['title']}>Manage Assignment</span>
+        </Link>
+      </ListItem>
+    )}
 
-    <ListItem disablePadding sx={{ display: 'block' }}>
-      <Link to='/returnings' className={path == 'request' ? styles['active'] : ''}>
-        <span className={styles['icon']}><AssignmentReturnIcon /></span>
-        <span className={styles['title']}>Manage for Returning</span>
-      </Link>
-    </ListItem>
+    {
+      appState.user.role == 'ADMIN' && (
+      <ListItem disablePadding sx={{ display: 'block' }}>
+        <Link to='/returnings' className={path == 'request' ? styles['active'] : ''}>
+          <span className={styles['icon']}><AssignmentReturnIcon /></span>
+          <span className={styles['title']}>Manage for Returning</span>
+        </Link>
+      </ListItem>
+    )}
 
     {
       appState.user.role == 'ADMIN' && (
