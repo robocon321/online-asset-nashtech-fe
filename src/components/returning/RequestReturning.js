@@ -248,11 +248,6 @@ const RequestReturning = (props) => {
                   .toUpperCase()
                   .includes(
                     requestReturningState.conditions.search.toUpperCase()
-                  ) ||
-                item.assignedTo
-                  .toUpperCase()
-                  .includes(
-                    requestReturningState.conditions.search.toUpperCase()
                   ))
             );
           })}
