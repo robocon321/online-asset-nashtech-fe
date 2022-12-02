@@ -1,7 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { validateDate } from "../../utils/Validate";
-import { loadAssignmentAction } from "../actions/AssignmentAction";
-import { setLoadingAction } from "../actions/CreateAssignmentAction";
 import { setFieldConditionAction, setFieldModalAction } from "../actions/ListAssignmentAction";
 
 import ListAssignmentReducer from "../reducers/ListAssignmentReducer";
@@ -37,7 +35,11 @@ const ListAssignmentProvider = (props) => {
         states.push(stateElements[i].value);
       }
     }
-    if(value == "All") states = ["All"];
+    
+    if(states.includes(value)) states = states.filter(item => item != value);
+    else states.push(value);
+
+    if(value == "All" || states.length == 0) states = ["All"];
     else states = states.filter(item => item != "All");
     setFieldConditionAction('states', states)(dispatch);
   }

@@ -49,6 +49,12 @@ const reducer = (state, { type, payload }) => {
         [payload.name]: payload.value
       }};
       break;
+    case ACTIONS.ADD_ASSET_POPUP_ASSET:
+      state = { ...state, popupAsset: {
+        ...state.popupAsset,
+        assets: [payload, ...state.popupAsset.assets]
+      }}
+      break;
     case ACTIONS.SET_FIELD_POPUP_USER:
       state = { ...state, popupUser: {
         ...state.popupUser,

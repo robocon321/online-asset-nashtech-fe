@@ -18,6 +18,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useContext, useState } from "react";
 import { EditAssignmentContext } from "../../../contexts/providers/EditAssignmentProvider";
 import { DataGrid } from "@mui/x-data-grid";
+import CustomPagination from "../../common/pagination/CustomPagination";
 
 const EditAssignment = (props) => {
   const {
@@ -88,13 +89,13 @@ const EditAssignment = (props) => {
       flex: 2,
     },
     {
-      field: "name",
+      field: "fullName",
       headerName: "Full Name",
       minWidth: 100,
       flex: 1.5,
     },
     {
-      field: "type",
+      field: "role",
       headerName: "Type",
       minWidth: 150,
       flex: 1.5,
@@ -141,6 +142,7 @@ const EditAssignment = (props) => {
       flex: 1.5,
     },
   ];
+
 
   function AssetNoRowsOverlay() {
     return (
@@ -208,6 +210,9 @@ const EditAssignment = (props) => {
                       label="Search"
                       variant="outlined"
                       onChange={(e) => changeSearchUser(e.target.value)}
+                      inputProps={{
+                        maxLength: 50,
+                      }}
                       InputProps={{
                         endAdornment: <SearchIcon />,
                       }}
@@ -224,9 +229,9 @@ const EditAssignment = (props) => {
                           return code.includes(search) || fullName.includes(search);
                         }
                       )}
-                      components={{ NoRowsOverlay: UserNoRowsOverlay }}
                       columns={userColumns}
-                      hideFooter
+                      components={{ NoRowsOverlay: UserNoRowsOverlay, Pagination: CustomPagination }}
+                      pageSize={10}
                     />
                   </div>
                   <div className={styles["footer-popup"] + " " + styles["btn"]}>
@@ -297,7 +302,11 @@ const EditAssignment = (props) => {
                       id="search-asset"
                       label="Search"
                       variant="outlined"
+                      value={editAssignmentState.popupAsset.search}
                       onChange={(e) => changeSearchAsset(e.target.value)}
+                      inputProps={{
+                        maxLength: 50,
+                      }}
                       InputProps={{
                         endAdornment: <SearchIcon />,
                       }}
@@ -310,13 +319,13 @@ const EditAssignment = (props) => {
                           const code = item.code.toUpperCase();
                           const name = item.name.toUpperCase();
                           const search =
-                            editAssignmentState.popupAsset.search.toUpperCase();
+                          editAssignmentState.popupAsset.search.toUpperCase();
                           return code.includes(search) || name.includes(search);
                         }
                       )}
-                      components={{ NoRowsOverlay: AssetNoRowsOverlay }}
                       columns={assetColumns}
-                      hideFooter
+                      components={{ NoRowsOverlay: AssetNoRowsOverlay, Pagination: CustomPagination }}
+                      pageSize={10}
                     />
                   </div>
                   <div className={styles["footer-popup"] + " " + styles["btn"]}>
