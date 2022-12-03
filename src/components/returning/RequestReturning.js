@@ -13,8 +13,6 @@ import {
 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
-import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
-import ReplayIcon from "@mui/icons-material/Replay";
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -31,6 +29,7 @@ import {
   compareDate,
   convertDateByFormatEdit_v2,
 } from "../../utils/DateUtils";
+import CustomPagination from "../common/pagination/CustomPagination";
 
 const columns = [
   {
@@ -142,13 +141,14 @@ const RequestReturning = (props) => {
         <div>
           <Box>
             <FormControl>
-              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+              <InputLabel id="demo-simple-select-label">State</InputLabel>
               <Select
                 IconComponent={() => <FilterAltIcon />}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 multiple
                 value={requestReturningState.conditions.states}
+                onChange={(e) => changeTypeCondition(e.target.value)}
                 renderValue={() =>
                   requestReturningState.conditions.states.join(", ")
                 }
@@ -156,20 +156,22 @@ const RequestReturning = (props) => {
               >
                 {states.map((item, index) => {
                   return (
-                    <MenuItem key={index} value={item}>
+                    <MenuItem
+                      key={index}
+                      value={item}
+                    >
                       <Checkbox
                         name="state"
-                        value={item}
                         checked={requestReturningState.conditions.states.includes(
                           item
                         )}
-                        onChange={(e) => changeTypeCondition(e.target.value)}
                       />
                       <ListItemText primary={item} />
                     </MenuItem>
                   );
                 })}
               </Select>
+
             </FormControl>
             <FormControl style={{ marginLeft: "10px" }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -252,7 +254,10 @@ const RequestReturning = (props) => {
             );
           })}
           columns={columns}
-          components={{ NoRowsOverlay: RequestReturningNoRowsOverlay }}
+          components={{ 
+            NoRowsOverlay: RequestReturningNoRowsOverlay,
+            Pagination: CustomPagination
+          }}
           pageSize={10}
           disableSelectionOnClick
           onRowClick={() => changeOpenModalStatus(true)        

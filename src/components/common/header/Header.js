@@ -49,8 +49,9 @@ const Header = (props) => {
   const [title, setTitle] = useState("NASHTECH");
   
   useEffect(() => {
-    setTitle(pathname);
-    if(pathname == '/users') {
+    if(pathname == '/') {
+      setTitle("Home")
+    } else if(pathname == '/users') {
       setTitle("Manage User")
     } else if(pathname == '/users/create') {
       setTitle("Manage User > Create New User")

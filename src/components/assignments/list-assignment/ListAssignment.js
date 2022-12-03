@@ -34,81 +34,6 @@ import {
 import ModalDetail from "./ModalDetail";
 import CustomPagination from "../../common/pagination/CustomPagination";
 
-const columns = [
-  {
-    field: "id",
-    headerName: "No.",
-    minWidth: 100,
-    flex: 1,
-  },
-  {
-    field: "assetCode",
-    headerName: "Asset Code",
-    minWidth: 100,
-    flex: 1.5,
-  },
-  {
-    field: "assetName",
-    headerName: "Asset Name",
-    minWidth: 200,
-    flex: 2,
-  },
-  {
-    field: "assignedTo",
-    headerName: "Assigned to",
-    minWidth: 150,
-    flex: 1.5,
-  },
-  {
-    field: "assignedBy",
-    headerName: "Assigned by",
-    minWidth: 150,
-    flex: 1.5,
-  },
-  {
-    field: "assignedDate",
-    headerName: "Date",
-    minWidth: 150,
-    flex: 1.5,
-  },
-  {
-    field: "state",
-    headerName: "State",
-    minWidth: 200,
-    flex: 2,
-  },
-  {
-    headerName: "",
-    minWidth: 150,
-    flex: 1.5,
-    renderCell: (params) => {
-      return (
-        <div>
-          <Link to={"/assignments/edit/" + params.id}>
-            <GridActionsCellItem icon={<EditRoundedIcon />} label="edit" />
-          </Link>
-          <GridActionsCellItem
-            icon={<HighlightOffRoundedIcon style={{ color: "red" }} />}
-            label="Delete"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("Delete: ", params.id)
-            }}
-          />
-          <GridActionsCellItem
-            icon={<ReplayIcon style={{ color: "blue" }} />}
-            label="Return"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("Return: ", params.id)
-            }}
-          />
-        </div>
-      );
-    },
-  },
-];
-
 function AssignmentNoRowsOverlay() {
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
@@ -124,10 +49,109 @@ const ListAssignment = (props) => {
     listAssignmentState,
     assignmentState,
     changeTypeCondition,
+    changeCheckboxTypeCondtion,
     changeDateCondition,
     changeSearchCondition,
-    changeOpenModalStatus
+    showDetailAssignment,
+    navigate
   } = useContext(ListAssignmentContext);
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "No.",
+      minWidth: 100,
+      flex: 1,
+    },
+    {
+      field: "assetCode",
+      headerName: "Asset Code",
+      minWidth: 100,
+      flex: 1.5,
+    },
+    {
+      field: "assetName",
+      headerName: "Asset Name",
+      minWidth: 200,
+      flex: 2,
+    },
+    {
+      field: "assignedTo",
+      headerName: "Assigned to",
+      minWidth: 150,
+      flex: 1.5,
+    },
+    {
+      field: "assignedBy",
+      headerName: "Assigned by",
+      minWidth: 150,
+      flex: 1.5,
+    },
+    {
+      field: "assignedDate",
+      headerName: "Date",
+      minWidth: 150,
+      flex: 1.5,
+    },
+    {
+      field: "state",
+      headerName: "State",
+      minWidth: 200,
+      flex: 2,
+    },
+    {
+      headerName: "",
+      minWidth: 150,
+      flex: 1.5,
+      sortable: false,
+      renderCell: (params) => {
+        const isEdit = params.row.state == "Waiting for acceptance";
+        const isDelete = params.row.state == "Waiting for acceptance" || params.row.state == "Declined";
+        const isReturn = params.row.state == "Accepted" && !params.row.stateReturnRequest;
+  
+        return (
+          <div>
+            <GridActionsCellItem 
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate("/assignments/edit/" + params.id);
+              }}
+              icon={<EditRoundedIcon />} 
+              disabled={!isEdit}
+              style={{
+                color: isEdit ? "black" : "#BCBCBC"
+              }} label="edit" />
+            <GridActionsCellItem
+              disabled={!isDelete}
+              icon={
+                <HighlightOffRoundedIcon
+                  style={{
+                    color:
+                      isDelete ? "red" : "#F6B4B8"
+                  }}
+                />
+              }
+              label="Delete"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log("Delete: ", params.id);
+              }}
+            />
+            <GridActionsCellItem
+              disabled={!isReturn}
+              icon={<ReplayIcon style={{ color: isReturn ? "blue" : "#BCBCBC" }} />}
+              label="Return"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log("Return: ", params.id);
+              }}
+            />
+          </div>
+        );
+      },
+    },
+  ];
+  
 
   return (
     <>
@@ -150,6 +174,7 @@ const ListAssignment = (props) => {
                 id="demo-simple-select"
                 multiple
                 value={listAssignmentState.conditions.states}
+                onChange={(e) => changeTypeCondition(e.target.value)}
                 renderValue={() =>
                   listAssignmentState.conditions.states.join(", ")
                 }
@@ -157,13 +182,15 @@ const ListAssignment = (props) => {
               >
                 {states.map((item, index) => {
                   return (
-                    <MenuItem key={index} value={item} onClick={() => changeTypeCondition(item)}>
+                    <MenuItem
+                      key={index}
+                      value={item}
+                    >
                       <Checkbox
                         name="state"
-                        value={item}
                         checked={listAssignmentState.conditions.states.includes(
                           item
-                        )}                        
+                        )}
                       />
                       <ListItemText primary={item} />
                     </MenuItem>
@@ -272,11 +299,13 @@ const ListAssignment = (props) => {
             );
           })}
           columns={columns}
-          components={{ NoRowsOverlay: AssignmentNoRowsOverlay, Pagination: CustomPagination }}
+          components={{
+            NoRowsOverlay: AssignmentNoRowsOverlay,
+            Pagination: CustomPagination,
+          }}
           pageSize={10}
           disableSelectionOnClick
-          onRowClick={() => changeOpenModalStatus(true)        
-          }
+          onRowClick={(params) => showDetailAssignment(params.id)}
         />
       </Box>
     </>

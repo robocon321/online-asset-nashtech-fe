@@ -52,7 +52,7 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.ADD_ASSET_POPUP_ASSET:
       state = { ...state, popupAsset: {
         ...state.popupAsset,
-        assets: [payload, ...state.popupAsset.assets]
+        assets: [payload, ...state.popupAsset.assets.filter(item => item.id != payload.id)]
       }}
       break;
     case ACTIONS.SET_FIELD_POPUP_USER:

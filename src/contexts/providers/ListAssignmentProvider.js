@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 import { validateDate } from "../../utils/Validate";
+import { loadDetailAssignmentAction, setLoadingAction } from "../actions/AssignmentAction";
 import { setFieldConditionAction, setFieldModalAction } from "../actions/ListAssignmentAction";
 
 import ListAssignmentReducer from "../reducers/ListAssignmentReducer";
@@ -15,32 +17,23 @@ const initState = {
   },
   modalDetail: {
     open: false,
-    data: null
+    data: {}
   }
 };
 
 const ListAssignmentProvider = (props) => {
   const [listAssignmentState, dispatch] = useReducer(ListAssignmentReducer, initState);
   const { assignmentState } = useContext(AssignmentContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(listAssignmentState);
   }, [listAssignmentState]);
 
   const changeTypeCondition = (value) => {
-    const stateElements = document.getElementsByName("state");
     let states = [];
-    for(var i = 0 ; i < stateElements.length; i ++) {
-      if(stateElements[i].checked) {
-        states.push(stateElements[i].value);
-      }
-    }
-    
-    if(states.includes(value)) states = states.filter(item => item != value);
-    else states.push(value);
-
-    if(value == "All" || states.length == 0) states = ["All"];
-    else states = states.filter(item => item != "All");
+    if(value.length == 0 || (value.includes("All") && !listAssignmentState.conditions.states.includes("All"))) states = ['All'];
+    else states = value.filter(item => item != "All");
     setFieldConditionAction('states', states)(dispatch);
   }
 
@@ -59,8 +52,10 @@ const ListAssignmentProvider = (props) => {
     setFieldModalAction('open', value)(dispatch);
   }
 
-  const changeDataModal = (id) => {
-    setFieldModalAction('data', value)(dispatch);
+  const showDetailAssignment = async (id) => {
+    setLoadingAction(true)(dispatch);
+    await loadDetailAssignmentAction(id)(dispatch);
+    setLoadingAction(false)(dispatch);
   }
 
   const value = {
@@ -70,7 +65,8 @@ const ListAssignmentProvider = (props) => {
     changeDateCondition,
     changeSearchCondition,
     changeOpenModalStatus,
-    changeDataModal
+    showDetailAssignment,
+    navigate
   };
 
   return (

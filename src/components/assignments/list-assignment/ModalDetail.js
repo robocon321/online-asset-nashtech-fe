@@ -41,7 +41,7 @@ const ModalDetail = props => {
           justifyContent: "space-between",
         }}
       >
-        <Title title="Detailed Asset Information" />
+        <Title title="Detailed Assignment Information" />
         <IconButton 
           onClick={() => changeOpenModalStatus(false)}
           >
@@ -52,27 +52,25 @@ const ModalDetail = props => {
         </IconButton>
       </div>
       <div style={{ display: "flex" }}>
-        <div>
+        <div style={{width: "150px"}}>
           <p>Asset Code</p>
           <p>Asset Name</p>
-          <p>Category</p>
-          <p>Installed Date </p>
-          <p>State </p>
-          <p>Location </p>
           <p>Specification</p>
+          <p>Assigned to</p>
+          <p>Assigned by</p>
+          <p>Assigned Date </p>
+          <p>State </p>
+          <p>Note </p>
         </div>
         <div style={{ paddingLeft: "15px" }}>
-          {/* <p> {listAssignmentState.data.code}</p>
-          <p> {listAssignmentState.assetDetails.name}</p>
-          <p> {listAssignmentState.assetDetails.categoryName}</p>
-          <p>
-            {listAssignmentState.assetDetails.installedDate
-              ? listAssignmentState.assetDetails.installedDate
-              : "N/A"}
-          </p>
-          <p> {listAssignmentState.assetDetails.state}</p>
-          <p> {listAssignmentState.assetDetails.location}</p>
-          <p> {listAssignmentState.assetDetails.specification}</p> */}
+          <p> {listAssignmentState.modalDetail.data.assetCode}</p>
+          <p> {listAssignmentState.modalDetail.data.assetName}</p>
+          <p> {listAssignmentState.modalDetail.data.specification}</p>
+          <p> {listAssignmentState.modalDetail.data.assignedTo}</p>
+          <p> {listAssignmentState.modalDetail.data.assignedBy}</p>
+          <p> {listAssignmentState.modalDetail.data.assignedDate}</p>
+          <p> {listAssignmentState.modalDetail.data.state}</p>
+          <p> {listAssignmentState.modalDetail.data.note}</p>
         </div>
       </div>
     </Box>
