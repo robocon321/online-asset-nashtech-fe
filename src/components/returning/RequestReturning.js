@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   InputLabel,
@@ -31,84 +30,6 @@ import {
 } from "../../utils/DateUtils";
 import CustomPagination from "../common/pagination/CustomPagination";
 
-const columns = [
-  {
-    field: "id",
-    headerName: "No.",
-    minWidth: 50,
-    flex: 0.5,
-  },
-  {
-    field: "assetCode",
-    headerName: "Asset Code",
-    minWidth: 150,
-    flex: 1.5,
-  },
-  {
-    field: "assetName",
-    headerName: "Asset Name",
-    minWidth: 200,
-    flex: 2,
-  },
-  {
-    field: "requestedBy",
-    headerName: "Requested by",
-    minWidth: 150,
-    flex: 1.5,
-  },
-  {
-    field: "assignedDate",
-    headerName: "Assigned Date",
-    minWidth: 150,
-    flex: 1.5,
-  },
-  {
-    field: "acceptedBy",
-    headerName: "Accepted by",
-    minWidth: 150,
-    flex: 1.5,
-  },
-  {
-    field: "returnedDate",
-    headerName: "Returned Date",
-    minWidth: 150,
-    flex: 1.5,
-  },
-  {
-    field: "state",
-    headerName: "State",
-    minWidth: 200,
-    flex: 2,
-  },
-  {
-    headerName: "",
-    minWidth: 150,
-    flex: 1.5,
-    renderCell: (params) => {
-      return (
-        <div>
-          <GridActionsCellItem
-            icon={<DoneIcon style={{ color: "red" }} />}
-            label="Delete"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("Delete: ", params.id)
-            }}
-          />
-          <GridActionsCellItem
-            icon={<CloseIcon style={{ color: "black" }} />}
-            label="Return"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("Return: ", params.id)
-            }}
-          />
-        </div>
-      );
-    },
-  },
-];
-
 function RequestReturningNoRowsOverlay() {
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
@@ -117,7 +38,7 @@ function RequestReturningNoRowsOverlay() {
   );
 }
 
-const states = ["All", "Accepted", "Waiting for acceptance"];
+const states = ["All", "Completed", "Waiting for returning"];
 
 const RequestReturning = (props) => {
   const {
@@ -127,6 +48,92 @@ const RequestReturning = (props) => {
     changeSearchCondition,
     changeOpenModalStatus
   } = useContext(RequestReturningContext);
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "No.",
+      minWidth: 50,
+      flex: 0.5,
+    },
+    {
+      field: "assetCode",
+      headerName: "Asset Code",
+      minWidth: 150,
+      flex: 1.5,
+    },
+    {
+      field: "assetName",
+      headerName: "Asset Name",
+      minWidth: 150,
+      flex: 1.5,
+    },
+    {
+      field: "requestedBy",
+      headerName: "Requested by",
+      minWidth: 150,
+      flex: 1.5,
+    },
+    {
+      field: "assignedDate",
+      headerName: "Assigned Date",
+      minWidth: 150,
+      flex: 1.5,
+    },
+    {
+      field: "acceptedBy",
+      headerName: "Accepted by",
+      minWidth: 150,
+      flex: 1.5,
+    },
+    {
+      field: "returnedDate",
+      headerName: "Returned Date",
+      minWidth: 150,
+      flex: 1.5,
+    },
+    {
+      field: "state",
+      headerName: "State",
+      minWidth: 200,
+      flex: 2,
+    },
+    {
+      headerName: "",
+      minWidth: 150,
+      flex: 1.5,
+      renderCell: (params) => {
+        const isTick = params.row.state == 'Waiting for returning';
+        const isCancel = params.row.state == 'Waiting for returning';
+
+        return (
+          <div>
+            <GridActionsCellItem
+              disabled={!isTick}
+              icon={<DoneIcon style={{  
+                color: isTick ? "red" : "#F6B4B8" 
+              }} />}
+              label="Completed"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log("Complete: ", params.id)
+              }}
+            />
+            <GridActionsCellItem
+              disabled={!isCancel}
+              icon={<CloseIcon style={{ color: isCancel ? "black" : "#BCBCBC" }} />}
+              label="Cancel"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log("Cancel: ", params.id)
+              }}
+            />
+          </div>
+        );
+      },
+    },
+  ];
+  
 
   return (
     <>
@@ -176,7 +183,7 @@ const RequestReturning = (props) => {
             <FormControl style={{ marginLeft: "10px" }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  value={requestReturningState.conditions.assignedDate}
+                  value={requestReturningState.conditions.returnedDate}
                   inputFormat="DD/MM/YYYY"
                   onChange={(newValue) => {
                     changeDateCondition(
@@ -189,8 +196,8 @@ const RequestReturning = (props) => {
                     return (
                       <TextField
                         {...params}
-                        id="assignedDate"
-                        name="assignedDate"
+                        id="returnedDate"
+                        name="returnedDate"
                         error={false}
                       />
                     );
@@ -233,12 +240,12 @@ const RequestReturning = (props) => {
             return (
               (requestReturningState.conditions.states.includes("All") ||
                 requestReturningState.conditions.states.includes(item.state)) &&
-              (requestReturningState.conditions.assignedDate == null ||
-                requestReturningState.conditions.assignedDate == "" ||
+              (requestReturningState.conditions.returnedDate == null ||
+                requestReturningState.conditions.returnedDate == "" ||
                 compareDate(
-                  new Date(requestReturningState.conditions.assignedDate),
+                  new Date(requestReturningState.conditions.returnedDate),
                   new Date(
-                    convertDateByFormatEdit_v2(item.assignedDate, "yyyy/MM/dd")
+                    convertDateByFormatEdit_v2(item.returnedDate, "yyyy/MM/dd")
                   )
                 )) &&
               (item.assetCode

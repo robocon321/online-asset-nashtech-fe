@@ -49,7 +49,6 @@ const ListAssignment = (props) => {
     listAssignmentState,
     assignmentState,
     changeTypeCondition,
-    changeCheckboxTypeCondtion,
     changeDateCondition,
     changeSearchCondition,
     showDetailAssignment,

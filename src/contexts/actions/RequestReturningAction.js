@@ -1,3 +1,6 @@
+import axios from "axios"
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
+
 export const ACTIONS = {
   SET_FIELD_CONDITION: 'SET_FIELD_CONDITION',
   SET_FIELD_MODAL: 'SET_FIELD_MODAL',
@@ -24,33 +27,43 @@ export const setFieldModalAction = (name, value) => dispatch => {
 }
 
 export const loadReturningAction = () => async dispatch => {
-  const rows = [];
-  const states = ["All", "Accepted", "Waiting for acceptance"];
-
-  await setTimeout(() => {
-    for (var i = 0; i < 30; i++) {
-      rows.push({
-        id: i,
-        assetCode: "Asset code " + i,
-        assetName: "Asset Name " + i,
-        requestedBy: "username" + i,
-        assignedBy: "Assigned By " + i,
-        assignedDate: `${Math.floor(Math.random() * 30 + 1)}/${Math.floor(
-          Math.random() * 11 + 1
-        )}/${Math.floor(Math.random() * 2 + 2020)}`,
-        acceptedBy: "username" + Math.floor(Math.random()*100),
-        returnedDate: `${Math.floor(Math.random() * 30 + 1)}/${Math.floor(
-          Math.random() * 11 + 1
-        )}/${Math.floor(Math.random() * 2 + 2020)}`,
-        state: `${states[Math.floor(Math.random() * 2 + 1)]}`,
+  await axios.get(`${API_ENDPOINT}/v1/return-requests`)
+    .then((res) => {
+      dispatch({
+        type: ACTIONS.SET_LIST_RETURNING,
+        payload: res.data,
       });
-    }
+    })
+    .catch((err) => console.log(err.data));
 
-    dispatch({
-      type: ACTIONS.SET_LIST_RETURNING,
-      payload: rows
-    })  
-  }, 1000);
+
+  // const rows = [];
+  // const states = ["All", "Accepted", "Waiting for acceptance"];
+
+  // await setTimeout(() => {
+  //   for (var i = 0; i < 30; i++) {
+  //     rows.push({
+  //       id: i,
+  //       assetCode: "Asset code " + i,
+  //       assetName: "Asset Name " + i,
+  //       requestedBy: "username" + i,
+  //       assignedBy: "Assigned By " + i,
+  //       assignedDate: `${Math.floor(Math.random() * 30 + 1)}/${Math.floor(
+  //         Math.random() * 11 + 1
+  //       )}/${Math.floor(Math.random() * 2 + 2020)}`,
+  //       acceptedBy: "username" + Math.floor(Math.random()*100),
+  //       returnedDate: `${Math.floor(Math.random() * 30 + 1)}/${Math.floor(
+  //         Math.random() * 11 + 1
+  //       )}/${Math.floor(Math.random() * 2 + 2020)}`,
+  //       state: `${states[Math.floor(Math.random() * 2 + 1)]}`,
+  //     });
+  //   }
+
+  //   dispatch({
+  //     type: ACTIONS.SET_LIST_RETURNING,
+  //     payload: rows
+  //   })  
+  // }, 1000);
 
 }
 

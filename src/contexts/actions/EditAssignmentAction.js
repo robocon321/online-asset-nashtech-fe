@@ -175,7 +175,6 @@ export const submitAction = (form, navigate, editAssignmentFunc) => async (dispa
   setLoadingAction(true)(dispatch);
 
   form.assignedDate = convertDateByFormat(form.assignedDate, 'dd/MM/yyyy');
-  console.log(form);
 
   await axios.put(`${API_ENDPOINT}/v1/assignments`, form).then(response => {
     setStatusAction({
