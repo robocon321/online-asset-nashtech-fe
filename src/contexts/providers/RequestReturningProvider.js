@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 import { validateDate } from "../../utils/Validate";
-import { loadReturningAction, setFieldConditionAction, setFieldModalAction, setLoadingAction } from "../actions/RequestReturningAction";
+import { loadReturningAction, setFieldConditionAction, setLoadingAction } from "../actions/RequestReturningAction";
 
 import RequestReturningReducer from "../reducers/RequestReturningReducer";
 
@@ -9,7 +9,7 @@ export const RequestReturningContext = createContext();
 const initState = {
   conditions: {
     states: ["All"],
-    assignedDate: null,
+    returnedDate: null,
     search: ''
   },
   returnings: []
@@ -41,9 +41,9 @@ const RequestReturningProvider = (props) => {
 
 
   const changeDateCondition = (value) => {
-    const assignedTime = new Date(value);
-    if(value == '' || validateDate(assignedTime)) {
-      setFieldConditionAction('assignedDate', value)(dispatch);      
+    const returnedDate = new Date(value);
+    if(value == '' || validateDate(returnedDate)) {
+      setFieldConditionAction('returnedDate', value)(dispatch);      
     }
   }
 
