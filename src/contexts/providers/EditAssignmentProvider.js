@@ -31,7 +31,7 @@ const initState = {
     selected: null,
   },
   form: {
-    id: 1,
+    id: null,
     userId: null,
     assetId: null,
     assignedDate: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
@@ -71,7 +71,7 @@ const EditAssignmentProvider = (props) => {
     await loadUserAction()(dispatch);
     await loadAssetAction()(dispatch);
     await loadAssignmentAction(params.id)(dispatch);
-    setLoadingAction(false)(dispatch);
+    setLoadingAction(false)(dispatch);  
   };
 
   const changeSelectUser = (userId) => {
