@@ -1,3 +1,6 @@
+import axios from "axios";
+import { setFieldModalAction } from "./ListAssignmentAction";
+
 export const ACTIONS = {
   ADD_ASSIGNMENT: 'ADD_ASSIGNMENT',
   EDIT_ASSIGNMENT: 'EDIT_ASSIGNMENT',
@@ -8,6 +11,8 @@ export const ACTIONS = {
   SET_SUCCESS: 'SET_SUCCESS',
   SET_STATUS: 'SET_STATUS'
 }
+
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const addNewAssignmentAction = (assignment) => dispatch => {
   dispatch({
@@ -24,30 +29,23 @@ export const editAssignmentAction = (assignment) => dispatch => {
 }
 
 export const loadAssignmentAction = () => async dispatch => {
-  const rows = [];
-  const states = ["All", "Accepted", "Waiting for acceptance"];
-
-  await setTimeout(() => {
-    for (var i = 0; i < 30; i++) {
-      rows.push({
-        id: i,
-        assetCode: "Asset code " + i,
-        assetName: "Asset Name " + i,
-        assignedTo: "Assigned To " + i,
-        assignedBy: "Assigned By " + i,
-        assignedDate: `${Math.floor(Math.random() * 30 + 1)}/${Math.floor(
-          Math.random() * 11 + 1
-        )}/${Math.floor(Math.random() * 2 + 2020)}`,
-        state: `${states[Math.floor(Math.random() * 2 + 1)]}`,
+  await axios.get(`${API_ENDPOINT}/v1/assignments/admin`)
+    .then((res) => {
+      dispatch({
+        type: ACTIONS.SET_LIST_ASSIGNMENT,
+        payload: res.data,
       });
-    }
+    })
+    .catch((err) => console.log(err.data));
+}
 
-    dispatch({
-      type: ACTIONS.SET_LIST_ASSIGNMENT,
-      payload: rows
-    })  
-  }, 1000);
-
+export const loadDetailAssignmentAction = (id) => async dispatch => {
+  await axios.get(`${API_ENDPOINT}/v1/assignments/${id}`)
+    .then((res) => {
+      setFieldModalAction('data', res.data)(dispatch);
+      setFieldModalAction('open', true)(dispatch);
+    })
+    .catch((err) => console.log(err.data));
 }
 
 export const setStatusAction = (status) => dispatch => {

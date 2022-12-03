@@ -33,17 +33,12 @@ const RequestReturningProvider = (props) => {
   }
 
   const changeTypeCondition = (value) => {
-    const stateElements = document.getElementsByName("state");
     let states = [];
-    for(var i = 0 ; i < stateElements.length; i ++) {
-      if(stateElements[i].checked) {
-        states.push(stateElements[i].value);
-      }
-    }
-    if(value == "All") states = ["All"];
-    else states = states.filter(item => item != "All");
+    if(value.length == 0 || (value.includes("All") && !requestReturningState.conditions.states.includes("All"))) states = ['All'];
+    else states = value.filter(item => item != "All");
     setFieldConditionAction('states', states)(dispatch);
   }
+
 
   const changeDateCondition = (value) => {
     const assignedTime = new Date(value);
