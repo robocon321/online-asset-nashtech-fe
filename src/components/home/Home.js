@@ -6,7 +6,7 @@ import ModalDetail from "./ModalDetail";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
-import {HomeContext} from "../../contexts/providers/HomeProvider";
+import { HomeContext } from "../../contexts/providers/HomeProvider";
 import {
   gridPageCountSelector,
   gridPageSelector,
@@ -37,21 +37,21 @@ const ListAssignment = (props) => {
     returnAssignment,
   } = useContext(HomeContext);
 
-    function CustomPagination() {
-      const apiRef = useGridApiContext();
-      const page = useGridSelector(apiRef, gridPageSelector);
-      const pageCount = useGridSelector(apiRef, gridPageCountSelector);
-      return (
-        <Pagination
-          color="primary"
-          count={pageCount}
-          page={page + 1}
-          onChange={(event, value) => apiRef.current.setPage(value - 1)}
-          showFirstButton
-          showLastButton
-        />
-      );
-    }
+  function CustomPagination() {
+    const apiRef = useGridApiContext();
+    const page = useGridSelector(apiRef, gridPageSelector);
+    const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+    return (
+      <Pagination
+        color="primary"
+        count={pageCount}
+        page={page + 1}
+        onChange={(event, value) => apiRef.current.setPage(value - 1)}
+        showFirstButton
+        showLastButton
+      />
+    );
+  }
 
   const columns = [
     {
@@ -200,13 +200,24 @@ const ListAssignment = (props) => {
                 label="Decline"
                 icon={<HighlightOffRoundedIcon style={{ color: "#B1B1B1" }} />}
               />
-              <GridActionsCellItem
-                label="Return"
-                onClick={() => {
-                  returnAssignment(params.row.id);
-                }}
-                icon={<ReplayRoundedIcon style={{ color: "blue" }} />}
-              />
+              {params.row.stateReturnRequest ? (
+                <GridActionsCellItem
+                  label="Return"
+                  disabled
+                  // onClick={() => {
+                  //   returnAssignment(params.row.id);
+                  // }}
+                  icon={<ReplayRoundedIcon style={{ color: "#0000ff52" }} />}
+                />
+              ) : (
+                <GridActionsCellItem
+                  label="Return"
+                  onClick={() => {
+                    returnAssignment(params.row.id);
+                  }}
+                  icon={<ReplayRoundedIcon style={{ color: "blue" }} />}
+                />
+              )}
             </div>
           );
         } else {
@@ -216,6 +227,7 @@ const ListAssignment = (props) => {
                 label="Accept"
                 icon={<CheckRoundedIcon style={{ color: "red" }} />}
                 onClick={() => {
+                  // console.log(homeState.assignmentId);
                   acceptAssignment(params.row.id);
                 }}
               />

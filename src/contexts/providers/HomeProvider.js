@@ -9,6 +9,7 @@ import {
   setFieldDialogAcceptAction,
   setFieldDialogDeclineAction,
   setFieldDialogReturnAction,
+  setAssigmentIdAction,
 } from "../actions/HomeAction";
 
 import HomeReducer from "../reducers/HomeReducer";
@@ -17,7 +18,7 @@ export const HomeContext = createContext();
 
 const initState = {
   listAssignment: [],
-
+  assignmentId: {},
   modalDetail: {
     data: {},
     open: false,
@@ -46,6 +47,17 @@ const HomeAssignmentProvider = (props) => {
     loadData();
   }, []);
 
+  useEffect(() => {
+    loadData();
+  }, [homeState.dialogAccept]);
+  useEffect(() => {
+    loadData();
+  }, [homeState.dialogDecline]);
+  useEffect(() => {
+    console.log(homeState.dialogReturn.data);
+    loadData();
+  }, [homeState.dialogReturn]);
+
   const loadData = async () => {
     loadHomeAction()(dispatch);
   };
@@ -72,18 +84,33 @@ const HomeAssignmentProvider = (props) => {
   };
 
   const acceptAssignment = (id) => {
-    acceptAssignmentAction(id)(dispatch);
+    setAssigmentIdAction(id)(dispatch);
     changeOpenDialogAcceptStatus(true);
   };
 
+  const clickAcceptAssignment = (id) => {
+    acceptAssignmentAction(id)(dispatch);
+    changeOpenDialogAcceptStatus(false);
+  };
+
   const declineAssignment = (id) => {
-    declineAssignmentAction(id)(dispatch);
+    setAssigmentIdAction(id)(dispatch);
     changeOpenDialogDeclineStatus(true);
   };
 
+  const clickDeclinedAssignment = (id) => {
+    declineAssignmentAction(id)(dispatch);
+    changeOpenDialogDeclineStatus(false);
+  };
+
   const returnAssignment = (id) => {
-    returnRequestAssignmentAction(id)(dispatch);
+    setAssigmentIdAction(id)(dispatch);
     changeOpenDialogReturnStatus(true);
+  };
+
+  const clickReturnAssignment = (id) => {
+    returnRequestAssignmentAction(id)(dispatch);
+    changeOpenDialogReturnStatus(false);
   };
 
   const value = {
@@ -96,12 +123,13 @@ const HomeAssignmentProvider = (props) => {
     changeOpenDialogAcceptStatus,
     changeOpenDialogDeclineStatus,
     changeOpenDialogReturnStatus,
+    clickAcceptAssignment,
+    clickDeclinedAssignment,
+    clickReturnAssignment,
   };
 
   return (
-    <HomeContext.Provider value={value}>
-      {props.children}
-    </HomeContext.Provider>
+    <HomeContext.Provider value={value}>{props.children}</HomeContext.Provider>
   );
 };
 

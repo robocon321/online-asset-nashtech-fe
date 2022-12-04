@@ -16,7 +16,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function AlertDialogSlide() {
-  const { homeState, changeOpenDialogReturnStatus } = useContext(HomeContext);
+  const { homeState, changeOpenDialogReturnStatus, clickReturnAssignment } =
+    useContext(HomeContext);
 
   // console.log(homeState.dialogAccept.open);
 
@@ -60,7 +61,7 @@ export default function AlertDialogSlide() {
         <Button
           variant="contained"
           color="error"
-          onClick={() => console.log("CLICK")}
+          onClick={() => clickReturnAssignment(homeState.assignmentId)}
         >
           Yes
         </Button>
