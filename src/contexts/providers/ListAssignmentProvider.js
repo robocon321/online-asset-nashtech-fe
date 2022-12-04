@@ -1,8 +1,14 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateDate } from "../../utils/Validate";
-import { loadDetailAssignmentAction, setLoadingAction } from "../actions/AssignmentAction";
-import { setFieldConditionAction, setFieldModalAction } from "../actions/ListAssignmentAction";
+import {
+  loadDetailAssignmentAction,
+  setLoadingAction,
+} from "../actions/AssignmentAction";
+import {
+  setFieldConditionAction,
+  setFieldModalAction,
+} from "../actions/ListAssignmentAction";
 
 import ListAssignmentReducer from "../reducers/ListAssignmentReducer";
 import { AssignmentContext } from "./AssignmentProvider";
@@ -13,16 +19,19 @@ const initState = {
   conditions: {
     states: ["All"],
     assignedDate: null,
-    search: ''
+    search: "",
   },
   modalDetail: {
     open: false,
-    data: {}
-  }
+    data: {},
+  },
 };
 
 const ListAssignmentProvider = (props) => {
-  const [listAssignmentState, dispatch] = useReducer(ListAssignmentReducer, initState);
+  const [listAssignmentState, dispatch] = useReducer(
+    ListAssignmentReducer,
+    initState
+  );
   const { assignmentState } = useContext(AssignmentContext);
   const navigate = useNavigate();
 
@@ -32,31 +41,36 @@ const ListAssignmentProvider = (props) => {
 
   const changeTypeCondition = (value) => {
     let states = [];
-    if(value.length == 0 || (value.includes("All") && !listAssignmentState.conditions.states.includes("All"))) states = ['All'];
-    else states = value.filter(item => item != "All");
-    setFieldConditionAction('states', states)(dispatch);
-  }
+    if (
+      value.length == 0 ||
+      (value.includes("All") &&
+        !listAssignmentState.conditions.states.includes("All"))
+    )
+      states = ["All"];
+    else states = value.filter((item) => item != "All");
+    setFieldConditionAction("states", states)(dispatch);
+  };
 
   const changeDateCondition = (value) => {
     const assignedTime = new Date(value);
-    if(value == '' || validateDate(assignedTime)) {
-      setFieldConditionAction('assignedDate', value)(dispatch);      
+    if (value == "" || validateDate(assignedTime)) {
+      setFieldConditionAction("assignedDate", value)(dispatch);
     }
-  }
+  };
 
   const changeSearchCondition = (value) => {
-    setFieldConditionAction('search', value)(dispatch);
-  }
+    setFieldConditionAction("search", value)(dispatch);
+  };
 
   const changeOpenModalStatus = (value) => {
-    setFieldModalAction('open', value)(dispatch);
-  }
+    setFieldModalAction("open", value)(dispatch);
+  };
 
   const showDetailAssignment = async (id) => {
     setLoadingAction(true)(dispatch);
     await loadDetailAssignmentAction(id)(dispatch);
     setLoadingAction(false)(dispatch);
-  }
+  };
 
   const value = {
     listAssignmentState,
@@ -66,11 +80,13 @@ const ListAssignmentProvider = (props) => {
     changeSearchCondition,
     changeOpenModalStatus,
     showDetailAssignment,
-    navigate
+    navigate,
   };
 
   return (
-    <ListAssignmentContext.Provider value={value}>{props.children}</ListAssignmentContext.Provider>
+    <ListAssignmentContext.Provider value={value}>
+      {props.children}
+    </ListAssignmentContext.Provider>
   );
 };
 

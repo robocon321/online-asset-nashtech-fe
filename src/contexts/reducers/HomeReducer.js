@@ -10,6 +10,10 @@ const reducer = (state, { type, payload }) => {
       state = { ...state, dialogAccept: payload };
       break;
 
+    case ACTIONS.SET_ASSIGMENT_ID:
+      state = { ...state, assignmentId: payload };
+      break;
+
     case ACTIONS.SET_DECLINE_ASSIGNMENT:
       state = { ...state, dialogDecline: payload };
       break;
