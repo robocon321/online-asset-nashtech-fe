@@ -10,6 +10,7 @@ import {
   setStateAssignmentAction,
 } from "../actions/AssignmentAction";
 import AssignmentReducer from "../reducers/AssignmentReducer";
+import { deleteAssignmentAction } from "../actions/AssignmentAction";
 
 const initState = {
   assignments: [],
@@ -62,14 +63,26 @@ const AssignmentProvider = (props) => {
   // const clickReturnAssignment = (id) => {
   //   returnRequestAssignmentAction(id)(dispatch);
   // };
+  // const value = {
+  //   assignmentState,
+  //   addNewAssignment,
+  //   editAssignment,
+  //   // returnAssignment,
+  //   // clickReturnAssignment,
+  // };
+
+  const deleteAssignment = (assignment) => {
+    deleteAssignmentAction(assignment)(dispatch);
+  };
+
   const value = {
     assignmentState,
     addNewAssignment,
-    editAssignment,
-    // returnAssignment,
     changeOpenDialogReturnStatus,
-    // clickReturnAssignment,
     changeStateAssignment,
+
+    editAssignment,
+    deleteAssignment,
   };
   return (
     <AssignmentContext.Provider value={value}>

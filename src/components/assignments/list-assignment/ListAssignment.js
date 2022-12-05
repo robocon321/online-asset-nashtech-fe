@@ -11,6 +11,14 @@ import {
   TextField,
 } from "@mui/material";
 import ReturnDialog from "./ReturnDialog";
+
+import * as React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
@@ -34,6 +42,10 @@ import {
 import ModalDetail from "./ModalDetail";
 import CustomPagination from "../../common/pagination/CustomPagination";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 function AssignmentNoRowsOverlay() {
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
@@ -54,6 +66,9 @@ const ListAssignment = (props) => {
     showDetailAssignment,
     returnAssignment,
     navigate,
+    changeOpenDelete,
+    changeDeleteId,
+    deleteSubmit,
   } = useContext(ListAssignmentContext);
 
   const columns = [
@@ -107,8 +122,9 @@ const ListAssignment = (props) => {
       renderCell: (params) => {
         const isEdit = params.row.state == "Waiting for acceptance";
         const isDelete =
-          params.row.state == "Waiting for acceptance" ||
-          params.row.state == "Declined";
+          (params.row.state == "Waiting for acceptance" ||
+            params.row.state == "Declined") &&
+          !params.row.stateReturnRequest;
         const isReturn =
           params.row.state == "Accepted" && !params.row.stateReturnRequest;
 
@@ -139,7 +155,8 @@ const ListAssignment = (props) => {
               onClick={(e) => {
                 e.stopPropagation();
                 console.log("Delete: ", params.id);
-                // returnAssignment(params.id)
+                changeOpenDelete(true);
+                changeDeleteId(params.id);
               }}
             />
             <GridActionsCellItem
@@ -313,6 +330,25 @@ const ListAssignment = (props) => {
           onRowClick={(params) => showDetailAssignment(params.id)}
         />
       </Box>
+
+      <Dialog
+        open={listAssignmentState.modalDelete.open}
+        //TransitionComponent={Transition}
+        keepMounted
+        //onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Are you sure?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Do you want to delete this assignment?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => deleteSubmit()}>Delete</Button>
+          <Button onClick={() => changeOpenDelete(false)}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

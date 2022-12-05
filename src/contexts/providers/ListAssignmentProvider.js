@@ -13,6 +13,10 @@ import {
   setFieldDialogReturnAction,
   returnRequestAssignmentAction,
 } from "../actions/ListAssignmentAction";
+import {
+  setFieldModalDelete,
+  submitAction,
+} from "../actions/ListAssignmentAction";
 
 import ListAssignmentReducer from "../reducers/ListAssignmentReducer";
 import { AssignmentContext } from "./AssignmentProvider";
@@ -33,6 +37,10 @@ const initState = {
     data: {},
     open: false,
   },
+  modalDelete: {
+    open: false,
+    id: null,
+  },
 };
 
 const ListAssignmentProvider = (props) => {
@@ -40,13 +48,21 @@ const ListAssignmentProvider = (props) => {
     ListAssignmentReducer,
     initState
   );
-  const { assignmentState, changeStateAssignment } =
+  const { assignmentState, changeStateAssignment, deleteAssignment } =
     useContext(AssignmentContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log(listAssignmentState);
   }, [listAssignmentState]);
+
+  const changeDeleteId = (value) => {
+    setFieldModalDelete("id", value)(dispatch);
+  };
+
+  const changeOpenDelete = (value) => {
+    setFieldModalDelete("open", value)(dispatch);
+  };
 
   const changeTypeCondition = (value) => {
     let states = [];
@@ -95,6 +111,15 @@ const ListAssignmentProvider = (props) => {
     setLoadingAction(false)(dispatch);
   };
 
+  const deleteSubmit = () => {
+    submitAction(
+      { ...listAssignmentState.modalDelete },
+      navigate,
+      deleteAssignment
+    )(dispatch);
+    changeOpenDelete(false);
+  };
+
   const value = {
     listAssignmentState,
     assignmentState,
@@ -107,6 +132,9 @@ const ListAssignmentProvider = (props) => {
     changeOpenDialogReturnStatus,
     clickReturnAssignment,
     navigate,
+    changeOpenDelete,
+    changeDeleteId,
+    deleteSubmit,
   };
 
   return (

@@ -35,6 +35,21 @@ const reducer = (state, { type, payload }) => {
         },
       };
       break;
+    case ACTIONS.SET_FIELD_MODAL_DELETE:
+      state = {
+        ...state,
+        modalDelete: {
+          ...state.modalDelete,
+          [payload.name]: payload.value,
+        },
+      };
+      break;
+    case ACTIONS.SET_LOADING:
+      state = { ...state, status: { ...state.status, isLoading: payload } };
+      break;
+    case ACTIONS.SET_STATUS:
+      state = { ...state, status: payload };
+      break;
     default:
       break;
   }
