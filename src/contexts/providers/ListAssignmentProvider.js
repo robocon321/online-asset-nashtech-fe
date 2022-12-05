@@ -4,10 +4,14 @@ import { validateDate } from "../../utils/Validate";
 import {
   loadDetailAssignmentAction,
   setLoadingAction,
+  // setStateAssignmentAction,
 } from "../actions/AssignmentAction";
 import {
   setFieldConditionAction,
   setFieldModalAction,
+  setAssigmentIdAction,
+  setFieldDialogReturnAction,
+  returnRequestAssignmentAction,
 } from "../actions/ListAssignmentAction";
 
 import ListAssignmentReducer from "../reducers/ListAssignmentReducer";
@@ -25,6 +29,10 @@ const initState = {
     open: false,
     data: {},
   },
+  dialogReturn: {
+    data: {},
+    open: false,
+  },
 };
 
 const ListAssignmentProvider = (props) => {
@@ -32,7 +40,8 @@ const ListAssignmentProvider = (props) => {
     ListAssignmentReducer,
     initState
   );
-  const { assignmentState } = useContext(AssignmentContext);
+  const { assignmentState, changeStateAssignment } =
+    useContext(AssignmentContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,6 +75,20 @@ const ListAssignmentProvider = (props) => {
     setFieldModalAction("open", value)(dispatch);
   };
 
+  const changeOpenDialogReturnStatus = (value) => {
+    setFieldDialogReturnAction("open", value)(dispatch);
+  };
+  const returnAssignment = (id) => {
+    setAssigmentIdAction(id)(dispatch);
+    changeOpenDialogReturnStatus(true);
+  };
+
+  const clickReturnAssignment = (id) => {
+    // returnRequestAssignmentAction(id, changeStateAssignment)(dispatch);
+    returnRequestAssignmentAction(id, changeStateAssignment)(dispatch);
+    changeOpenDialogReturnStatus(false);
+  };
+
   const showDetailAssignment = async (id) => {
     setLoadingAction(true)(dispatch);
     await loadDetailAssignmentAction(id)(dispatch);
@@ -80,6 +103,9 @@ const ListAssignmentProvider = (props) => {
     changeSearchCondition,
     changeOpenModalStatus,
     showDetailAssignment,
+    returnAssignment,
+    changeOpenDialogReturnStatus,
+    clickReturnAssignment,
     navigate,
   };
 

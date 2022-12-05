@@ -10,7 +10,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-
+import ReturnDialog from "./ReturnDialog";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
@@ -52,7 +52,8 @@ const ListAssignment = (props) => {
     changeDateCondition,
     changeSearchCondition,
     showDetailAssignment,
-    navigate
+    returnAssignment,
+    navigate,
   } = useContext(ListAssignmentContext);
 
   const columns = [
@@ -105,28 +106,32 @@ const ListAssignment = (props) => {
       sortable: false,
       renderCell: (params) => {
         const isEdit = params.row.state == "Waiting for acceptance";
-        const isDelete = params.row.state == "Waiting for acceptance" || params.row.state == "Declined";
-        const isReturn = params.row.state == "Accepted" && !params.row.stateReturnRequest;
-  
+        const isDelete =
+          params.row.state == "Waiting for acceptance" ||
+          params.row.state == "Declined";
+        const isReturn =
+          params.row.state == "Accepted" && !params.row.stateReturnRequest;
+
         return (
           <div>
-            <GridActionsCellItem 
+            <GridActionsCellItem
               onClick={(e) => {
                 e.stopPropagation();
                 navigate("/assignments/edit/" + params.id);
               }}
-              icon={<EditRoundedIcon />} 
+              icon={<EditRoundedIcon />}
               disabled={!isEdit}
               style={{
-                color: isEdit ? "black" : "#BCBCBC"
-              }} label="edit" />
+                color: isEdit ? "black" : "#BCBCBC",
+              }}
+              label="edit"
+            />
             <GridActionsCellItem
               disabled={!isDelete}
               icon={
                 <HighlightOffRoundedIcon
                   style={{
-                    color:
-                      isDelete ? "red" : "#F6B4B8"
+                    color: isDelete ? "red" : "#F6B4B8",
                   }}
                 />
               }
@@ -134,15 +139,19 @@ const ListAssignment = (props) => {
               onClick={(e) => {
                 e.stopPropagation();
                 console.log("Delete: ", params.id);
+                // returnAssignment(params.id)
               }}
             />
             <GridActionsCellItem
               disabled={!isReturn}
-              icon={<ReplayIcon style={{ color: isReturn ? "blue" : "#BCBCBC" }} />}
+              icon={
+                <ReplayIcon style={{ color: isReturn ? "blue" : "#BCBCBC" }} />
+              }
               label="Return"
               onClick={(e) => {
                 e.stopPropagation();
                 console.log("Return: ", params.id);
+                returnAssignment(params.id);
               }}
             />
           </div>
@@ -150,11 +159,11 @@ const ListAssignment = (props) => {
       },
     },
   ];
-  
 
   return (
     <>
       <ModalDetail />
+      <ReturnDialog />
       <Title title="Assignment List"></Title>
       <div
         style={{
@@ -181,10 +190,7 @@ const ListAssignment = (props) => {
               >
                 {states.map((item, index) => {
                   return (
-                    <MenuItem
-                      key={index}
-                      value={item}
-                    >
+                    <MenuItem key={index} value={item}>
                       <Checkbox
                         name="state"
                         checked={listAssignmentState.conditions.states.includes(
