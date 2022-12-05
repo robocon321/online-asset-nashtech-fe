@@ -10,14 +10,15 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import ReturnDialog from "./ReturnDialog";
 
-import * as React from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
+import * as React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
@@ -41,9 +42,6 @@ import {
 import ModalDetail from "./ModalDetail";
 import CustomPagination from "../../common/pagination/CustomPagination";
 
-
-
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -66,10 +64,11 @@ const ListAssignment = (props) => {
     changeDateCondition,
     changeSearchCondition,
     showDetailAssignment,
+    returnAssignment,
     navigate,
     changeOpenDelete,
     changeDeleteId,
-    deleteSubmit
+    deleteSubmit,
   } = useContext(ListAssignmentContext);
 
   const columns = [
@@ -122,8 +121,12 @@ const ListAssignment = (props) => {
       sortable: false,
       renderCell: (params) => {
         const isEdit = params.row.state == "Waiting for acceptance";
-        const isDelete = (params.row.state == "Waiting for acceptance" || params.row.state == "Declined") && !params.row.stateReturnRequest;
-        const isReturn = params.row.state == "Accepted" && !params.row.stateReturnRequest;
+        const isDelete =
+          (params.row.state == "Waiting for acceptance" ||
+            params.row.state == "Declined") &&
+          !params.row.stateReturnRequest;
+        const isReturn =
+          params.row.state == "Accepted" && !params.row.stateReturnRequest;
 
         return (
           <div>
@@ -135,15 +138,16 @@ const ListAssignment = (props) => {
               icon={<EditRoundedIcon />}
               disabled={!isEdit}
               style={{
-                color: isEdit ? "black" : "#BCBCBC"
-              }} label="edit" />
+                color: isEdit ? "black" : "#BCBCBC",
+              }}
+              label="edit"
+            />
             <GridActionsCellItem
               disabled={!isDelete}
               icon={
                 <HighlightOffRoundedIcon
                   style={{
-                    color:
-                      isDelete ? "red" : "#F6B4B8"
+                    color: isDelete ? "red" : "#F6B4B8",
                   }}
                 />
               }
@@ -157,11 +161,14 @@ const ListAssignment = (props) => {
             />
             <GridActionsCellItem
               disabled={!isReturn}
-              icon={<ReplayIcon style={{ color: isReturn ? "blue" : "#BCBCBC" }} />}
+              icon={
+                <ReplayIcon style={{ color: isReturn ? "blue" : "#BCBCBC" }} />
+              }
               label="Return"
               onClick={(e) => {
                 e.stopPropagation();
                 console.log("Return: ", params.id);
+                returnAssignment(params.id);
               }}
             />
           </div>
@@ -170,10 +177,10 @@ const ListAssignment = (props) => {
     },
   ];
 
-
   return (
     <>
       <ModalDetail />
+      <ReturnDialog />
       <Title title="Assignment List"></Title>
       <div
         style={{
@@ -200,10 +207,7 @@ const ListAssignment = (props) => {
               >
                 {states.map((item, index) => {
                   return (
-                    <MenuItem
-                      key={index}
-                      value={item}
-                    >
+                    <MenuItem key={index} value={item}>
                       <Checkbox
                         name="state"
                         checked={listAssignmentState.conditions.states.includes(
