@@ -1,14 +1,9 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateDate } from "../../utils/Validate";
-import {
-  loadDetailAssignmentAction,
-  setLoadingAction,
-} from "../actions/AssignmentAction";
-import {
-  setFieldConditionAction,
-  setFieldModalAction,
-} from "../actions/ListAssignmentAction";
+import { loadDetailAssignmentAction } from "../actions/AssignmentAction";
+import { setLoadingAction } from "../actions/ListAssignmentAction";
+import { setFieldConditionAction, setFieldModalAction, setFieldModalDelete, submitAction, } from "../actions/ListAssignmentAction";
 
 import ListAssignmentReducer from "../reducers/ListAssignmentReducer";
 import { AssignmentContext } from "./AssignmentProvider";
@@ -25,19 +20,30 @@ const initState = {
     open: false,
     data: {},
   },
+  modalDelete: {
+    open: false,
+    id: null,
+  }
 };
 
+
+
 const ListAssignmentProvider = (props) => {
-  const [listAssignmentState, dispatch] = useReducer(
-    ListAssignmentReducer,
-    initState
-  );
-  const { assignmentState } = useContext(AssignmentContext);
+  const [listAssignmentState, dispatch] = useReducer(ListAssignmentReducer, initState);
+  const { assignmentState, deleteAssignment } = useContext(AssignmentContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log(listAssignmentState);
   }, [listAssignmentState]);
+
+  const changeDeleteId = (value) => {
+    setFieldModalDelete('id', value)(dispatch);
+  }
+
+  const changeOpenDelete = (value) => {
+    setFieldModalDelete('open', value)(dispatch);
+  }
 
   const changeTypeCondition = (value) => {
     let states = [];
@@ -72,6 +78,11 @@ const ListAssignmentProvider = (props) => {
     setLoadingAction(false)(dispatch);
   };
 
+  const deleteSubmit = () => {
+    submitAction({ ...listAssignmentState.modalDelete }, navigate, deleteAssignment)(dispatch);
+    changeOpenDelete(false);
+  };
+
   const value = {
     listAssignmentState,
     assignmentState,
@@ -81,6 +92,9 @@ const ListAssignmentProvider = (props) => {
     changeOpenModalStatus,
     showDetailAssignment,
     navigate,
+    changeOpenDelete,
+    changeDeleteId,
+    deleteSubmit
   };
 
   return (

@@ -4,6 +4,7 @@ import { setFieldModalAction } from "./ListAssignmentAction";
 export const ACTIONS = {
   ADD_ASSIGNMENT: 'ADD_ASSIGNMENT',
   EDIT_ASSIGNMENT: 'EDIT_ASSIGNMENT',
+  DELETE_ASSIGNMENT: 'DELETE_ASSIGNMENT',
   SET_LIST_ASSIGNMENT: 'SET_LIST_ASSIGNMENT',
 
   SET_LOADING: 'SET_LOADING',
@@ -13,6 +14,12 @@ export const ACTIONS = {
 }
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
+export const deleteAssignmentAction = (assignment) => dispatch => {
+  dispatch({
+    type: ACTIONS.DELETE_ASSIGNMENT,
+    payload: assignment
+  });
+}
 
 export const addNewAssignmentAction = (assignment) => dispatch => {
   dispatch({
