@@ -80,7 +80,7 @@ const ListAssignmentProvider = (props) => {
 
   const deleteSubmit = () => {
     submitAction({ ...listAssignmentState.modalDelete }, navigate, deleteAssignment)(dispatch);
-    setFieldModalDelete('open', 'false')(dispatch);
+    changeOpenDelete(false);
   };
 
   const value = {

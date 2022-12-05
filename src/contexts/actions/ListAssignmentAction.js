@@ -46,13 +46,13 @@ export const setStatusAction = (status) => dispatch => {
 
 export const submitAction = (form, navigate, deleteAssignmentFunc) => async (dispatch) => {
   setLoadingAction(true)(dispatch);
-  await axios.delete(`${API_ENDPOINT}/v1/assignments`, form.id).then(response => {
+  await axios.delete(`${API_ENDPOINT}/v1/assignments`, { params: { id: form.id } }).then(response => {
     setStatusAction({
       isLoading: false,
       message: 'Successful!',
       success: true
     })(dispatch);
-    deleteAssignmentFunc(response.data);
+    deleteAssignmentFunc(form.id);
     navigate('/assignments');
   }).catch(error => {
     if (error.response == undefined) {

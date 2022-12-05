@@ -9,7 +9,7 @@ const reducer = (state, { type, payload }) => {
       state = { ...state, assignments: [payload, ...state.assignments.filter(item => item.id != payload.id)] };
       break;
     case ACTIONS.DELETE_ASSIGNMENT:
-      state = { ...state, assets: state.assets.filter(item => item.id != payload) };
+      state = { ...state, assignments: state.assignments.filter(item => item.id != payload) };
       break;
     case ACTIONS.SET_LIST_ASSIGNMENT:
       state = { ...state, assignments: payload };

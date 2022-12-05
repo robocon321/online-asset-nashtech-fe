@@ -68,7 +68,8 @@ const ListAssignment = (props) => {
     showDetailAssignment,
     navigate,
     changeOpenDelete,
-    changeDeleteId, deleteSumbit
+    changeDeleteId,
+    deleteSubmit
   } = useContext(ListAssignmentContext);
 
   const columns = [
@@ -121,7 +122,7 @@ const ListAssignment = (props) => {
       sortable: false,
       renderCell: (params) => {
         const isEdit = params.row.state == "Waiting for acceptance";
-        const isDelete = params.row.state == "Waiting for acceptance" || params.row.state == "Declined";
+        const isDelete = (params.row.state == "Waiting for acceptance" || params.row.state == "Declined") && !params.row.stateReturnRequest;
         const isReturn = params.row.state == "Accepted" && !params.row.stateReturnRequest;
 
         return (
@@ -340,7 +341,7 @@ const ListAssignment = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => deleteSumbit()}>Delete</Button>
+          <Button onClick={() => deleteSubmit()}>Delete</Button>
           <Button onClick={() => changeOpenDelete(false)}>Cancel</Button>
         </DialogActions>
       </Dialog>
