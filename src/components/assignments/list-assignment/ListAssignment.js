@@ -105,7 +105,7 @@ const ListAssignment = (props) => {
     },
     {
       field: "assignedDate",
-      headerName: "Date",
+      headerName: "Assigned Date",
       minWidth: 150,
       flex: 1.5,
     },

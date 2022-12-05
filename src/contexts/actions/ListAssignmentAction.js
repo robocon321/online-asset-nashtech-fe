@@ -44,6 +44,15 @@ export const setStatusAction = (status) => dispatch => {
   })
 }
 
+export const loadDetailAssignmentAction = (id) => async dispatch => {
+  await axios.get(`${API_ENDPOINT}/v1/assignments/${id}`)
+    .then((res) => {
+      setFieldModalAction('data', res.data)(dispatch);
+      setFieldModalAction('open', true)(dispatch);
+    })
+    .catch((err) => console.log(err.data));
+}
+
 export const submitAction = (form, navigate, deleteAssignmentFunc) => async (dispatch) => {
   setLoadingAction(true)(dispatch);
   await axios.delete(`${API_ENDPOINT}/v1/assignments`, { params: { id: form.id } }).then(response => {

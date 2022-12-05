@@ -1,8 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateDate } from "../../utils/Validate";
-import { loadDetailAssignmentAction } from "../actions/AssignmentAction";
-import { setLoadingAction } from "../actions/ListAssignmentAction";
+import { loadDetailAssignmentAction, setLoadingAction } from "../actions/ListAssignmentAction";
 import { setFieldConditionAction, setFieldModalAction, setFieldModalDelete, submitAction, } from "../actions/ListAssignmentAction";
 
 import ListAssignmentReducer from "../reducers/ListAssignmentReducer";

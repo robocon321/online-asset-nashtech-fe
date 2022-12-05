@@ -75,7 +75,6 @@ const CreateAssignment = (props) => {
                 ? createAssignmentState.popupUser.selected
                 : false)
             }
-            onChange={() => changeSelectUser(params.row.id)}
             value={params.id}
             name="radio-user"
           />
@@ -117,7 +116,6 @@ const CreateAssignment = (props) => {
               ? createAssignmentState.popupAsset.selected
               : false)
           }
-          onChange={() => changeSelectAsset(params.row.id)}
           value={params.id}
           name="radio-asset"
         />
@@ -231,6 +229,7 @@ const CreateAssignment = (props) => {
                         }
                       )}
                       columns={userColumns}
+                      onRowClick={(params) => changeSelectUser(params.id)}
                       components={{ NoRowsOverlay: UserNoRowsOverlay, Pagination: CustomPagination }}
                       pageSize={10}
                     />
@@ -325,6 +324,7 @@ const CreateAssignment = (props) => {
                         }
                       )}
                       columns={assetColumns}
+                      onRowClick={(params) => changeSelectAsset(params.id)}
                       components={{ NoRowsOverlay: AssetNoRowsOverlay, Pagination: CustomPagination }}
                       pageSize={10}
                     />

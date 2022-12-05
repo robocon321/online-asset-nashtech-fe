@@ -46,15 +46,6 @@ export const loadAssignmentAction = () => async dispatch => {
     .catch((err) => console.log(err.data));
 }
 
-export const loadDetailAssignmentAction = (id) => async dispatch => {
-  await axios.get(`${API_ENDPOINT}/v1/assignments/${id}`)
-    .then((res) => {
-      setFieldModalAction('data', res.data)(dispatch);
-      setFieldModalAction('open', true)(dispatch);
-    })
-    .catch((err) => console.log(err.data));
-}
-
 export const setStatusAction = (status) => dispatch => {
   dispatch({
     type: ACTIONS.SET_STATUS,
