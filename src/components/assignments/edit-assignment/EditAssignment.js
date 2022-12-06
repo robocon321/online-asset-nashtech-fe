@@ -232,6 +232,7 @@ const EditAssignment = (props) => {
                       columns={userColumns}
                       components={{ NoRowsOverlay: UserNoRowsOverlay, Pagination: CustomPagination }}
                       pageSize={10}
+                      onRowClick={(params) => changeSelectUser(params.id)}
                     />
                   </div>
                   <div className={styles["footer-popup"] + " " + styles["btn"]}>
@@ -324,6 +325,7 @@ const EditAssignment = (props) => {
                         }
                       )}
                       columns={assetColumns}
+                      onRowClick={(params) => changeSelectAsset(params.id)}
                       components={{ NoRowsOverlay: AssetNoRowsOverlay, Pagination: CustomPagination }}
                       pageSize={10}
                     />
