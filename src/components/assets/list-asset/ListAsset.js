@@ -465,7 +465,6 @@ function ListAsset() {
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={assetState.assets.filter((item) => {
-            console.log(item);
             if (
               listAssetState.assetState.length &&
               listAssetState.assetState[0] !== "All" &&
