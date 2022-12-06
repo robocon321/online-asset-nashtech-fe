@@ -112,7 +112,7 @@ export const handleCheckRemoveAction = (id) => (dispatch) => {
       else{
         setRemoveAssetDialogAction({
           title: "Are you sure?",
-          content:"Are you sure you want to delete this asset?",
+          content:"Do you want to delete this asset?",
           hiddenButton: false,
           assetId: id,
           open: true,
