@@ -1,10 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateDate } from "../../utils/Validate";
-<<<<<<< HEAD
-import { loadDetailAssignmentAction, setLoadingAction } from "../actions/ListAssignmentAction";
-import { setFieldConditionAction, setFieldModalAction, setFieldModalDelete, submitAction, } from "../actions/ListAssignmentAction";
-=======
 import {
   loadDetailAssignmentAction,
   setLoadingAction,
@@ -21,7 +17,6 @@ import {
   setFieldModalDelete,
   submitAction,
 } from "../actions/ListAssignmentAction";
->>>>>>> d5f28f26104d57716ce1143c044b65b5741934ef
 
 import ListAssignmentReducer from "../reducers/ListAssignmentReducer";
 import { AssignmentContext } from "./AssignmentProvider";

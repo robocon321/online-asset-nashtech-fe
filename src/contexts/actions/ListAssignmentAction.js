@@ -80,43 +80,6 @@ export const setStatusAction = (status) => (dispatch) => {
   });
 };
 
-<<<<<<< HEAD
-export const loadDetailAssignmentAction = (id) => async dispatch => {
-  await axios.get(`${API_ENDPOINT}/v1/assignments/${id}`)
-    .then((res) => {
-      setFieldModalAction('data', res.data)(dispatch);
-      setFieldModalAction('open', true)(dispatch);
-    })
-    .catch((err) => console.log(err.data));
-}
-
-export const submitAction = (form, navigate, deleteAssignmentFunc) => async (dispatch) => {
-  setLoadingAction(true)(dispatch);
-  await axios.delete(`${API_ENDPOINT}/v1/assignments`, { params: { id: form.id } }).then(response => {
-    setStatusAction({
-      isLoading: false,
-      message: 'Successful!',
-      success: true
-    })(dispatch);
-    deleteAssignmentFunc(form.id);
-    navigate('/assignments');
-  }).catch(error => {
-    if (error.response == undefined) {
-      setStatusAction({
-        isLoading: false,
-        message: error.message,
-        success: false
-      })(dispatch)
-    } else {
-      setStatusAction({
-        isLoading: false,
-        message: error.response.data,
-        success: false
-      })(dispatch)
-    }
-  })
-}
-=======
 export const submitAction =
   (form, navigate, deleteAssignmentFunc) => async (dispatch) => {
     setLoadingAction(true)(dispatch);
@@ -147,4 +110,3 @@ export const submitAction =
         }
       });
   };
->>>>>>> d5f28f26104d57716ce1143c044b65b5741934ef
