@@ -1,6 +1,7 @@
 import {
   Box,
   Checkbox,
+  Button,
   FormControl,
   InputLabel,
   ListItemText,
@@ -9,11 +10,21 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import * as React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
+import ReplayIcon from "@mui/icons-material/Replay";
 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
-import DoneIcon from '@mui/icons-material/Done';
-import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from "@mui/icons-material/Done";
+import CloseIcon from "@mui/icons-material/Close";
 
 import Title from "../common/title/Title";
 import SearchIconWrapper from "../common/search/SearchIconWrapper";
@@ -24,10 +35,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { RequestReturningContext } from "../../contexts/providers/RequestReturningProvider";
 import { useContext } from "react";
-import {
-  compareDate,
-  convertDateByFormatEdit_v2,
-} from "../../utils/DateUtils";
+import { compareDate, convertDateByFormatEdit_v2 } from "../../utils/DateUtils";
 import CustomPagination from "../common/pagination/CustomPagination";
 
 function RequestReturningNoRowsOverlay() {
@@ -38,6 +46,10 @@ function RequestReturningNoRowsOverlay() {
   );
 }
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const states = ["All", "Completed", "Waiting for returning"];
 
 const RequestReturning = (props) => {
@@ -46,7 +58,13 @@ const RequestReturning = (props) => {
     changeTypeCondition,
     changeDateCondition,
     changeSearchCondition,
-    changeOpenModalStatus
+    changeOpenModalStatus,
+    changeDeleteId,
+    changeOpenDelete,
+    deleteSubmit,
+    changeAcceptId,
+    changeOpenAccept,
+    acceptSubmit,
   } = useContext(RequestReturningContext);
 
   const columns = [
@@ -103,29 +121,39 @@ const RequestReturning = (props) => {
       minWidth: 150,
       flex: 1.5,
       renderCell: (params) => {
-        const isTick = params.row.state == 'Waiting for returning';
-        const isCancel = params.row.state == 'Waiting for returning';
+        const isTick = params.row.state == "Waiting for returning";
+        const isCancel = params.row.state == "Waiting for returning";
 
         return (
           <div>
             <GridActionsCellItem
               disabled={!isTick}
-              icon={<DoneIcon style={{  
-                color: isTick ? "red" : "#F6B4B8" 
-              }} />}
+              icon={
+                <DoneIcon
+                  style={{
+                    color: isTick ? "red" : "#F6B4B8",
+                  }}
+                />
+              }
               label="Completed"
               onClick={(e) => {
                 e.stopPropagation();
-                console.log("Complete: ", params.id)
+                console.log("Complete: ", params.id);
+                changeOpenAccept(true);
+                changeAcceptId(params.id);
               }}
             />
             <GridActionsCellItem
               disabled={!isCancel}
-              icon={<CloseIcon style={{ color: isCancel ? "black" : "#BCBCBC" }} />}
+              icon={
+                <CloseIcon style={{ color: isCancel ? "black" : "#BCBCBC" }} />
+              }
               label="Cancel"
               onClick={(e) => {
                 e.stopPropagation();
-                console.log("Cancel: ", params.id)
+                console.log("Cancel: ", params.id);
+                changeOpenDelete(true);
+                changeDeleteId(params.id);
               }}
             />
           </div>
@@ -133,7 +161,6 @@ const RequestReturning = (props) => {
       },
     },
   ];
-  
 
   return (
     <>
@@ -163,10 +190,7 @@ const RequestReturning = (props) => {
               >
                 {states.map((item, index) => {
                   return (
-                    <MenuItem
-                      key={index}
-                      value={item}
-                    >
+                    <MenuItem key={index} value={item}>
                       <Checkbox
                         name="state"
                         checked={requestReturningState.conditions.states.includes(
@@ -178,7 +202,6 @@ const RequestReturning = (props) => {
                   );
                 })}
               </Select>
-
             </FormControl>
             <FormControl style={{ marginLeft: "10px" }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -261,16 +284,55 @@ const RequestReturning = (props) => {
             );
           })}
           columns={columns}
-          components={{ 
+          components={{
             NoRowsOverlay: RequestReturningNoRowsOverlay,
-            Pagination: CustomPagination
+            Pagination: CustomPagination,
           }}
           pageSize={10}
           disableSelectionOnClick
-          onRowClick={() => changeOpenModalStatus(true)        
-          }
+          onRowClick={() => changeOpenModalStatus(true)}
         />
       </Box>
+
+      <Dialog
+        //open={listAssignmentState.modalDelete.open}
+        open={requestReturningState.modalDelete.open}
+        //TransitionComponent={Transition}
+        keepMounted
+        //onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Are you sure?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Do you want to cancel this returning request?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          {/* <Button onClick={() => deleteSubmit()}>Delete</Button>
+          <Button onClick={() => changeOpenDelete(false)}>Cancel</Button> */}
+          <Button onClick={() => deleteSubmit()}>Yes</Button>
+          <Button onClick={() => changeOpenDelete(false)}>No</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={requestReturningState.modalAccept.open}
+        //TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Are you sure?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Do you want to mark this returning request as "Completed"?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => acceptSubmit()}>Yes</Button>
+          <Button onClick={() => changeOpenAccept(false)}>No</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
