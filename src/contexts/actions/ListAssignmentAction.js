@@ -84,7 +84,7 @@ export const submitAction =
   (form, navigate, deleteAssignmentFunc) => async (dispatch) => {
     setLoadingAction(true)(dispatch);
     await axios
-      .delete(`${API_ENDPOINT}/v1/assignments`, { params: { id: form.id } })
+      .delete(`${API_ENDPOINT}/v1/assignments`, { id: form.id })
       .then((response) => {
         setStatusAction({
           isLoading: false,
