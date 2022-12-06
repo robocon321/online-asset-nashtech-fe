@@ -1,42 +1,37 @@
 import {
-  Box,
-  Checkbox,
-  Button,
-  FormControl,
+  Box, Button, Checkbox, FormControl,
+  Grid,
   InputLabel,
   ListItemText,
   MenuItem,
   Select,
   Stack,
-  TextField,
+  TextField
 } from "@mui/material";
-import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
-import ReplayIcon from "@mui/icons-material/Replay";
+import * as React from "react";
 
+import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
-import DoneIcon from "@mui/icons-material/Done";
-import CloseIcon from "@mui/icons-material/Close";
 
-import Title from "../common/title/Title";
-import SearchIconWrapper from "../common/search/SearchIconWrapper";
-import StyledInputBase from "../common/search/StyledInputBase";
-import Search from "../common/search/Search";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { RequestReturningContext } from "../../contexts/providers/RequestReturningProvider";
 import { useContext } from "react";
+import { RequestReturningContext } from "../../contexts/providers/RequestReturningProvider";
 import { compareDate, convertDateByFormatEdit_v2 } from "../../utils/DateUtils";
 import CustomPagination from "../common/pagination/CustomPagination";
+import Search from "../common/search/Search";
+import SearchIconWrapper from "../common/search/SearchIconWrapper";
+import StyledInputBase from "../common/search/StyledInputBase";
+import Title from "../common/title/Title";
 
 function RequestReturningNoRowsOverlay() {
   return (
@@ -138,7 +133,6 @@ const RequestReturning = (props) => {
               label="Completed"
               onClick={(e) => {
                 e.stopPropagation();
-                console.log("Complete: ", params.id);
                 changeOpenAccept(true);
                 changeAcceptId(params.id);
               }}
@@ -151,7 +145,6 @@ const RequestReturning = (props) => {
               label="Cancel"
               onClick={(e) => {
                 e.stopPropagation();
-                console.log("Cancel: ", params.id);
                 changeOpenDelete(true);
                 changeDeleteId(params.id);
               }}
@@ -172,10 +165,15 @@ const RequestReturning = (props) => {
           justifyContent: "space-between",
         }}
       >
-        <div>
-          <Box>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">State</InputLabel>
+        <Grid container spacing={3} alignItems={"center"}>
+          <Grid item lg={3} xs={12}>
+            <FormControl style={{ width: "100%" }}>
+              <InputLabel
+                style={{ backgroundColor: "white", zIndex: "1" }}
+                id="demo-simple-select-label"
+              >
+                State
+              </InputLabel>
               <Select
                 IconComponent={() => <FilterAltIcon />}
                 labelId="demo-simple-select-label"
@@ -186,7 +184,6 @@ const RequestReturning = (props) => {
                 renderValue={() =>
                   requestReturningState.conditions.states.join(", ")
                 }
-                sx={{ width: "150px" }}
               >
                 {states.map((item, index) => {
                   return (
@@ -203,47 +200,50 @@ const RequestReturning = (props) => {
                 })}
               </Select>
             </FormControl>
-            <FormControl style={{ marginLeft: "10px" }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  value={requestReturningState.conditions.returnedDate}
-                  inputFormat="DD/MM/YYYY"
-                  onChange={(newValue) => {
-                    changeDateCondition(
-                      newValue == null
-                        ? ""
-                        : `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`
-                    );
-                  }}
-                  renderInput={(params) => {
-                    return (
-                      <TextField
-                        {...params}
-                        id="returnedDate"
-                        name="returnedDate"
-                        error={false}
-                      />
-                    );
-                  }}
-                />
-              </LocalizationProvider>
+          </Grid>
+          <Grid item lg={3} xs={12}>
+            <FormControl style={{ width: "100%" }}>
+              <form autoComplete="off">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={requestReturningState.conditions.returnedDate}
+                    inputFormat="DD/MM/YYYY"
+                    onChange={(newValue) => {
+                      changeDateCondition(
+                        newValue == null
+                          ? ""
+                          : `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`
+                      );
+                    }}
+                    renderInput={(params) => {
+                      return (
+                        <TextField
+                          {...params}
+                          id="returnedDate"
+                          name="returnedDate"
+                          error={false}
+                          style={{ width: "100%" }}
+                        />
+                      );
+                    }}
+                  />
+                </LocalizationProvider>
+              </form>
             </FormControl>
-          </Box>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <div>
+          </Grid>
+          <Grid item lg={3} xs={12} order={{ xs: 4, lg: 3 }}></Grid>
+          <Grid item lg={3} xs={12} order={{ xs: 3, lg: 4 }}>
             <form autoComplete="off">
-              <Search>
+              <Search style={{ marginLeft: 0, width: "100%" }}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  style={{ border: "1px solid black", borderRadius: "8px" }}
+                  style={{
+                    border: "1px solid black",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
                   placeholder="Search…"
                   type="search"
                   onChange={(e) => changeSearchCondition(e.target.value)}
@@ -254,8 +254,8 @@ const RequestReturning = (props) => {
                 />
               </Search>
             </form>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </div>
       <Box sx={{ height: 700, width: "100%" }}>
         <DataGrid

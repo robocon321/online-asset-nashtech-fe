@@ -7,10 +7,10 @@ import {
   removeErrorFieldAction,
   setEnableSubmitAction,
   setFieldAction,
-  setLoadingAction,
   submitAction,
 } from "../actions/EditAssetAction";
 import EditAssetReducer from "../reducers/EditAssetReducer";
+import { AppContext } from "./AppProvider";
 import { AssetContext } from "./AssetProvider";
 
 export const EditAssetContext = createContext();
@@ -33,6 +33,7 @@ const EditAssetProvider = (props) => {
     initState
   );
   const { editAsset } = useContext(AssetContext);
+  const { setLoading } = useContext(AppContext);
 
   const navigate = useNavigate();
   let { id } = useParams();
@@ -45,18 +46,14 @@ const EditAssetProvider = (props) => {
     }
   }, [editAssetState.error]);
 
-
-  useEffect(() => {
-  }, [editAssetState]);
-
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setLoadingAction(true)(dispatch);
-    loadAssetAction(id)(dispatch);
-    setLoadingAction(false)(dispatch);
+    setLoading(true);
+    await loadAssetAction(id, navigate)(dispatch);
+    setLoading(false);
   }
 
   const changeField = (e) => {
@@ -124,7 +121,11 @@ const EditAssetProvider = (props) => {
 
 
   const submit = () => {
-    submitAction({...editAssetState.form}, navigate, editAsset)(dispatch);
+    if(editAsset.enableSubmit) {
+      setLoading(true);
+      submitAction({...editAssetState.form}, navigate, editAsset)(dispatch);
+      setLoading(false);
+    }
   }
 
   const value = {

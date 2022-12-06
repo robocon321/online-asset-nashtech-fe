@@ -8,6 +8,7 @@ import {
   setFieldModalChangePasswordAction,
   submit_ModalChangePasswordAction,
   cancel_ModalChangePasswordAction,
+  setLoadingAction,
 } from "../actions/AppAction";
 import AppReducer from "../reducers/AppReducer";
 
@@ -54,20 +55,6 @@ const AppProvider = (props) => {
     }
   }, [appState.modalLoginFirstTime.password]);
 
-  // useEffect(() => {
-  //   if (
-  //     !validatePassword(appState.modalChangePassword.password) &&
-  //     appState.modalChangePassword.password != null
-  //   ) {
-  //     setFieldModalChangePasswordAction(
-  //       "error",
-  //       "Minimum eight characters, at least one letter, one number, one special character and less 50 letters"
-  //     )(dispatch);
-  //   } else {
-  //     setFieldModalChangePasswordAction("error", null)(dispatch);
-  //   }
-  // }, [appState.modalChangePassword.password]);
-
   useEffect(() => {
     if (
       !validatePassword(appState.modalChangePassword.newPassword) &&
@@ -82,12 +69,15 @@ const AppProvider = (props) => {
     }
   }, [appState.modalChangePassword.newPassword]);
 
-  useEffect(() => {
-  }, [appState]);
-
-  const loadUser = () => {
-    loadUserAction()(dispatch);
+  const loadUser = async () => {
+    setLoading(true);
+    await loadUserAction()(dispatch);
+    setLoading(false);
   };
+
+  const setLoading = (isLoading) => {
+    setLoadingAction(isLoading)(dispatch);
+  }
 
   const handleChange_ModalLoginFirstTime = (e) => {
     setFieldModalLoginFirstTimeAction("password", e.target.value)(dispatch);
@@ -133,6 +123,7 @@ const AppProvider = (props) => {
     handleChange_ModalChangePassword1,
     loadUser,
     cancle_ModalChangePassword,
+    setLoading
   };
 
   return (

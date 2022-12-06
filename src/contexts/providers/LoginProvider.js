@@ -13,6 +13,7 @@ const initState = {
   },
   error:{},
   enableSubmit: false,
+
   status: {
     isLoading: false,
     success: true,
@@ -26,9 +27,10 @@ const LoginProvider = props => {
   const [loginState, dispatch] = useReducer(LoginReducer, initState);  
   const navigate = useNavigate();
 
-  const { appState ,loadUser } = useContext(AppContext);
+  const { loadUser, setLoading } = useContext(AppContext);
 
   useEffect(() => {
+    console.log(loginState);
   }, [loginState]);
 
   useEffect(() => {
@@ -72,8 +74,9 @@ const LoginProvider = props => {
   const submit = async (e) => {
     e.preventDefault();
     if(loginState.enableSubmit) {
-      await submitAction(loginState.form, navigate)(dispatch);      
-      loadUser();
+      setLoading(true);
+      await submitAction(loginState.form, navigate, loadUser)(dispatch);      
+      setLoading(false);
     }
   }
 

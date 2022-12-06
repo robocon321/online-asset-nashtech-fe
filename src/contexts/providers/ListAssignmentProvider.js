@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { validateDate } from "../../utils/Validate";
 import {
   loadDetailAssignmentAction,
-  setLoadingAction,
-  // setStateAssignmentAction,
 } from "../actions/AssignmentAction";
 import {
   setFieldConditionAction,
@@ -19,6 +17,7 @@ import {
 } from "../actions/ListAssignmentAction";
 
 import ListAssignmentReducer from "../reducers/ListAssignmentReducer";
+import { AppContext } from "./AppProvider";
 import { AssignmentContext } from "./AssignmentProvider";
 
 export const ListAssignmentContext = createContext();
@@ -50,11 +49,8 @@ const ListAssignmentProvider = (props) => {
   );
   const { assignmentState, changeStateAssignment, deleteAssignment } =
     useContext(AssignmentContext);
+  const { setLoading } = useContext(AppContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(listAssignmentState);
-  }, [listAssignmentState]);
 
   const changeDeleteId = (value) => {
     setFieldModalDelete("id", value)(dispatch);
@@ -100,24 +96,25 @@ const ListAssignmentProvider = (props) => {
   };
 
   const clickReturnAssignment = (id) => {
-    // returnRequestAssignmentAction(id, changeStateAssignment)(dispatch);
     returnRequestAssignmentAction(id, changeStateAssignment)(dispatch);
     changeOpenDialogReturnStatus(false);
   };
 
   const showDetailAssignment = async (id) => {
-    setLoadingAction(true)(dispatch);
+    setLoading(true);
     await loadDetailAssignmentAction(id)(dispatch);
-    setLoadingAction(false)(dispatch);
+    setLoading(false);
   };
 
-  const deleteSubmit = () => {
-    submitAction(
+  const deleteSubmit = async () => {
+    setLoading(true);
+    await submitAction(
       { ...listAssignmentState.modalDelete },
       navigate,
       deleteAssignment
     )(dispatch);
     changeOpenDelete(false);
+    setLoading(false);
   };
 
   const value = {

@@ -17,6 +17,7 @@ import {
 } from "../actions/ListAssetAction";
 
 import ListAssetReducer from "../reducers/ListAssetReducer";
+import { AppContext } from "./AppProvider";
 import { AssetContext } from "./AssetProvider";
 
 export const ListAssetContext = createContext();
@@ -45,8 +46,6 @@ const initState = {
 const ListAssetProvider = (props) => {
   const { removeAsset } = useContext(AssetContext);
   const [listAssetState, dispatch] = useReducer(ListAssetReducer, initState);
-
-  useEffect(() => {}, [listAssetState]);
 
   const handleClose = () => {
     setOpenAction(false)(dispatch);
@@ -123,14 +122,6 @@ const ListAssetProvider = (props) => {
     handleClose();
   };
 
-  // const openRemoveDialog = () => {
-  //   setFieldRemoveAssetDialogAction("open", true)(dispatch);
-  // };
-
-  // const selectRemoveIdDialog = (id) => {
-  //   setFieldRemoveAssetDialogAction("assetId", id)(dispatch);
-  // };
-
   const openCheckAssignmentDialog = (id) => {
     handleCheckRemoveAction(id)(dispatch);
   };
@@ -143,9 +134,7 @@ const ListAssetProvider = (props) => {
     handleOnCellClick,
     handleClose,
     handleRemove,
-    // openRemoveDialog,
     openCheckAssignmentDialog,
-    // selectRemoveIdDialog,
   };
 
   return (

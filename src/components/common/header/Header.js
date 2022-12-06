@@ -143,7 +143,7 @@ const Header = (props) => {
     <AppBar
       position="fixed"
       open={true}
-      style={{ backgroundColor: "var(--primary_color)" }}
+      style={{ backgroundColor: "var(--primary_color)", zIndex: 1 }}
     >
       <ChangePassword open={open} setOpen={setOpen} setOpenNoti={setOpenNoti} />
       <Dialog

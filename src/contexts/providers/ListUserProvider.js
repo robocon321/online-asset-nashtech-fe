@@ -79,7 +79,6 @@ const ListUserProvider = (props) => {
   const disableUser = (id) => {
     setDisbleUserAction(id, deleUser)(dispatch);
     setOpenDeleteAction(false)(dispatch);
-    // console.log(listUserState);
   };
   useEffect(() => {
     setOpenAction(false)(dispatch);

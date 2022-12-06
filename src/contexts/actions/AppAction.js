@@ -15,7 +15,6 @@ export const ACTIONS = {
 };
 
 export const loadUserAction = () => (dispatch) => {
-  setLoadingAction(false)(dispatch);
   setAuthToken(localStorage["TOKEN"]);
 
   if (localStorage["username"] == undefined) return;
