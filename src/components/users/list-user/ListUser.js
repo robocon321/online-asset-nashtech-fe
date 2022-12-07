@@ -30,6 +30,7 @@ import { ListUserContext } from "../../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
 import { UserContext } from "../../../contexts/providers/UserProvider";
 import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -321,8 +322,13 @@ function ListUser() {
       >
         <div>
           <Box>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+            <FormControl variant="outlined">
+              <InputLabel
+                id="demo-simple-select-label"
+                style={{ backgroundColor: "white", zIndex: "1" }}
+              >
+                Type
+              </InputLabel>
               <Select
                 IconComponent={() => <FilterAltIcon />}
                 labelId="demo-simple-select-label"

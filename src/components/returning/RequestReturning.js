@@ -175,7 +175,12 @@ const RequestReturning = (props) => {
         <div>
           <Box>
             <FormControl>
-              <InputLabel id="demo-simple-select-label">State</InputLabel>
+              <InputLabel
+                id="demo-simple-select-label"
+                style={{ backgroundColor: "white", zIndex: "1" }}
+              >
+                State
+              </InputLabel>
               <Select
                 IconComponent={() => <FilterAltIcon />}
                 labelId="demo-simple-select-label"
