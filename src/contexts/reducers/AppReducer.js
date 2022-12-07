@@ -1,6 +1,7 @@
 import { ACTIONS } from "../actions/AppAction";
 
 const reducer = (state, { type, payload }) => {
+  console.log(type);
   switch (type) {
     case ACTIONS.SET_USER:
       state = { ...state, user: payload };
@@ -45,7 +46,7 @@ const reducer = (state, { type, payload }) => {
           errorNew: null,
         },
         status: {
-          isLoading: true,
+          isLoading: false,
           success: true,
           message: "",
         },

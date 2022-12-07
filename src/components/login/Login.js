@@ -10,14 +10,20 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginContext } from '../../contexts/providers/LoginProvider';
 import { Alert } from '@mui/material';
+import Loading from '../common/loading/Loading';
+import { AppContext } from '../../contexts/providers/AppProvider';
 
 const theme = createTheme();
 
 const Login = (props) => {
   const { changeField, loginState, submit } = useContext(LoginContext);
+  const { appState } = useContext(AppContext);
 
   return (
     <ThemeProvider theme={theme}>
+      {
+        appState.status.isLoading && <Loading />
+      }      
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

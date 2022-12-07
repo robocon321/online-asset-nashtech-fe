@@ -30,6 +30,7 @@ import { ListUserContext } from "../../../contexts/providers/ListUserProvider";
 import IconButton from "@mui/material/IconButton";
 import { UserContext } from "../../../contexts/providers/UserProvider";
 import Stack from "@mui/material/Stack";
+import { Grid } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -319,10 +320,10 @@ function ListUser() {
           justifyContent: "space-between",
         }}
       >
-        <div>
-          <Box>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+        <Grid container spacing={3} alignItems={"center"}>
+          <Grid item lg={3} xs={12}>
+            <FormControl style={{ width: "100%" }}>
+              <InputLabel id="demo-simple-select-label" style={{ backgroundColor: "white", zIndex: "1" }}>Type</InputLabel>
               <Select
                 IconComponent={() => <FilterAltIcon />}
                 labelId="demo-simple-select-label"
@@ -331,7 +332,6 @@ function ListUser() {
                 value={listUserState.userRole}
                 onChange={handleChange}
                 renderValue={() => listUserState.userRole.toString()}
-                sx={{ width: "150px" }}
               >
                 {roles.map((userrole) => {
                   return (
@@ -345,24 +345,20 @@ function ListUser() {
                 })}
               </Select>
             </FormControl>
-          </Box>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "30vw",
-          }}
-        >
-          <div>
-            {" "}
+          </Grid>
+          <Grid item lg={3} xs={12} display={{xs: "none", lg: "block"}}></Grid>
+          <Grid item lg={3} xs={12}>
             <form autoComplete="off">
-              <Search>
+              <Search style={{marginLeft: 0, width: "100%"}}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  style={{ border: "1px solid black", borderRadius: "8px" }}
+                  style={{
+                    border: "1px solid black",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
                   placeholder="Search…"
                   type="search"
                   onChange={handleSearch}
@@ -372,24 +368,27 @@ function ListUser() {
                 />
               </Search>
             </form>
-          </div>
-          <div>
-            <Link to={"create"} style={{ textDecoration: "none" }}>
+          </Grid>
+          <Grid item lg={3} xs={12}>
+            <Link
+              to={"create"}
+              style={{ width: "100%", textDecoration: "none" }}
+            >
               <Button
                 variant="contained"
                 style={{
                   background: "#e30613",
                   borderRadius: "8px",
                   textTransform: "none",
+                  width: "100%",
                 }}
               >
                 Create new user
               </Button>
             </Link>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </div>
-
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           // labelRowsPerPage=""
@@ -427,7 +426,6 @@ function ListUser() {
           }}
         ></DataGrid>
       </Box>
-
       <Modal
         keepMounted
         open={listUserState.open}

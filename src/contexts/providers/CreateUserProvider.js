@@ -11,6 +11,7 @@ import {
   submitAction,
 } from "../actions/CreateUserAction";
 import CreateUserReducer from "../reducers/CreateUserReducer";
+import { AppContext } from "./AppProvider";
 import { UserContext } from "./UserProvider";
 
 export const CreateUserContext = createContext();
@@ -23,11 +24,6 @@ const initState = {
     joinedDate: null,
     role: "ADMIN",
   },
-  status: {
-    isLoading: false,
-    success: true,
-    message: "",
-  },
   error: {},
   enableSubmit: false,
 };
@@ -36,6 +32,7 @@ const CreateUserProvider = (props) => {
   const navigate = useNavigate();
   const [createUserState, dispatch] = useReducer(CreateUserReducer, initState);
   const { addUser } = useContext(UserContext);
+  const { setLoading } = useContext(AppContext);
 
   useEffect(() => {
     if (Object.keys(createUserState.error).length > 0 || isBlankField()) {
@@ -241,9 +238,11 @@ const CreateUserProvider = (props) => {
     return false;
   };
 
-  const submit = () => {
-    if (Object.keys(createUserState.error).length == 0) {
-      submitAction({ ...createUserState.form }, navigate, addUser)(dispatch);
+  const submit = async () => {
+    if (Object.keys(createUserState.error).length == 0) {    
+      setLoading(true);
+      await submitAction({ ...createUserState.form }, navigate, addUser)(dispatch);
+      setLoading(false);
     }
   };
 

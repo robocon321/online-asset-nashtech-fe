@@ -10,35 +10,22 @@ import {
   TextField,
   Card,
   CardContent,
-  Alert,
 } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { EditUserContext } from "../../../contexts/providers/EditUserProvider";
-import dayjs from "dayjs";
 import styles from "./EditUser.module.css";
 import Title from "../../common/title/Title";
-import { addUser, setUserInput } from "../../../contexts/actions/UserAction";
-import UserProvider from "../../../contexts/providers/UserProvider";
 const EditUser = (props) => {
   const { changeField, editUserState, submit, navigate } =
     useContext(EditUserContext);
 
-  // const [state, dispatch] = useContext(UserProvider);
-
-  // const handleAdd = () => {
-  //   dispatch(addUser(state.userInput));
-  // };
-
   return (
     <div className={styles["create-user"]}>
       <Title title="Edit User" />
-      {!editUserState.status.success && (
-        <Alert severity="error">{editUserState.status.message}</Alert>
-      )}
       <Card>
         <CardContent>
           <form>
@@ -93,11 +80,6 @@ const EditUser = (props) => {
                     return (
                       <TextField
                         {...params}
-                        //inputProps={{ max: "9999-12-31" }}
-                        //className={styles["input"]}
-                        //value={editUserState.form.dob}
-                        //onChange={changeField}
-                        //onKeyUp={changeField}
                         error={editUserState.error.dob != null || params.error}
                         helperText={editUserState.error.dob}
                         id="dob"
@@ -154,11 +136,6 @@ const EditUser = (props) => {
                     return (
                       <TextField
                         {...params}
-                        //inputProps={{ max: "9999-12-31" }}
-                        //value={editUserState.form.joinedDate}
-                        //onChange={changeField}
-                        //onKeyUp={changeField}
-                        //className={styles["input"]}
                         error={
                           editUserState.error.joinedDate != null || params.error
                         }

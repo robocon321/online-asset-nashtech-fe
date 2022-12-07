@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setAuthToken } from "../../utils/SetAuth";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
@@ -70,7 +69,7 @@ export const setSuccesAction = (success) => (dispatch) => {
   });
 };
 
-export const submitAction = (form, navigate) => async (dispatch) => {
+export const submitAction = (form, navigate, loadUser) => async (dispatch) => {
   setLoadingAction(true)(dispatch);
 
   await axios
@@ -92,6 +91,7 @@ export const submitAction = (form, navigate) => async (dispatch) => {
       })(dispatch);
 
       navigate("/");
+      loadUser();
     })
     .catch((error) => {
       if(error.response == undefined) {

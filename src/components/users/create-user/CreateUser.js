@@ -29,10 +29,6 @@ const CreateUser = (props) => {
   return (
     <div className={styles["create-user"]}>
       <Title title="Create New User" />
-      {!createUserState.status.success && (
-        <Alert severity="error">{createUserState.status.message}</Alert>
-      )}
-
       <Card>
         <CardContent>
           <form>
