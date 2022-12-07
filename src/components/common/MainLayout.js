@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { Outlet } from "react-router-dom";
 
 import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
+import Loading from "./loading/Loading";
+import { AppContext } from "../../contexts/providers/AppProvider";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -15,6 +17,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const MainLayout = (props) => {
+  const { appState } = useContext(AppContext);
   return (
     <Box sx={{ display: "flex" }}>
       <Header  />
@@ -23,6 +26,9 @@ const MainLayout = (props) => {
         <DrawerHeader />
         <Outlet />
       </Box>
+      {
+        appState.status.isLoading && <Loading />
+      }      
     </Box>
   );
 };

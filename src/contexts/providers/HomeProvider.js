@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import {
   loadHomeAction,
   acceptAssignmentAction,
@@ -13,6 +13,7 @@ import {
 } from "../actions/HomeAction";
 
 import HomeReducer from "../reducers/HomeReducer";
+import { AppContext } from "./AppProvider";
 
 export const HomeContext = createContext();
 
@@ -42,6 +43,7 @@ const initState = {
 
 const HomeAssignmentProvider = (props) => {
   const [homeState, dispatch] = useReducer(HomeReducer, initState);
+  const { setLoading } = useContext(AppContext); 
 
   useEffect(() => {
     loadData();
@@ -50,16 +52,19 @@ const HomeAssignmentProvider = (props) => {
   useEffect(() => {
     loadData();
   }, [homeState.dialogAccept]);
+
   useEffect(() => {
     loadData();
   }, [homeState.dialogDecline]);
+
   useEffect(() => {
-    console.log(homeState.dialogReturn.data);
     loadData();
   }, [homeState.dialogReturn]);
 
   const loadData = async () => {
-    loadHomeAction()(dispatch);
+    setLoading(true);
+    await loadHomeAction()(dispatch);
+    setLoading(false);
   };
 
   const changeOpenModalStatus = (value) => {

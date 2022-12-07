@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import {
   addAssetAction,
   editAssetAction,
@@ -7,6 +7,7 @@ import {
   removeAssetAction
 } from "../actions/AssetAction";
 import AssetReducer from "../reducers/AssetReducer";
+import { AppContext } from "./AppProvider";
 
 const initState = {
   assets: [],
@@ -17,13 +18,21 @@ export const AssetContext = createContext();
 
 const AssetProvider = (props) => {
   const [assetState, dispatch] = useReducer(AssetReducer, initState);
+  const { setLoading } = useContext(AppContext);
 
   useEffect(() => {
   }, [assetState]);
+
   useEffect(() => {
-    assetListAction()(dispatch);
-    categoriesListAction()(dispatch);
+    loadData();
   }, []);
+
+  const loadData = async () => {
+    setLoading(true);
+    await assetListAction()(dispatch);
+    await categoriesListAction()(dispatch);
+    setLoading(false);
+  }
 
   const addAsset = (asset) => {
     addAssetAction(asset)(dispatch);

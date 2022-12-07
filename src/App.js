@@ -22,6 +22,7 @@ import CreateAssignmentPage from "./pages/CreateAssignmentPage";
 import EditAssignmentPage from "./pages/EditAssignmentPage";
 import ListAssignmentPage from "./pages/ListAssignmentPage";
 import RequestReturningPage from "./pages/RequestReturningPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   const { appState } = useContext(AppContext);
@@ -53,6 +54,7 @@ function App() {
             )}
             <Route path="*" element={<Navigate to="/" />} />
           </Route>
+          <Route path="/404" element={<NotFoundPage />} />
         </Routes>
       );
     } else if (appState.user.role == "STAFF") {
@@ -65,6 +67,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
           )}
           <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/404" element={<NotFoundPage />} />
         </Routes>
       );
     } else {

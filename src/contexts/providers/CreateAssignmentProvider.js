@@ -14,6 +14,7 @@ import {
   submitAction,
 } from "../actions/CreateAssignmentAction";
 import CreateAssignmentReducer from "../reducers/CreateAssignmentReducer";
+import { AppContext } from "./AppProvider";
 import { AssignmentContext } from "./AssignmentProvider";
 
 export const CreateAssignmentContext = createContext();
@@ -41,6 +42,7 @@ const initState = {
 
 const CreateAssignmentProvider = (props) => {
   const { addNewAssignment } = useContext(AssignmentContext);
+  const { setLoading } = useContext(AppContext);
   const [createAssignmentState, dispatch] = useReducer(
     CreateAssignmentReducer,
     initState
@@ -52,10 +54,6 @@ const CreateAssignmentProvider = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(createAssignmentState);
-  }, [createAssignmentState]);
-
-  useEffect(() => {
     if (Object.keys(createAssignmentState.error).length > 0 || isBlankField()) {
       setEnableSubmitAction(false)(dispatch);
     } else {
@@ -64,10 +62,10 @@ const CreateAssignmentProvider = (props) => {
   }, [createAssignmentState.error]);
 
   const loadData = async () => {
-    setLoadingAction(true)(dispatch);
+    setLoading(true);
     await loadUserAction()(dispatch);
     await loadAssetAction()(dispatch);
-    setLoadingAction(false)(dispatch);
+    setLoading(false);
   };
 
   const changeSelectUser = (userId) => {
@@ -113,6 +111,8 @@ const CreateAssignmentProvider = (props) => {
     else {
       if (name != "note") {
         validateDefault(name, value);
+      } else {
+        removeErrorFieldAction(name)(dispatch);
       }
     }
   };
@@ -133,7 +133,7 @@ const CreateAssignmentProvider = (props) => {
       const currentTime = new Date();
       const oneDay=1000*60*60*24
       const diff = Math.round((currentTime.getTime()-assignedTime.getTime())/oneDay)
-      if (diff > 1) {
+      if (diff >= 1) {
         addErrorFieldAction(
           "assignedDate",
           "Select only current or future date for Assigned Date"
@@ -156,9 +156,11 @@ const CreateAssignmentProvider = (props) => {
     return false;
   };
 
-  const submit = () => {
+  const submit = async () => {
     if (createAssignmentState.enableSubmit) {
-      submitAction({...createAssignmentState.form}, navigate, addNewAssignment)(dispatch);
+      setLoading(true);
+      await submitAction({...createAssignmentState.form}, navigate, addNewAssignment)(dispatch);
+      setLoading(false);
     }
   };
 

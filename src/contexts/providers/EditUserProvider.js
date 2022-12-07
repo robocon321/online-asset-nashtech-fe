@@ -14,6 +14,7 @@ import {
 import EditUserReducer from "../reducers/EditUserReducer";
 import { useParams } from "react-router-dom";
 import { UserContext } from "./UserProvider";
+import { AppContext } from "./AppProvider";
 
 export const EditUserContext = createContext();
 const initState = {
@@ -25,11 +26,6 @@ const initState = {
     joinedDate: null,
     role: "ADMIN",
   },
-  status: {
-    isLoading: false,
-    success: true,
-    message: "",
-  },
   error: {},
   enableSubmit: false,
 };
@@ -37,19 +33,15 @@ const initState = {
 const EditUserProvider = (props) => {
   let { id } = useParams();
   const { editUser } = useContext(UserContext);
+  const { setLoading } = useContext(AppContext);
   const navigate = useNavigate();
   const [editUserState, dispatch] = useReducer(EditUserReducer, initState);
 
   useEffect(() => {
-    console.log(editUserState);
-  }, [editUserState]);
+    loadData();
+  }, []);
 
   useEffect(() => {
-    setUserDetailAction(id)(dispatch);
-  }, [id]);
-
-  useEffect(() => {
-    console.log(Object.keys(editUserState.error).length, isBlankField());
     if (Object.keys(editUserState.error).length > 0 || isBlankField()) {
       setEnableSubmitAction(false)(dispatch);
     } else {
@@ -57,6 +49,11 @@ const EditUserProvider = (props) => {
     }
   }, [editUserState.error]);
 
+  const loadData = async () => {
+    setLoading(true);
+    await setUserDetailAction(id, navigate)(dispatch);
+    setLoading(false);
+  }
 
   const changeField = (e) => {
     const { name, value } = e.target;
@@ -255,9 +252,11 @@ const EditUserProvider = (props) => {
   };
 
 
-  const submit = () => {
-    if (Object.keys(editUserState.error).length == 0) {
-      submitAction({ ...editUserState.form }, navigate, editUser)(dispatch);
+  const submit = async () => {
+    if (editUserState.enableSubmit) {
+      setLoading(true);
+      await submitAction({ ...editUserState.form }, navigate, editUser)(dispatch);
+      setLoading(false);
     }
   };
 

@@ -10,10 +10,6 @@ export const ACTIONS = {
   SET_ENABLE_SUBMIT: "SET_ENABLE_SUBMIT",
   REMOVE_FIELD_ERROR: "REMOVE_FIELD_ERROR",
   ADD_FIELD_ERROR: "ADD_FIELD_ERROR",
-  SET_LOADING: "SET_LOADING",
-  SET_MESSAGE: "SET_MESSAGE",
-  SET_SUCCESS: "SET_SUCCESS",
-  SET_STATUS: "SET_STATUS",
   SET_USER_DETAIL: "SET_USER_DETAIL",
 };
 
@@ -31,14 +27,7 @@ export const setEnableSubmitAction = (enable) => (dispatch) => {
   });
 };
 
-export const setLoadingAction = (isLoading) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_LOADING,
-    payload: isLoading,
-  });
-};
-
-export const setUserDetailAction = (id) => async (dispatch) => {
+export const setUserDetailAction = (id, navigate) => async (dispatch) => {
   await axios
     .get(`${API_ENDPOINT}/v1/users/${id}`)
     .then((res) => {
@@ -51,41 +40,25 @@ export const setUserDetailAction = (id) => async (dispatch) => {
         type: ACTIONS.SET_USER_DETAIL,
         payload: res.data,
       });
+    }).catch(error => {
+      console.log(error);
+      navigate('/404');
     });
 };
 
 export const submitAction =
   (form, navigate, editUserFunc) => async (dispatch) => {
-    setLoadingAction(true)(dispatch);
-
     form.dob = convertDateByFormat(form.dob, "dd/MM/yyyy");
     form.joinedDate = convertDateByFormat(form.joinedDate, "dd/MM/yyyy");
 
     await axios
       .put(`${API_ENDPOINT}/v1/users`, form)
       .then((response) => {
-        setStatusAction({
-          isLoading: false,
-          message: "Successful!",
-          success: true,
-        })(dispatch);
         editUserFunc(response.data);
         navigate("/users");
       })
       .catch((error) => {
-        if (error.response == undefined) {
-          setStatusAction({
-            isLoading: false,
-            message: error.message,
-            success: false,
-          })(dispatch);
-        } else {
-          setStatusAction({
-            isLoading: false,
-            message: error.response.data,
-            success: false,
-          })(dispatch);
-        }
+        console.log(error);
       });
   };
 
@@ -100,26 +73,5 @@ export const removeErrorFieldAction = (name) => (dispatch) => {
   dispatch({
     type: ACTIONS.REMOVE_FIELD_ERROR,
     payload: name,
-  });
-};
-
-export const setStatusAction = (status) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_STATUS,
-    payload: status,
-  });
-};
-
-export const setMessageAction = (message) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_MESSAGE,
-    payload: message,
-  });
-};
-
-export const setSuccesAction = (success) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_SUCCESS,
-    payload: success,
   });
 };
