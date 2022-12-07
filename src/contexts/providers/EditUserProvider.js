@@ -78,9 +78,16 @@ const EditUserProvider = (props) => {
         validateJoinedDate(value);
         break;
       default:
+        validateDefault(name, value);
         break;
     }
   };
+
+  const validateDefault = (name, value) => {
+    if (value == null || value == '')
+      addErrorFieldAction(name, `Field ${name} is not null`)(dispatch);
+    else removeErrorFieldAction(name)(dispatch);
+  }
 
   const validateFirstName = (value) => {
     const slug = changeToSlug(value);

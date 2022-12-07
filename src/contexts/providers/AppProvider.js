@@ -42,6 +42,10 @@ const AppProvider = (props) => {
   }, []);
 
   useEffect(() => {
+    console.log(appState);
+  }, [appState]);
+
+  useEffect(() => {
     if (
       !validatePassword(appState.modalLoginFirstTime.password) &&
       appState.modalLoginFirstTime.password != null
@@ -95,18 +99,24 @@ const AppProvider = (props) => {
     setFieldModalLoginFirstTimeAction("showPassword", showPassword)(dispatch);
   };
 
-  const submit_ModalLoginFirstTime = () => {
-    submit_ModalLoginFirstTimeAction(
+  const submit_ModalLoginFirstTime = async () => {
+    setLoading(true);
+    await submit_ModalLoginFirstTimeAction(
       appState.modalLoginFirstTime.password,
       appState.modalLoginFirstTime.newPassword
     )(dispatch);
+    setLoading(false)
   };
 
-  const submit_ModalChangePassword = () => {
-    submit_ModalChangePasswordAction(
+  const submit_ModalChangePassword = async () => {
+    setLoading(true);
+    console.log(1);
+    await submit_ModalChangePasswordAction(
       appState.modalChangePassword.password,
       appState.modalChangePassword.newPassword
     )(dispatch);
+    console.log(2);
+    setLoading(false);
   };
 
   const cancle_ModalChangePassword = () => {
