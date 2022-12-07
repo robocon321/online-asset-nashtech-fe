@@ -8,7 +8,7 @@ export const ACTIONS = {
 
 
 
-export const loadReturningAction = () => async (dispatch) => {
+export const loadReportAction = () => async (dispatch) => {
     // await axios
     //     .get(`${API_ENDPOINT}/v1/return-requests`)
     //     .then((res) => {
@@ -21,7 +21,7 @@ export const loadReturningAction = () => async (dispatch) => {
 
     const rows = [];
 
-    await setTimeout(() => {
+    setTimeout(() => {
         for (var i = 0; i < 30; i++) {
             rows.push({
                 id: i + 1,

@@ -74,7 +74,7 @@ const Report = (props) => {
             {
                 console.log(reportState.returnings)
             }
-            <Title title="Report List"></Title>
+            <Title title="Report"></Title>
             <div
                 style={{
                     marginBottom: "20px",

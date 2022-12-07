@@ -22,11 +22,8 @@ import CreateAssignmentPage from "./pages/CreateAssignmentPage";
 import EditAssignmentPage from "./pages/EditAssignmentPage";
 import ListAssignmentPage from "./pages/ListAssignmentPage";
 import RequestReturningPage from "./pages/RequestReturningPage";
-<<<<<<< HEAD
 import ReportPage from "./pages/ReportPage";
-=======
 import NotFoundPage from "./pages/NotFoundPage";
->>>>>>> main
 
 function App() {
   const { appState } = useContext(AppContext);

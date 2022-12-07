@@ -1,10 +1,11 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import {
-    loadReturningAction,
+    loadReportAction,
     setLoadingAction,
 } from "../actions/ReportAction";
 
 import ReportReducer from "../reducers/ReportReducer";
+import { AppContext } from "./AppProvider";
 
 export const ReportContext = createContext();
 
@@ -20,15 +21,19 @@ const ReportProvider = (props) => {
 
     useEffect(() => {
     }, [reportState]);
+    const { setLoading } = useContext(AppContext);
 
     useEffect(() => {
         loadData();
     }, []);
 
+
     const loadData = async () => {
-        setLoadingAction(true)(dispatch);
-        await loadReturningAction()(dispatch);
-        setLoadingAction(false)(dispatch);
+        setLoading(true);
+        // setLoadingAction(true)(dispatch);
+        await loadReportAction()(dispatch);
+        // setLoadingAction(false)(dispatch);
+        setLoading(false);
     };
     const value = {
         reportState,
