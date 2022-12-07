@@ -69,7 +69,7 @@ export const setFieldModalDelete = (name, value) => (dispatch) => {
 export const submitAction =
   (form, navigate, deleteAssignmentFunc) => async (dispatch) => {
     await axios
-      .delete(`${API_ENDPOINT}/v1/assignments`, { id: form.id })
+      .delete(`${API_ENDPOINT}/v1/assignments`, { params: {id: form.id } })
       .then((response) => {
         deleteAssignmentFunc(form.id);
         navigate("/assignments");

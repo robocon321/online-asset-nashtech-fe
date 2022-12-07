@@ -136,7 +136,7 @@ const EditAssignmentProvider = (props) => {
       const currentTime = new Date();
       const oneDay=1000*60*60*24
       const diff = Math.round((currentTime.getTime()-assignedTime.getTime())/oneDay)
-      if (diff > 1) {
+      if (diff >= 1) {
         addErrorFieldAction(
           "assignedDate",
           "Select only current or future date for Assigned Date"
