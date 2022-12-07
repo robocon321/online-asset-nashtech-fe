@@ -51,7 +51,7 @@ export default function AlertDialogSlide() {
           color="error"
           onClick={() => clickDeclinedAssignment(homeState.assignmentId)}
         >
-          Accept
+          Decline
         </Button>
         <Button
           variant="contained"
