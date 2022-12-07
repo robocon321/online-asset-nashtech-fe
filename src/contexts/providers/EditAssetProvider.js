@@ -121,7 +121,7 @@ const EditAssetProvider = (props) => {
 
 
   const submit = () => {
-    if(editAsset.enableSubmit) {
+    if(editAssetState.enableSubmit) {
       setLoading(true);
       submitAction({...editAssetState.form}, navigate, editAsset)(dispatch);
       setLoading(false);
