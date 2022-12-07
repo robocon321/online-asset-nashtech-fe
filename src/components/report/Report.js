@@ -1,5 +1,8 @@
 import {
     Box,
+    Button,
+    Grid,
+    Link,
     Stack,
 } from "@mui/material";
 import * as React from "react";
@@ -9,6 +12,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useContext } from "react";
 import CustomPagination from "../common/pagination/CustomPagination";
 import { ReportContext } from "../../contexts/providers/ReportProvider";
+
 
 
 function ReportNoRowsOverlay() {
@@ -71,10 +75,31 @@ const Report = (props) => {
 
     return (
         <>
-            {
-                console.log(reportState.returnings)
-            }
+
             <Title title="Report"></Title>
+
+            <Grid
+                container
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+            >
+                <Grid item>
+                    <Button
+                        variant="contained"
+                        style={{
+                            background: "#e30613",
+                            borderRadius: "8px",
+                            textTransform: "none",
+                            width: "100px",
+                        }}
+                    >
+                        Export
+                    </Button>
+                </Grid>
+            </Grid>
+
+
             <div
                 style={{
                     marginBottom: "20px",
@@ -84,7 +109,7 @@ const Report = (props) => {
             >
             </div>
 
-            <Box sx={{ height: 700, width: "100%" }}>
+            <Box sx={{ height: 400, width: "100%" }}>
                 <DataGrid
                     rows={reportState.reports}
                     columns={columns}
