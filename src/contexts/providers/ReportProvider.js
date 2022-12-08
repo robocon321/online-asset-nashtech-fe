@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import {
     loadReportAction,
-    setLoadingAction,
 } from "../actions/ReportAction";
 
 import ReportReducer from "../reducers/ReportReducer";
@@ -30,9 +29,7 @@ const ReportProvider = (props) => {
 
     const loadData = async () => {
         setLoading(true);
-        // setLoadingAction(true)(dispatch);
         await loadReportAction()(dispatch);
-        // setLoadingAction(false)(dispatch);
         setLoading(false);
     };
     const value = {
