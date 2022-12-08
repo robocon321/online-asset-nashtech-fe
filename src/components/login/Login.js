@@ -23,7 +23,7 @@ const Login = (props) => {
     <ThemeProvider theme={theme}>
       {
         appState.status.isLoading && <Loading />
-      }      
+      }
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

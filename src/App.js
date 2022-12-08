@@ -76,9 +76,6 @@ function App() {
       return <LoginPage />;
     }
   } else {
-    if (appState.status.isLoading) {
-      return <Loading />;
-    } else
       return (
         <Routes>
           <Route path="/login" element={<LoginPage />} />

@@ -1,7 +1,6 @@
 import { ACTIONS } from "../actions/AppAction";
 
 const reducer = (state, { type, payload }) => {
-  console.log(type);
   switch (type) {
     case ACTIONS.SET_USER:
       state = { ...state, user: payload };
