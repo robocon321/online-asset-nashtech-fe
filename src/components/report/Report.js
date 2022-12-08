@@ -2,7 +2,6 @@ import {
     Box,
     Button,
     Grid,
-    Link,
     Stack,
 } from "@mui/material";
 import * as React from "react";
@@ -30,7 +29,7 @@ const Report = (props) => {
 
     const columns = [
         {
-            field: "categoryName",
+            field: "cateName",
             headerName: "Category",
             minWidth: 150,
             flex: 1.5,
@@ -48,7 +47,7 @@ const Report = (props) => {
             flex: 1.5,
         },
         {
-            field: "avalable",
+            field: "available",
             headerName: "Available",
             minWidth: 150,
             flex: 1.5,
