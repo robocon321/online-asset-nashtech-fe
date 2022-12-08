@@ -36,18 +36,6 @@ export default function AlertDialogSlide() {
     >
       <DialogTitle sx={{ ml: 3 }}>
         Are you sure?
-        <IconButton
-          onClick={() => changeOpenDialogDeclineStatus(false)}
-          style={{
-            float: "right",
-            padding: "0px",
-          }}
-        >
-          <DisabledByDefaultOutlinedIcon
-            sx={{ fontSize: 35 }}
-            style={{ color: "#e30613", float: "right", marginTop: "0px" }}
-          />
-        </IconButton>
       </DialogTitle>
       <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
         <DialogContentText
