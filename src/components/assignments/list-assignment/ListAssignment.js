@@ -258,12 +258,16 @@ const ListAssignment = (props) => {
           </Grid>
           <Grid item lg={3} xs={12}>
             <form autoComplete="off">
-              <Search style={{marginLeft: 0, width: "100%"}}>
+              <Search style={{ marginLeft: 0, width: "100%" }}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  style={{ border: "1px solid black", borderRadius: "8px", width: "100%" }}
+                  style={{
+                    border: "1px solid black",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
                   placeholder="Search…"
                   type="search"
                   onChange={(e) => changeSearchCondition(e.target.value)}
@@ -276,7 +280,10 @@ const ListAssignment = (props) => {
             </form>
           </Grid>
           <Grid item lg={3} xs={12}>
-            <Link to="/assignments/create" style={{  width: "100%", textDecoration: "none" }}>
+            <Link
+              to="/assignments/create"
+              style={{ width: "100%", textDecoration: "none" }}
+            >
               <Button
                 variant="contained"
                 style={{
@@ -348,8 +355,20 @@ const ListAssignment = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => deleteSubmit()}>Delete</Button>
-          <Button onClick={() => changeOpenDelete(false)}>Cancel</Button>
+          <Button
+            onClick={() => deleteSubmit()}
+            color="error"
+            variant="contained"
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={() => changeOpenDelete(false)}
+            color="success"
+            variant="contained"
+          >
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     </>
