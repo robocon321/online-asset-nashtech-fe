@@ -1,12 +1,15 @@
 import {
-  Box, Button, Checkbox, FormControl,
+  Box,
+  Button,
+  Checkbox,
+  FormControl,
   Grid,
   InputLabel,
   ListItemText,
   MenuItem,
   Select,
   Stack,
-  TextField
+  TextField,
 } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -311,8 +314,20 @@ const RequestReturning = (props) => {
         <DialogActions>
           {/* <Button onClick={() => deleteSubmit()}>Delete</Button>
           <Button onClick={() => changeOpenDelete(false)}>Cancel</Button> */}
-          <Button onClick={() => deleteSubmit()}>Yes</Button>
-          <Button onClick={() => changeOpenDelete(false)}>No</Button>
+          <Button
+            onClick={() => deleteSubmit()}
+            color="error"
+            variant="contained"
+          >
+            Yes
+          </Button>
+          <Button
+            onClick={() => changeOpenDelete(false)}
+            color="success"
+            variant="contained"
+          >
+            No
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -329,8 +344,20 @@ const RequestReturning = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => acceptSubmit()}>Yes</Button>
-          <Button onClick={() => changeOpenAccept(false)}>No</Button>
+          <Button
+            onClick={() => acceptSubmit()}
+            color="error"
+            variant="contained"
+          >
+            Yes
+          </Button>
+          <Button
+            onClick={() => changeOpenAccept(false)}
+            color="success"
+            variant="contained"
+          >
+            No
+          </Button>
         </DialogActions>
       </Dialog>
     </>
