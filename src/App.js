@@ -22,6 +22,7 @@ import CreateAssignmentPage from "./pages/CreateAssignmentPage";
 import EditAssignmentPage from "./pages/EditAssignmentPage";
 import ListAssignmentPage from "./pages/ListAssignmentPage";
 import RequestReturningPage from "./pages/RequestReturningPage";
+import ReportPage from "./pages/ReportPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
               <Route path="edit/:id" element={<EditAssignmentPage />} />
             </Route>
             <Route path="/returnings" element={<RequestReturningPage />} />
+            <Route path="/reports" element={<ReportPage />} />
             {appState.user == null && (
               <Route path="/login" element={<LoginPage />} />
             )}
