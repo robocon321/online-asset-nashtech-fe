@@ -1,12 +1,15 @@
 import {
-  Box, Button, Checkbox, FormControl,
+  Box,
+  Button,
+  Checkbox,
+  FormControl,
   Grid,
   InputLabel,
   ListItemText,
   MenuItem,
   Select,
   Stack,
-  TextField
+  TextField,
 } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -43,10 +46,10 @@ function RequestReturningNoRowsOverlay() {
 const states = ["All", "Completed", "Waiting for returning"];
 
 const sortByDate = (v1, v2) => {
-  const date1 = new Date(convertDateByFormatEdit_v2(v1, 'yyyy/MM/dd'));
-  const date2 = new Date(convertDateByFormatEdit_v2(v2, 'yyyy/MM/dd'));
+  const date1 = new Date(convertDateByFormatEdit_v2(v1, "yyyy/MM/dd"));
+  const date2 = new Date(convertDateByFormatEdit_v2(v2, "yyyy/MM/dd"));
   return date1 - date2;
-}
+};
 
 const RequestReturning = (props) => {
   const {
@@ -86,14 +89,14 @@ const RequestReturning = (props) => {
       field: "requestedBy",
       headerName: "Requested by",
       minWidth: 150,
-      flex: 1.5
+      flex: 1.5,
     },
     {
       field: "assignedDate",
       headerName: "Assigned Date",
       minWidth: 150,
       flex: 1.5,
-      sortComparator: sortByDate
+      sortComparator: sortByDate,
     },
     {
       field: "acceptedBy",
@@ -106,7 +109,7 @@ const RequestReturning = (props) => {
       headerName: "Returned Date",
       minWidth: 150,
       flex: 1.5,
-      sortComparator: sortByDate
+      sortComparator: sortByDate,
     },
     {
       field: "state",
@@ -263,24 +266,36 @@ const RequestReturning = (props) => {
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={requestReturningState.returnings.filter((item) => {
+            console.log(
+              requestReturningState.conditions.returnedDate == null,
+              requestReturningState.conditions.returnedDate == ""
+            );
             return (
               (requestReturningState.conditions.states.includes("All") ||
                 requestReturningState.conditions.states.includes(item.state)) &&
               (requestReturningState.conditions.returnedDate == null ||
                 requestReturningState.conditions.returnedDate == "" ||
-                item.returnedDate != null &&
-                (compareDate(
-                  new Date(requestReturningState.conditions.returnedDate),
-                  new Date(
-                    convertDateByFormatEdit_v2(item.returnedDate, "yyyy/MM/dd")
-                  )
-                ))) &&
+                (item.returnedDate != null &&
+                  compareDate(
+                    new Date(requestReturningState.conditions.returnedDate),
+                    new Date(
+                      convertDateByFormatEdit_v2(
+                        item.returnedDate,
+                        "yyyy/MM/dd"
+                      )
+                    )
+                  ))) &&
               (item.assetCode
                 .toUpperCase()
                 .includes(
                   requestReturningState.conditions.search.toUpperCase()
                 ) ||
                 item.assetName
+                  .toUpperCase()
+                  .includes(
+                    requestReturningState.conditions.search.toUpperCase()
+                  ) ||
+                item.requestedBy
                   .toUpperCase()
                   .includes(
                     requestReturningState.conditions.search.toUpperCase()
