@@ -25,6 +25,7 @@ function ReportNoRowsOverlay() {
 const Report = (props) => {
     const {
         reportState,
+        exportToExcel
     } = useContext(ReportContext);
 
     const columns = [
@@ -85,6 +86,7 @@ const Report = (props) => {
             >
                 <Grid item>
                     <Button
+                        onClick={() => exportToExcel(reportState.reports)}
                         variant="contained"
                         style={{
                             background: "#e30613",

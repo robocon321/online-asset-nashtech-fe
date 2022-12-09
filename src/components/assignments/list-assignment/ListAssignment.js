@@ -258,7 +258,7 @@ const ListAssignment = (props) => {
           </Grid>
           <Grid item lg={3} xs={12}>
             <form autoComplete="off">
-              <Search style={{marginLeft: 0, width: "100%"}}>
+              <Search style={{ marginLeft: 0, width: "100%" }}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
@@ -276,7 +276,7 @@ const ListAssignment = (props) => {
             </form>
           </Grid>
           <Grid item lg={3} xs={12}>
-            <Link to="/assignments/create" style={{  width: "100%", textDecoration: "none" }}>
+            <Link to="/assignments/create" style={{ width: "100%", textDecoration: "none" }}>
               <Button
                 variant="contained"
                 style={{
@@ -292,7 +292,7 @@ const ListAssignment = (props) => {
           </Grid>
         </Grid>
       </div>
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={assignmentState.assignments.filter((item) => {
             return (

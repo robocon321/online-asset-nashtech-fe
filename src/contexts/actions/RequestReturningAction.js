@@ -55,7 +55,7 @@ export const loadReturningAction = () => async (dispatch) => {
   //       assignedDate: `${Math.floor(Math.random() * 30 + 1)}/${Math.floor(
   //         Math.random() * 11 + 1
   //       )}/${Math.floor(Math.random() * 2 + 2020)}`,
-  //       acceptedBy: "username" + Math.floor(Math.random()*100),
+  //       acceptedBy: "username" + Math.floor(Math.random() * 100),
   //       returnedDate: `${Math.floor(Math.random() * 30 + 1)}/${Math.floor(
   //         Math.random() * 11 + 1
   //       )}/${Math.floor(Math.random() * 2 + 2020)}`,
