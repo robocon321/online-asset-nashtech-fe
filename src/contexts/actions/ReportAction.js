@@ -24,9 +24,9 @@ export const loadReportAction = () => async (dispatch) => {
         }
         );
 
-    //const rows = [];
+    // const rows = [];
 
-    // setTimeout(() => {
+    // await setTimeout(() => {
     //     for (var i = 0; i < 30; i++) {
     //         rows.push({
     //             id: i + 1,
