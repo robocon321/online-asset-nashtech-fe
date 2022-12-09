@@ -39,9 +39,9 @@ const ReportProvider = (props) => {
     const exportToExcel = (reports) => {
         const fileName = "reports"
         const fileName2 = "report"
-        let data = [...reports];
+        let rows = [...reports];
 
-        data = data.map((report) => {
+        rows = rows.map((report) => {
             return {
                 'Category': report.cateName,
                 'Total': report.total,
@@ -52,7 +52,21 @@ const ReportProvider = (props) => {
                 'Recycled': report.recycled
             }
         })
-        const ws = XLSXUtils.json_to_sheet(data)
+
+        rows.sort((a, b) => {
+            const nameA = a.Category.toUpperCase();
+            const nameB = b.Category.toUpperCase();
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            return 0;
+        });
+
+
+        const ws = XLSXUtils.json_to_sheet(rows)
         const wb = XLSXUtils.book_new();
         XLSXUtils.book_append_sheet(wb, ws, fileName2);
         // XLSXUtils.sheet_add_aoa(ws, [["Category 1", "Total 1", "Assigned 1", "Available", "Not available", "Waiting for recycling", "Recycled"]], { origin: "A1" });

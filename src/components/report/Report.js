@@ -112,6 +112,11 @@ const Report = (props) => {
 
             <Box sx={{ height: 400, width: "100%" }}>
                 <DataGrid
+                    initialState={{
+                        sorting: {
+                            sortModel: [{ field: 'cateName', sort: 'asc' }],
+                        },
+                    }}
                     rows={reportState.reports}
                     columns={columns}
                     components={{
