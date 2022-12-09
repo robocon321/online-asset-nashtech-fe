@@ -292,7 +292,7 @@ const ListAssignment = (props) => {
           </Grid>
         </Grid>
       </div>
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box sx={{ height: 399, width: "100%" }}>
         <DataGrid
           rows={assignmentState.assignments.filter((item) => {
             return (
