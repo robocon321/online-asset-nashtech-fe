@@ -60,6 +60,9 @@ export const convertDateByFormatEdit = (dateString, format) => {
 };
 
 export const convertDateByFormatEdit_v2 = (dateString, format) => {
+  if(dateString == '' || dateString == null) {
+    return '01/01/1900';
+  }
   const dateSplit = dateString.split('/');
   const day = dateSplit[0];
   const month = dateSplit[1];

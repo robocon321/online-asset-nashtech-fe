@@ -13,7 +13,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
 import * as React from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -41,11 +40,13 @@ function RequestReturningNoRowsOverlay() {
   );
 }
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 const states = ["All", "Completed", "Waiting for returning"];
+
+const sortByDate = (v1, v2) => {
+  const date1 = new Date(convertDateByFormatEdit_v2(v1, 'yyyy/MM/dd'));
+  const date2 = new Date(convertDateByFormatEdit_v2(v2, 'yyyy/MM/dd'));
+  return date1 - date2;
+}
 
 const RequestReturning = (props) => {
   const {
@@ -85,13 +86,14 @@ const RequestReturning = (props) => {
       field: "requestedBy",
       headerName: "Requested by",
       minWidth: 150,
-      flex: 1.5,
+      flex: 1.5
     },
     {
       field: "assignedDate",
       headerName: "Assigned Date",
       minWidth: 150,
       flex: 1.5,
+      sortComparator: sortByDate
     },
     {
       field: "acceptedBy",
@@ -104,6 +106,7 @@ const RequestReturning = (props) => {
       headerName: "Returned Date",
       minWidth: 150,
       flex: 1.5,
+      sortComparator: sortByDate
     },
     {
       field: "state",
@@ -265,12 +268,13 @@ const RequestReturning = (props) => {
                 requestReturningState.conditions.states.includes(item.state)) &&
               (requestReturningState.conditions.returnedDate == null ||
                 requestReturningState.conditions.returnedDate == "" ||
-                compareDate(
+                item.returnedDate != null &&
+                (compareDate(
                   new Date(requestReturningState.conditions.returnedDate),
                   new Date(
                     convertDateByFormatEdit_v2(item.returnedDate, "yyyy/MM/dd")
                   )
-                )) &&
+                ))) &&
               (item.assetCode
                 .toUpperCase()
                 .includes(
