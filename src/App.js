@@ -28,61 +28,64 @@ import NotFoundPage from "./pages/NotFoundPage";
 function App() {
   const { appState } = useContext(AppContext);
   if (appState.user != null) {
-    if (appState.user.role == "ADMIN") {
-      return (
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route path="" element={<HomePage />} />
-
-            <Route path="users" element={<UserLayout />}>
-              <Route path="" element={<NewListUserPage />} />
-              <Route path="create" element={<CreateUserPage />} />
-              <Route path="edit/:id" element={<EditUserPage />} />
+      if (appState.user.role == "ADMIN") {
+        return (
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="" element={<HomePage />} />
+  
+              <Route path="users" element={<UserLayout />}>
+                <Route path="" element={<NewListUserPage />} />
+                <Route path="create" element={<CreateUserPage />} />
+                <Route path="edit/:id" element={<EditUserPage />} />
+              </Route>
+              <Route path="assets" element={<AssetLayout />}>
+                <Route path="" element={<ListAssetPage />}></Route>
+                <Route path="create" element={<CreateAssetPage />} />
+                <Route path="edit/:id" element={<EditAssetPage />} />
+              </Route>
+              <Route path="assignments" element={<AssignmentLayout />}>
+                <Route path="" element={<ListAssignmentPage />}></Route>
+                <Route path="create" element={<CreateAssignmentPage />} />
+                <Route path="edit/:id" element={<EditAssignmentPage />} />
+              </Route>
+              <Route path="/returnings" element={<RequestReturningPage />} />
+              <Route path="/reports" element={<ReportPage />} />
+              {appState.user == null && (
+                <Route path="/login" element={<LoginPage />} />
+              )}
+              <Route path="*" element={<Navigate to="/" />} />
             </Route>
-            <Route path="assets" element={<AssetLayout />}>
-              <Route path="" element={<ListAssetPage />}></Route>
-              <Route path="create" element={<CreateAssetPage />} />
-              <Route path="edit/:id" element={<EditAssetPage />} />
+            <Route path="/404" element={<NotFoundPage />} />
+          </Routes>
+        );
+      } else if (appState.user.role == "STAFF") {
+        return (
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="" element={<HomePage />} />
             </Route>
-            <Route path="assignments" element={<AssignmentLayout />}>
-              <Route path="" element={<ListAssignmentPage />}></Route>
-              <Route path="create" element={<CreateAssignmentPage />} />
-              <Route path="edit/:id" element={<EditAssignmentPage />} />
-            </Route>
-            <Route path="/returnings" element={<RequestReturningPage />} />
-            <Route path="/reports" element={<ReportPage />} />
             {appState.user == null && (
               <Route path="/login" element={<LoginPage />} />
             )}
             <Route path="*" element={<Navigate to="/" />} />
-          </Route>
-          <Route path="/404" element={<NotFoundPage />} />
-        </Routes>
-      );
-    } else if (appState.user.role == "STAFF") {
-      return (
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route path="" element={<HomePage />} />
-          </Route>
-          {appState.user == null && (
-            <Route path="/login" element={<LoginPage />} />
-          )}
-          <Route path="*" element={<Navigate to="/" />} />
-          <Route path="/404" element={<NotFoundPage />} />
-        </Routes>
-      );
-    } else {
-      return <LoginPage />;
-    }
+            <Route path="/404" element={<NotFoundPage />} />
+          </Routes>
+        );
+      } else {
+        return <LoginPage />;
+      }  
   } else {
       return (
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<Navigate to="/login" />} />
+          {
+            !appState.status.isLoading &&
+            <Route path="*" element={<Navigate to="/login" />} />
+          }
         </Routes>
-      );
-  }
+      );  
+    }  
 }
 
 export default App;
