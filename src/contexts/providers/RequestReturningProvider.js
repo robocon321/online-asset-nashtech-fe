@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { validateDate } from "../../utils/Validate";
 import {
   loadReturningAction,
@@ -11,6 +11,7 @@ import {
 } from "../actions/RequestReturningAction";
 
 import RequestReturningReducer from "../reducers/RequestReturningReducer";
+import { AppContext } from "./AppProvider";
 
 export const RequestReturningContext = createContext();
 
@@ -40,16 +41,17 @@ const RequestReturningProvider = (props) => {
   useEffect(() => {
     console.log(requestReturningState);
   }, [requestReturningState]);
+  const { setLoading } = useContext(AppContext);
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    setLoadingAction(true)(dispatch);
+    setLoading(true);
     await loadReturningAction()(dispatch);
-    setLoadingAction(false)(dispatch);
-  };
+    setLoading(false);
+  }
 
   const changeTypeCondition = (value) => {
     let states = [];

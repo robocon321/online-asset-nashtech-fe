@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { validateDate } from "../../utils/Validate";
+
 import {
   addErrorFieldAction,
   loadAssetAction,
@@ -11,10 +12,10 @@ import {
   setFieldAction,
   setFieldPopupAssetAction,
   setFieldPopupUserAction,
-  setLoadingAction,
   submitAction,
 } from "../actions/EditAssignmentAction";
 import EditAssignmentReducer from "../reducers/EditAssignmentReducer";
+import { AppContext } from "./AppProvider";
 import { AssignmentContext } from "./AssignmentProvider";
 
 export const EditAssignmentContext = createContext();
@@ -43,6 +44,7 @@ const initState = {
 
 const EditAssignmentProvider = (props) => {
   const { editAssignment } = useContext(AssignmentContext);
+  const { setLoading } = useContext(AppContext);
   const [editAssignmentState, dispatch] = useReducer(
     EditAssignmentReducer,
     initState
@@ -55,10 +57,6 @@ const EditAssignmentProvider = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(editAssignmentState);
-  }, [editAssignmentState]);
-
-  useEffect(() => {
     if (Object.keys(editAssignmentState.error).length > 0 || isBlankField()) {
       setEnableSubmitAction(false)(dispatch);
     } else {
@@ -66,12 +64,16 @@ const EditAssignmentProvider = (props) => {
     }
   }, [editAssignmentState.error]);
 
+  useEffect(() => {
+    console.log(editAssignmentState);
+  }, [editAssignmentState]);
+
   const loadData = async () => {
-    setLoadingAction(true)(dispatch);
+    setLoading(true);
     await loadUserAction()(dispatch);
     await loadAssetAction()(dispatch);
-    await loadAssignmentAction(params.id)(dispatch);
-    setLoadingAction(false)(dispatch);  
+    await loadAssignmentAction(params.id, navigate)(dispatch);
+    setLoading(false);
   };
 
   const changeSelectUser = (userId) => {
@@ -162,9 +164,11 @@ const EditAssignmentProvider = (props) => {
     return false;
   };
 
-  const submit = () => {
+  const submit = async () => {
     if (editAssignmentState.enableSubmit) {
-      submitAction({...editAssignmentState.form}, navigate, editAssignment)(dispatch);
+      setLoading(true);
+      await submitAction({...editAssignmentState.form}, navigate, editAssignment)(dispatch);
+      setLoading(false);
     }
   };
 

@@ -15,7 +15,6 @@ export const ACTIONS = {
 };
 
 export const loadUserAction = () => (dispatch) => {
-  setLoadingAction(false)(dispatch);
   setAuthToken(localStorage["TOKEN"]);
 
   if (localStorage["username"] == undefined) return;
@@ -63,8 +62,6 @@ export const setStatusAction = (status) => (dispatch) => {
 
 export const submit_ModalLoginFirstTimeAction =
   (password) => async (dispatch) => {
-    setLoadingAction(true)(dispatch);
-
     const data = {
       newPassword: password,
     };
@@ -107,8 +104,6 @@ export const cancel_ModalChangePasswordAction = () => (dispatch) => {
 
 export const submit_ModalChangePasswordAction =
   (password, newPassword) => async (dispatch) => {
-    setLoadingAction(true)(dispatch);
-
     const data = {
       oldPassword: password,
       newPassword: newPassword,

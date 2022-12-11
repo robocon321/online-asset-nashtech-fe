@@ -1,24 +1,17 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import {
   addNewAssignmentAction,
   editAssignmentAction,
   loadAssignmentAction,
-  setLoadingAction,
   setFieldDialogReturnAction,
-  setAssigmentIdAction,
-  returnRequestAssignmentAction,
   setStateAssignmentAction,
 } from "../actions/AssignmentAction";
 import AssignmentReducer from "../reducers/AssignmentReducer";
 import { deleteAssignmentAction } from "../actions/AssignmentAction";
+import { AppContext } from "./AppProvider";
 
 const initState = {
   assignments: [],
-  status: {
-    isLoading: false,
-    success: true,
-    message: "",
-  },
   dialogReturn: {
     data: {},
     open: false,
@@ -29,6 +22,7 @@ export const AssignmentContext = createContext();
 
 const AssignmentProvider = (props) => {
   const [assignmentState, dispatch] = useReducer(AssignmentReducer, initState);
+  const { setLoading } = useContext(AppContext);
 
   useEffect(() => {
     console.log(assignmentState);
@@ -41,9 +35,9 @@ const AssignmentProvider = (props) => {
     setStateAssignmentAction(id, stateReturnRequest)(dispatch);
   };
   const loadData = async () => {
-    setLoadingAction(true)(dispatch);
+    setLoading(true);
     await loadAssignmentAction()(dispatch);
-    setLoadingAction(false)(dispatch);
+    setLoading(false);
   };
 
   const addNewAssignment = (assignment) => {
@@ -56,20 +50,6 @@ const AssignmentProvider = (props) => {
   const changeOpenDialogReturnStatus = (value) => {
     setFieldDialogReturnAction("open", value)(dispatch);
   };
-  // const returnAssignment = (id) => {
-  //   setAssigmentIdAction(id)(dispatch);
-  //   changeOpenDialogReturnStatus(true);
-  // };
-  // const clickReturnAssignment = (id) => {
-  //   returnRequestAssignmentAction(id)(dispatch);
-  // };
-  // const value = {
-  //   assignmentState,
-  //   addNewAssignment,
-  //   editAssignment,
-  //   // returnAssignment,
-  //   // clickReturnAssignment,
-  // };
 
   const deleteAssignment = (assignment) => {
     deleteAssignmentAction(assignment)(dispatch);

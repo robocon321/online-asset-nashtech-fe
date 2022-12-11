@@ -8,6 +8,7 @@ import {
   setFieldModalChangePasswordAction,
   submit_ModalChangePasswordAction,
   cancel_ModalChangePasswordAction,
+  setLoadingAction,
 } from "../actions/AppAction";
 import AppReducer from "../reducers/AppReducer";
 
@@ -41,6 +42,10 @@ const AppProvider = (props) => {
   }, []);
 
   useEffect(() => {
+    console.log(appState);
+  }, [appState]);
+
+  useEffect(() => {
     if (
       !validatePassword(appState.modalLoginFirstTime.password) &&
       appState.modalLoginFirstTime.password != null
@@ -53,20 +58,6 @@ const AppProvider = (props) => {
       setFieldModalLoginFirstTimeAction("error", null)(dispatch);
     }
   }, [appState.modalLoginFirstTime.password]);
-
-  // useEffect(() => {
-  //   if (
-  //     !validatePassword(appState.modalChangePassword.password) &&
-  //     appState.modalChangePassword.password != null
-  //   ) {
-  //     setFieldModalChangePasswordAction(
-  //       "error",
-  //       "Minimum eight characters, at least one letter, one number, one special character and less 50 letters"
-  //     )(dispatch);
-  //   } else {
-  //     setFieldModalChangePasswordAction("error", null)(dispatch);
-  //   }
-  // }, [appState.modalChangePassword.password]);
 
   useEffect(() => {
     if (
@@ -82,12 +73,15 @@ const AppProvider = (props) => {
     }
   }, [appState.modalChangePassword.newPassword]);
 
-  useEffect(() => {
-  }, [appState]);
-
-  const loadUser = () => {
-    loadUserAction()(dispatch);
+  const loadUser = async () => {
+    setLoading(true);
+    await loadUserAction()(dispatch);
+    setLoading(false);
   };
+
+  const setLoading = (isLoading) => {
+    setLoadingAction(isLoading)(dispatch);
+  }
 
   const handleChange_ModalLoginFirstTime = (e) => {
     setFieldModalLoginFirstTimeAction("password", e.target.value)(dispatch);
@@ -105,18 +99,24 @@ const AppProvider = (props) => {
     setFieldModalLoginFirstTimeAction("showPassword", showPassword)(dispatch);
   };
 
-  const submit_ModalLoginFirstTime = () => {
-    submit_ModalLoginFirstTimeAction(
+  const submit_ModalLoginFirstTime = async () => {
+    setLoading(true);
+    await submit_ModalLoginFirstTimeAction(
       appState.modalLoginFirstTime.password,
       appState.modalLoginFirstTime.newPassword
     )(dispatch);
+    setLoading(false)
   };
 
-  const submit_ModalChangePassword = () => {
-    submit_ModalChangePasswordAction(
+  const submit_ModalChangePassword = async () => {
+    setLoading(true);
+    console.log(1);
+    await submit_ModalChangePasswordAction(
       appState.modalChangePassword.password,
       appState.modalChangePassword.newPassword
     )(dispatch);
+    console.log(2);
+    setLoading(false);
   };
 
   const cancle_ModalChangePassword = () => {
@@ -133,6 +133,7 @@ const AppProvider = (props) => {
     handleChange_ModalChangePassword1,
     loadUser,
     cancle_ModalChangePassword,
+    setLoading
   };
 
   return (

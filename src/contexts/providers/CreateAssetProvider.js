@@ -17,6 +17,7 @@ import {
   submitAction,
 } from "../actions/CreateAssetAction";
 import CreateAssetReducer from "../reducers/CreateAssetReducer";
+import { AppContext } from "./AppProvider";
 import { AssetContext } from "./AssetProvider";
 
 export const CreateAssetContext = createContext();
@@ -49,6 +50,7 @@ const CreateAssetProvider = (props) => {
     initState
   );
   const { addAsset } = useContext(AssetContext);
+  const { setLoading } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -70,9 +72,6 @@ const CreateAssetProvider = (props) => {
       setNewCategoryFieldAction("enableSubmit", true)(dispatch);
     }
   }, [createAssetState.newCategory.error]);
-
-  useEffect(() => {
-  }, [createAssetState]);
 
   useEffect(() => {
     loadData();
@@ -243,8 +242,12 @@ const CreateAssetProvider = (props) => {
     return false;
   };
 
-  const submit = () => {
-    submitAction({...createAssetState.form}, navigate, addAsset)(dispatch);
+  const submit = async () => {
+    if(createAssetState.enableSubmit) {
+      setLoading(true);
+      await submitAction({...createAssetState.form}, navigate, addAsset)(dispatch);
+      setLoading(false);
+    }
   }
 
   const value = {

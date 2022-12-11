@@ -16,10 +16,17 @@ const initState = {
 
 const UserProvider = (props) => {
   const [userState, dispatch] = useReducer(UserReducer, initState);
-  const { appState } = useContext(AppContext);
+  const { appState, setLoading } = useContext(AppContext);
+
   useEffect(() => {
-    if (appState.user != null) setUsersAction()(dispatch);
+    if (appState.user != null) loadData();
   }, [appState.user]);
+
+  const loadData = async () => {
+    setLoading(true);
+    await setUsersAction()(dispatch);
+    setLoading(false);
+  }
 
   const addUser = (user) => {
     addUserAction(user)(dispatch);
@@ -28,7 +35,6 @@ const UserProvider = (props) => {
     editUserAction(user)(dispatch);
   };
   const deleUser = (userId) => {
-    console.log(userId);
     setDisbleUserAction(userId)(dispatch);
   };
 

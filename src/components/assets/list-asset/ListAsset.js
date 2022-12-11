@@ -32,6 +32,7 @@ import { UserContext } from "../../../contexts/providers/UserProvider";
 import Stack from "@mui/material/Stack";
 import { ListAssetContext } from "../../../contexts/providers/ListAssetProvider";
 import RemoveAsset from "../../common/dialog/removeAssets/RemoveAsset";
+import { Grid } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -364,108 +365,82 @@ function ListAsset() {
           justifyContent: "space-between",
         }}
       >
-        <div
-          style={{
-            // marginBottom: "20px",
-            display: "flex",
-            justifyContent: "space-between",
-            width: "25vw",
-          }}
-        >
-          <div>
-            <Box>
-              <FormControl>
-                <InputLabel
-                  id="demo-simple-select-label"
-                  style={{ backgroundColor: "white", zIndex: "1" }}
-                >
-                  State
-                </InputLabel>
-                <Select
-                  IconComponent={() => <FilterAltIcon />}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  multiple
-                  value={listAssetState.assetState}
-                  onChange={changeState}
-                  renderValue={() => listAssetState.assetState.toString()}
-                  sx={{ width: "160px" }}
-                >
-                  {states.map((state) => {
-                    // const cateFilter=[]
-                    return (
-                      <MenuItem key={state} value={state}>
-                        <Checkbox
-                          checked={
-                            listAssetState.assetState.indexOf(state) > -1
-                          }
-                        />
-                        <ListItemText primary={state} />
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </Box>
-          </div>
-          <div>
-            <Box>
-              <FormControl>
-                <InputLabel
-                  id="demo-simple-select-label"
-                  style={{ backgroundColor: "white", zIndex: "1" }}
-                >
-                  Category
-                </InputLabel>
-                <Select
-                  IconComponent={() => <FilterAltIcon />}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  multiple
-                  value={listAssetState.assetCategory}
-                  onChange={handleChange}
-                  renderValue={() => listAssetState.assetCategory.toString()}
-                  sx={{ width: "160px" }}
-                >
-                  <MenuItem value={"All"}>
-                    <Checkbox
-                      checked={listAssetState.assetCategory.indexOf("All") > -1}
-                    />
-                    <ListItemText primary={"All"} />
-                  </MenuItem>
-                  {assetState.categories.map((cate) => {
-                    return (
-                      <MenuItem key={cate.name} value={cate.name}>
-                        <Checkbox
-                          checked={
-                            listAssetState.assetCategory.indexOf(cate.name) > -1
-                          }
-                        />
-                        <ListItemText primary={cate.name} />
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </Box>
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "30vw",
-          }}
-        >
-          <div>
-            {" "}
+        <Grid container spacing={3} alignItems={"center"}>
+          <Grid item lg={3} xs={12}>
+            <FormControl style={{ width: "100%" }}>
+              <InputLabel
+                id="demo-simple-select-label"
+                style={{ backgroundColor: "white", zIndex: "1" }}
+              >
+                State
+              </InputLabel>
+              <Select
+                IconComponent={() => <FilterAltIcon />}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                multiple
+                value={listAssetState.assetState}
+                onChange={changeState}
+                renderValue={() => listAssetState.assetState.toString()}
+              >
+                {states.map((state) => {
+                  return (
+                    <MenuItem key={state} value={state}>
+                      <Checkbox
+                        checked={listAssetState.assetState.indexOf(state) > -1}
+                      />
+                      <ListItemText primary={state} />
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item lg={3} xs={12}>
+            <FormControl style={{ width: "100%" }}>
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                IconComponent={() => <FilterAltIcon />}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                multiple
+                value={listAssetState.assetCategory}
+                onChange={handleChange}
+                renderValue={() => listAssetState.assetCategory.toString()}
+              >
+                <MenuItem value={"All"}>
+                  <Checkbox
+                    checked={listAssetState.assetCategory.indexOf("All") > -1}
+                  />
+                  <ListItemText primary={"All"} />
+                </MenuItem>
+                {assetState.categories.map((cate) => {
+                  return (
+                    <MenuItem key={cate.name} value={cate.name}>
+                      <Checkbox
+                        checked={
+                          listAssetState.assetCategory.indexOf(cate.name) > -1
+                        }
+                      />
+                      <ListItemText primary={cate.name} />
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item lg={3} xs={12}>
             <form autoComplete="off">
-              <Search>
+              <Search style={{ marginLeft: 0, width: "100%" }}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  style={{ border: "1px solid black", borderRadius: "8px" }}
+                  style={{
+                    border: "1px solid black",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
                   placeholder="Search…"
                   type="search"
                   onChange={handleSearch}
@@ -473,28 +448,31 @@ function ListAsset() {
                 />
               </Search>
             </form>
-          </div>
-          <div>
-            <Link to={"create"} style={{ textDecoration: "none" }}>
+          </Grid>
+          <Grid item lg={3} xs={12}>
+            <Link
+              to={"create"}
+              style={{ width: "100%", textDecoration: "none" }}
+            >
               <Button
                 variant="contained"
                 style={{
                   background: "#e30613",
                   borderRadius: "8px",
                   textTransform: "none",
+                  width: "100%",
                 }}
               >
                 Create new asset
               </Button>
             </Link>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </div>
 
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={assetState.assets.filter((item) => {
-            console.log(item);
             if (
               listAssetState.assetState.length &&
               listAssetState.assetState[0] !== "All" &&

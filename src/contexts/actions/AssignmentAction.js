@@ -7,10 +7,6 @@ export const ACTIONS = {
   DELETE_ASSIGNMENT: "DELETE_ASSIGNMENT",
   SET_LIST_ASSIGNMENT: "SET_LIST_ASSIGNMENT",
 
-  SET_LOADING: "SET_LOADING",
-  SET_MESSAGE: "SET_MESSAGE",
-  SET_SUCCESS: "SET_SUCCESS",
-  SET_STATUS: "SET_STATUS",
   RETURN_ASSET: "RETURN_REQUEST",
   SET_RETURN_ASSIGNMENT: "SET_RETURN_ASSIGNMENT",
   SET_ASSIGMENT_ID: "SET_ASSIGNMENT_ID",
@@ -80,32 +76,6 @@ export const loadDetailAssignmentAction = (id) => async (dispatch) => {
     .catch((err) => console.log(err.data));
 };
 
-export const setStatusAction = (status) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_STATUS,
-    payload: status,
-  });
-};
-
-export const setMessageAction = (message) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_MESSAGE,
-    payload: message,
-  });
-};
-
-export const setSuccesAction = (success) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_SUCCESS,
-    payload: success,
-  });
-};
-export const setLoadingAction = (isLoading) => (dispatch) => {
-  dispatch({
-    type: ACTIONS.SET_LOADING,
-    payload: isLoading,
-  });
-};
 export const setStateAssignmentAction =
   (id, stateReturnRequest) => (dispatch) => {
     dispatch({

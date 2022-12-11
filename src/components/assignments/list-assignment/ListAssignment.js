@@ -3,6 +3,7 @@ import {
   Button,
   Checkbox,
   FormControl,
+  Grid,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -75,8 +76,8 @@ const ListAssignment = (props) => {
     {
       field: "id",
       headerName: "No.",
-      minWidth: 100,
-      flex: 1,
+      minWidth: 50,
+      flex: 0.5,
     },
     {
       field: "assetCode",
@@ -189,12 +190,12 @@ const ListAssignment = (props) => {
           justifyContent: "space-between",
         }}
       >
-        <div>
-          <Box>
-            <FormControl>
+        <Grid container spacing={3} alignItems={"center"}>
+          <Grid item lg={3} xs={12}>
+            <FormControl style={{ width: "100%" }}>
               <InputLabel
-                id="demo-simple-select-label"
                 style={{ backgroundColor: "white", zIndex: "1" }}
+                id="demo-simple-select-label"
               >
                 State
               </InputLabel>
@@ -208,7 +209,6 @@ const ListAssignment = (props) => {
                 renderValue={() =>
                   listAssignmentState.conditions.states.join(", ")
                 }
-                sx={{ width: "150px" }}
               >
                 {states.map((item, index) => {
                   return (
@@ -225,48 +225,49 @@ const ListAssignment = (props) => {
                 })}
               </Select>
             </FormControl>
-            <FormControl style={{ marginLeft: "10px" }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  value={listAssignmentState.conditions.assignedDate}
-                  inputFormat="DD/MM/YYYY"
-                  onChange={(newValue) => {
-                    changeDateCondition(
-                      newValue == null
-                        ? ""
-                        : `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`
-                    );
-                  }}
-                  renderInput={(params) => {
-                    return (
-                      <TextField
-                        {...params}
-                        id="assignedDate"
-                        name="assignedDate"
-                        error={false}
-                      />
-                    );
-                  }}
-                />
-              </LocalizationProvider>
+          </Grid>
+          <Grid item lg={3} xs={12}>
+            <FormControl style={{ width: "100%" }}>
+              <form autoComplete="off" style={{ width: "100%" }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={listAssignmentState.conditions.assignedDate}
+                    inputFormat="DD/MM/YYYY"
+                    onChange={(newValue) => {
+                      changeDateCondition(
+                        newValue == null
+                          ? ""
+                          : `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`
+                      );
+                    }}
+                    renderInput={(params) => {
+                      return (
+                        <TextField
+                          {...params}
+                          id="assignedDate"
+                          name="assignedDate"
+                          error={false}
+                          style={{ width: "100%" }}
+                        />
+                      );
+                    }}
+                  />
+                </LocalizationProvider>
+              </form>
             </FormControl>
-          </Box>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "30vw",
-          }}
-        >
-          <div>
+          </Grid>
+          <Grid item lg={3} xs={12}>
             <form autoComplete="off">
-              <Search>
+              <Search style={{ marginLeft: 0, width: "100%" }}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  style={{ border: "1px solid black", borderRadius: "8px" }}
+                  style={{
+                    border: "1px solid black",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
                   placeholder="Search…"
                   type="search"
                   onChange={(e) => changeSearchCondition(e.target.value)}
@@ -277,22 +278,26 @@ const ListAssignment = (props) => {
                 />
               </Search>
             </form>
-          </div>
-          <div>
-            <Link to="/assignments/create" style={{ textDecoration: "none" }}>
+          </Grid>
+          <Grid item lg={3} xs={12}>
+            <Link
+              to="/assignments/create"
+              style={{ width: "100%", textDecoration: "none" }}
+            >
               <Button
                 variant="contained"
                 style={{
                   background: "#e30613",
                   borderRadius: "8px",
                   textTransform: "none",
+                  width: "100%",
                 }}
               >
                 Create new assignment
               </Button>
             </Link>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </div>
       <Box sx={{ height: 700, width: "100%" }}>
         <DataGrid
