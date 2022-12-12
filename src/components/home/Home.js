@@ -261,7 +261,7 @@ const ListAssignment = (props) => {
           justifyContent: "space-between",
         }}
       ></div>
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box sx={{ height: 700, width: "100%" }}>
         <DataGrid
           rows={homeState.listAssignment}
           columns={columns}
