@@ -280,10 +280,15 @@ function ListUser() {
     {
       width: 110,
       flex: 2,
+      sortable: false,
+      filterable: false,
+      headerAlign: "center",
       align: "center",
+      renderHeader: () => {
+        return <h4>Action</h4>;
+      },
       disableClickEventBubbling: true,
       renderCell: (params) => {
-        // console.log(localStorage.getItem("username"));
         return (
           <div>
             <Link to={"/users/edit/" + params.id}>
@@ -399,10 +404,8 @@ function ListUser() {
           </Grid>
         </Grid>
       </div>
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 480, width: "100%" }}>
         <DataGrid
-          // labelRowsPerPage=""
-          // disableColumnMenu
           rows={userState.users.filter((item) => {
             if (
               listUserState.userRole.length &&
@@ -430,6 +433,7 @@ function ListUser() {
           columns={columns}
           pageSize={10}
           // onCellClick={handleOnCellClick}
+          disableColumnMenu
           components={{
             Pagination: CustomPagination,
             NoRowsOverlay,

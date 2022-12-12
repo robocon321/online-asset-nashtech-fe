@@ -21,16 +21,16 @@ export const editAssetAction = (asset) => (dispatch) => {
     payload: asset,
   });
 };
-export const categoriesListAction = () => (dispatch) => {
-  axios.get(`${API_ENDPOINT}/v1/categories`).then((res) => {
+export const categoriesListAction = () => async (dispatch) => {
+  await axios.get(`${API_ENDPOINT}/v1/categories`).then((res) => {
     dispatch({
       type: ACTIONS.LIST_CATEGORY,
       payload: res.data,
     });
   });
 };
-export const assetListAction = () => (dispatch) => {
-  axios
+export const assetListAction = () => async (dispatch) => {
+  await axios
     .get(`${API_ENDPOINT}/v1/assets`)
     .then((res) => {
       dispatch({

@@ -77,52 +77,76 @@ const ListAssignment = (props) => {
   const columns = [
     {
       field: "id",
-      headerName: "No.",
       minWidth: 50,
-      flex: 0.5,
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>No</h4>,
     },
     {
       field: "assetCode",
-      headerName: "Asset Code",
-      minWidth: 100,
-      flex: 1.5,
+      minWidth: 150,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Asset Code</h4>,
     },
     {
       field: "assetName",
-      headerName: "Asset Name",
-      minWidth: 200,
+      minWidth: 150,
       flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Asset Name</h4>,
     },
     {
       field: "assignedTo",
-      headerName: "Assigned to",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Assigned to</h4>,
     },
     {
       field: "assignedBy",
-      headerName: "Assigned by",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Assigned by</h4>,
     },
     {
       field: "assignedDate",
-      headerName: "Assigned Date",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
       sortComparator: sortByDate,
+      renderHeader: () => {
+        return <h4>Assigned Date</h4>;
+      },
     },
     {
       field: "state",
-      headerName: "State",
-      minWidth: 200,
+      minWidth: 150,
       flex: 2,
+      renderHeader: () => {
+        return <h4>State</h4>;
+      },
+      headerAlign: "center",
+      align: "center",
     },
     {
       headerName: "",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
       sortable: false,
+      filterable: false,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => {
+        return <h4>Action</h4>;
+      },
       renderCell: (params) => {
         const isEdit = params.row.state == "Waiting for acceptance";
         const isDelete =
@@ -302,8 +326,9 @@ const ListAssignment = (props) => {
           </Grid>
         </Grid>
       </div>
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 480, width: "100%" }}>
         <DataGrid
+          disableColumnMenu
           rows={assignmentState.assignments.filter((item) => {
             return (
               (listAssignmentState.conditions.states.includes("All") ||
