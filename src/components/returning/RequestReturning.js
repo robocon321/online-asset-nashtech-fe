@@ -356,7 +356,7 @@ const RequestReturning = (props) => {
         <DialogTitle>{"Are you sure?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Do you want to mark this returning request as "Completed"?
+            Do you want to mark this returning request as 'Completed'?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
