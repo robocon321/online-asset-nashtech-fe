@@ -266,7 +266,11 @@ const ListAssignment = (props) => {
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  style={{ border: "1px solid black", borderRadius: "8px", width: "100%" }}
+                  style={{
+                    border: "1px solid black",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
                   placeholder="Search…"
                   type="search"
                   onChange={(e) => changeSearchCondition(e.target.value)}
@@ -352,8 +356,20 @@ const ListAssignment = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => deleteSubmit()}>Delete</Button>
-          <Button onClick={() => changeOpenDelete(false)}>Cancel</Button>
+          <Button
+            onClick={() => deleteSubmit()}
+            color="error"
+            variant="contained"
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={() => changeOpenDelete(false)}
+            color="success"
+            variant="contained"
+          >
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     </>
