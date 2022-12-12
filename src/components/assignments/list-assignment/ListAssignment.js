@@ -362,8 +362,20 @@ const ListAssignment = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => deleteSubmit()}>Delete</Button>
-          <Button onClick={() => changeOpenDelete(false)}>Cancel</Button>
+          <Button
+            onClick={() => deleteSubmit()}
+            color="error"
+            variant="contained"
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={() => changeOpenDelete(false)}
+            color="success"
+            variant="contained"
+          >
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     </>

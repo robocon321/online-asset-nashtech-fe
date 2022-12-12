@@ -330,8 +330,20 @@ const RequestReturning = (props) => {
         <DialogActions>
           {/* <Button onClick={() => deleteSubmit()}>Delete</Button>
           <Button onClick={() => changeOpenDelete(false)}>Cancel</Button> */}
-          <Button onClick={() => deleteSubmit()}>Yes</Button>
-          <Button onClick={() => changeOpenDelete(false)}>No</Button>
+          <Button
+            onClick={() => deleteSubmit()}
+            color="error"
+            variant="contained"
+          >
+            Yes
+          </Button>
+          <Button
+            onClick={() => changeOpenDelete(false)}
+            color="success"
+            variant="contained"
+          >
+            No
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -344,12 +356,24 @@ const RequestReturning = (props) => {
         <DialogTitle>{"Are you sure?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Do you want to mark this returning request as "Completed"?
+            Do you want to mark this returning request as 'Completed'?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => acceptSubmit()}>Yes</Button>
-          <Button onClick={() => changeOpenAccept(false)}>No</Button>
+          <Button
+            onClick={() => acceptSubmit()}
+            color="error"
+            variant="contained"
+          >
+            Yes
+          </Button>
+          <Button
+            onClick={() => changeOpenAccept(false)}
+            color="success"
+            variant="contained"
+          >
+            No
+          </Button>
         </DialogActions>
       </Dialog>
     </>
