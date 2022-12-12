@@ -386,7 +386,7 @@ const ListAssignment = (props) => {
             Do you want to delete this assignment?
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ mx: "auto", p: 2 }}>
           <Button
             onClick={() => deleteSubmit()}
             color="error"

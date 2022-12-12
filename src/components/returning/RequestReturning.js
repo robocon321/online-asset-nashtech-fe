@@ -346,7 +346,7 @@ const RequestReturning = (props) => {
             Do you want to cancel this returning request?
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ mx: "auto", p: 2 }}>
           {/* <Button onClick={() => deleteSubmit()}>Delete</Button>
           <Button onClick={() => changeOpenDelete(false)}>Cancel</Button> */}
           <Button
@@ -378,7 +378,7 @@ const RequestReturning = (props) => {
             Do you want to mark this returning request as 'Completed'?
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ mx: "auto", p: 2 }}>
           <Button
             onClick={() => acceptSubmit()}
             color="error"
