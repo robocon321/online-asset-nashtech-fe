@@ -283,7 +283,10 @@ const ListAssignment = (props) => {
             </form>
           </Grid>
           <Grid item lg={3} xs={12}>
-            <Link to="/assignments/create" style={{ width: "100%", textDecoration: "none" }}>
+            <Link
+              to="/assignments/create"
+              style={{ width: "100%", textDecoration: "none" }}
+            >
               <Button
                 variant="contained"
                 style={{
