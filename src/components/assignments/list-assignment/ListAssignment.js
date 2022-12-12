@@ -54,10 +54,10 @@ function AssignmentNoRowsOverlay() {
 const states = ["All", "Accepted", "Waiting for acceptance"];
 
 const sortByDate = (v1, v2) => {
-  const date1 = new Date(convertDateByFormatEdit_v2(v1, 'yyyy/MM/dd'));
-  const date2 = new Date(convertDateByFormatEdit_v2(v2, 'yyyy/MM/dd'));
+  const date1 = new Date(convertDateByFormatEdit_v2(v1, "yyyy/MM/dd"));
+  const date2 = new Date(convertDateByFormatEdit_v2(v2, "yyyy/MM/dd"));
   return date1 - date2;
-}
+};
 
 const ListAssignment = (props) => {
   const {
@@ -110,7 +110,7 @@ const ListAssignment = (props) => {
       headerName: "Assigned Date",
       minWidth: 150,
       flex: 1.5,
-      sortComparator: sortByDate
+      sortComparator: sortByDate,
     },
     {
       field: "state",
@@ -266,7 +266,11 @@ const ListAssignment = (props) => {
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  style={{ border: "1px solid black", borderRadius: "8px", width: "100%" }}
+                  style={{
+                    border: "1px solid black",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
                   placeholder="Search…"
                   type="search"
                   onChange={(e) => changeSearchCondition(e.target.value)}
@@ -279,7 +283,10 @@ const ListAssignment = (props) => {
             </form>
           </Grid>
           <Grid item lg={3} xs={12}>
-            <Link to="/assignments/create" style={{ width: "100%", textDecoration: "none" }}>
+            <Link
+              to="/assignments/create"
+              style={{ width: "100%", textDecoration: "none" }}
+            >
               <Button
                 variant="contained"
                 style={{
@@ -295,7 +302,7 @@ const ListAssignment = (props) => {
           </Grid>
         </Grid>
       </div>
-      <Box sx={{ height: 399, width: "100%" }}>
+      <Box sx={{ height: 700, width: "100%" }}>
         <DataGrid
           rows={assignmentState.assignments.filter((item) => {
             return (
@@ -303,13 +310,16 @@ const ListAssignment = (props) => {
                 listAssignmentState.conditions.states.includes(item.state)) &&
               (listAssignmentState.conditions.assignedDate == null ||
                 listAssignmentState.conditions.assignedDate == "" ||
-                item.assignedDate != null &&
-                (compareDate(
-                  new Date(listAssignmentState.conditions.assignedDate),
-                  new Date(
-                    convertDateByFormatEdit_v2(item.assignedDate, "yyyy/MM/dd")
-                  )
-                ))) &&
+                (item.assignedDate != null &&
+                  compareDate(
+                    new Date(listAssignmentState.conditions.assignedDate),
+                    new Date(
+                      convertDateByFormatEdit_v2(
+                        item.assignedDate,
+                        "yyyy/MM/dd"
+                      )
+                    )
+                  ))) &&
               (item.assetCode
                 .toUpperCase()
                 .includes(

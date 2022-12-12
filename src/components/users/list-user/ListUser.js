@@ -323,7 +323,12 @@ function ListUser() {
         <Grid container spacing={3} alignItems={"center"}>
           <Grid item lg={3} xs={12}>
             <FormControl style={{ width: "100%" }}>
-              <InputLabel id="demo-simple-select-label" style={{ backgroundColor: "white", zIndex: "1" }}>Type</InputLabel>
+              <InputLabel
+                id="demo-simple-select-label"
+                style={{ backgroundColor: "white", zIndex: "1" }}
+              >
+                Type
+              </InputLabel>
               <Select
                 IconComponent={() => <FilterAltIcon />}
                 labelId="demo-simple-select-label"
@@ -346,10 +351,15 @@ function ListUser() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item lg={3} xs={12} display={{xs: "none", lg: "block"}}></Grid>
+          <Grid
+            item
+            lg={3}
+            xs={12}
+            display={{ xs: "none", lg: "block" }}
+          ></Grid>
           <Grid item lg={3} xs={12}>
             <form autoComplete="off">
-              <Search style={{marginLeft: 0, width: "100%"}}>
+              <Search style={{ marginLeft: 0, width: "100%" }}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
@@ -389,7 +399,7 @@ function ListUser() {
           </Grid>
         </Grid>
       </div>
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box sx={{ height: 700, width: "100%" }}>
         <DataGrid
           // labelRowsPerPage=""
           // disableColumnMenu
@@ -418,7 +428,7 @@ function ListUser() {
             return true;
           })}
           columns={columns}
-          pageSize={20}
+          pageSize={10}
           // onCellClick={handleOnCellClick}
           components={{
             Pagination: CustomPagination,

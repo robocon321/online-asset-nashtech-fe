@@ -368,7 +368,12 @@ function ListAsset() {
         <Grid container spacing={3} alignItems={"center"}>
           <Grid item lg={3} xs={12}>
             <FormControl style={{ width: "100%" }}>
-              <InputLabel id="demo-simple-select-label" style={{ backgroundColor: "white", zIndex: "1" }}>State</InputLabel>
+              <InputLabel
+                id="demo-simple-select-label"
+                style={{ backgroundColor: "white", zIndex: "1" }}
+              >
+                State
+              </InputLabel>
               <Select
                 IconComponent={() => <FilterAltIcon />}
                 labelId="demo-simple-select-label"
@@ -445,7 +450,10 @@ function ListAsset() {
             </form>
           </Grid>
           <Grid item lg={3} xs={12}>
-            <Link to={"create"} style={{ width: "100%", textDecoration: "none" }}>
+            <Link
+              to={"create"}
+              style={{ width: "100%", textDecoration: "none" }}
+            >
               <Button
                 variant="contained"
                 style={{
@@ -462,7 +470,7 @@ function ListAsset() {
         </Grid>
       </div>
 
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box sx={{ height: 700, width: "100%" }}>
         <DataGrid
           rows={assetState.assets.filter((item) => {
             if (
@@ -494,7 +502,7 @@ function ListAsset() {
             return true;
           })}
           columns={columns}
-          pageSize={20}
+          pageSize={10}
           components={{
             Pagination: CustomPagination,
             NoRowsOverlay,
