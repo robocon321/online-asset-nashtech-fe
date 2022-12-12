@@ -97,37 +97,37 @@ const Sidebar = (props) => {
           </Link>
         </ListItem>
       )
-    }
+      }
 
-    {
-      appState.user.role == 'ADMIN' && (
-      <ListItem disablePadding sx={{ display: 'block' }}>
-        <Link to='/assignments' className={path == 'assignments' ? styles['active'] : ''}>
-          <span className={styles['icon']}><AssignmentIcon /></span>
-          <span className={styles['title']}>Manage Assignment</span>
-        </Link>
-      </ListItem>
-    )}
+      {
+        appState.user.role == 'ADMIN' && (
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <Link to='/assignments' className={path == 'assignments' ? styles['active'] : ''}>
+              <span className={styles['icon']}><AssignmentIcon /></span>
+              <span className={styles['title']}>Manage Assignment</span>
+            </Link>
+          </ListItem>
+        )}
 
-    {
-      appState.user.role == 'ADMIN' && (
-      <ListItem disablePadding sx={{ display: 'block' }}>
-        <Link to='/returnings' className={path == 'returnings' ? styles['active'] : ''}>
-          <span className={styles['icon']}><AssignmentReturnIcon /></span>
-          <span className={styles['title']}>Manage for Returning</span>
-        </Link>
-      </ListItem>
-    )}
+      {
+        appState.user.role == 'ADMIN' && (
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <Link to='/returnings' className={path == 'returnings' ? styles['active'] : ''}>
+              <span className={styles['icon']}><AssignmentReturnIcon /></span>
+              <span className={styles['title']}>Request for Returning</span>
+            </Link>
+          </ListItem>
+        )}
 
-    {
-      appState.user.role == 'ADMIN' && (
-        <ListItem disablePadding sx={{ display: 'block' }}>
-          <Link to='#' className={path == 'report' ? styles['active'] : ''}>
-            <span className={styles['icon']}><PieChartOutlineIcon /></span>
-            <span className={styles['title']}>Report</span>
-          </Link>
-        </ListItem>
-      )}
+      {
+        appState.user.role === 'ADMIN' && (
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <Link to='/reports' className={path === 'reports' ? styles['active'] : ''}>
+              <span className={styles['icon']}><PieChartOutlineIcon /></span>
+              <span className={styles['title']}>Report</span>
+            </Link>
+          </ListItem>
+        )}
     </Drawer>
   );
 };

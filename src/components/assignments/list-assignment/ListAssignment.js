@@ -43,10 +43,6 @@ import {
 import ModalDetail from "./ModalDetail";
 import CustomPagination from "../../common/pagination/CustomPagination";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 function AssignmentNoRowsOverlay() {
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
@@ -56,6 +52,12 @@ function AssignmentNoRowsOverlay() {
 }
 
 const states = ["All", "Accepted", "Waiting for acceptance"];
+
+const sortByDate = (v1, v2) => {
+  const date1 = new Date(convertDateByFormatEdit_v2(v1, "yyyy/MM/dd"));
+  const date2 = new Date(convertDateByFormatEdit_v2(v2, "yyyy/MM/dd"));
+  return date1 - date2;
+};
 
 const ListAssignment = (props) => {
   const {
@@ -108,6 +110,7 @@ const ListAssignment = (props) => {
       headerName: "Assigned Date",
       minWidth: 150,
       flex: 1.5,
+      sortComparator: sortByDate,
     },
     {
       field: "state",
@@ -299,7 +302,7 @@ const ListAssignment = (props) => {
           </Grid>
         </Grid>
       </div>
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 399, width: "100%" }}>
         <DataGrid
           rows={assignmentState.assignments.filter((item) => {
             return (
@@ -307,12 +310,16 @@ const ListAssignment = (props) => {
                 listAssignmentState.conditions.states.includes(item.state)) &&
               (listAssignmentState.conditions.assignedDate == null ||
                 listAssignmentState.conditions.assignedDate == "" ||
-                compareDate(
-                  new Date(listAssignmentState.conditions.assignedDate),
-                  new Date(
-                    convertDateByFormatEdit_v2(item.assignedDate, "yyyy/MM/dd")
-                  )
-                )) &&
+                (item.assignedDate != null &&
+                  compareDate(
+                    new Date(listAssignmentState.conditions.assignedDate),
+                    new Date(
+                      convertDateByFormatEdit_v2(
+                        item.assignedDate,
+                        "yyyy/MM/dd"
+                      )
+                    )
+                  ))) &&
               (item.assetCode
                 .toUpperCase()
                 .includes(
@@ -323,7 +330,7 @@ const ListAssignment = (props) => {
                   .includes(
                     listAssignmentState.conditions.search.toUpperCase()
                   ) ||
-                item.assignedTo
+                item.assignedBy
                   .toUpperCase()
                   .includes(
                     listAssignmentState.conditions.search.toUpperCase()

@@ -1,6 +1,7 @@
 import { ACTIONS } from "../actions/LoginAction";
 
 const reducer = (state, {type, payload}) => {
+  console.log(type, payload);
   switch(type) {
     case ACTIONS.SET_ENABLE_SUBMIT:
       state = {...state, enableSubmit: payload};

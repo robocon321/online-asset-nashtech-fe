@@ -70,8 +70,12 @@ export const setSuccesAction = (success) => (dispatch) => {
 };
 
 export const submitAction = (form, navigate, loadUser) => async (dispatch) => {
-  setLoadingAction(true)(dispatch);
-
+      setStatusAction({
+        isLoading: false,
+        message: "Successful!",
+        success: true,
+      })(dispatch);
+  
   await axios
     .post(`${API_ENDPOINT}/v1/auth/login`, form)
     .then((response) => {
