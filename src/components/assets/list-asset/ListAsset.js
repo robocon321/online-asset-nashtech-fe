@@ -470,7 +470,7 @@ function ListAsset() {
         </Grid>
       </div>
 
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box sx={{ height: 700, width: "100%" }}>
         <DataGrid
           rows={assetState.assets.filter((item) => {
             if (
@@ -502,7 +502,7 @@ function ListAsset() {
             return true;
           })}
           columns={columns}
-          pageSize={20}
+          pageSize={10}
           components={{
             Pagination: CustomPagination,
             NoRowsOverlay,
