@@ -124,7 +124,7 @@ const Header = (props) => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleClickOpen}>Change password</MenuItem>
-      <MenuItem onClick={handleClickOpenLogout}>Logout</MenuItem>
+      <MenuItem onClick={handleClickOpenLogout}>Log out</MenuItem>
     </Menu>
   );
   const [openNoti, setOpenNoti] = React.useState(false);

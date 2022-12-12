@@ -7,6 +7,8 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
 import { HomeContext } from "../../contexts/providers/HomeProvider";
+import CloseIcon from "@mui/icons-material/Close";
+
 import {
   gridPageCountSelector,
   gridPageSelector,
@@ -18,7 +20,7 @@ import AcceptDialog from "./AcceptDialog";
 import DeclineDialog from "./DeclineDialog";
 import ReturnDialog from "./ReturnDialog";
 
-function AssignmentNoRowsOverlay() {
+function NoRowsOverlay() {
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
       No Assignment have assign to you
@@ -185,6 +187,12 @@ const ListAssignment = (props) => {
       width: 110,
       flex: 2,
       align: "center",
+      sortable: false,
+      filterable: false,
+      headerAlign: "center",
+      renderHeader: () => {
+        return <h4>Action</h4>;
+      },
       renderCell: (params) => {
         if (params.row.state === "Accepted") {
           return (
@@ -198,7 +206,7 @@ const ListAssignment = (props) => {
               <GridActionsCellItem
                 disabled
                 label="Decline"
-                icon={<HighlightOffRoundedIcon style={{ color: "#B1B1B1" }} />}
+                icon={<CloseIcon style={{ color: "#B1B1B1" }} />}
               />
               {params.row.stateReturnRequest ? (
                 <GridActionsCellItem
@@ -227,7 +235,6 @@ const ListAssignment = (props) => {
                 label="Accept"
                 icon={<CheckRoundedIcon style={{ color: "red" }} />}
                 onClick={() => {
-                  // console.log(homeState.assignmentId);
                   acceptAssignment(params.row.id);
                 }}
               />
@@ -236,7 +243,7 @@ const ListAssignment = (props) => {
                 onClick={() => {
                   declineAssignment(params.row.id);
                 }}
-                icon={<HighlightOffRoundedIcon style={{ color: "black" }} />}
+                icon={<CloseIcon style={{ color: "black" }} />}
               />
               <GridActionsCellItem
                 disabled
@@ -261,15 +268,15 @@ const ListAssignment = (props) => {
           justifyContent: "space-between",
         }}
       ></div>
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 535, width: "100%" }}>
         <DataGrid
           rows={homeState.listAssignment}
           columns={columns}
           pageSize={10}
-          disableSelectionOnClick
+          disableColumnMenu
           components={{
             Pagination: CustomPagination,
-            NoRowsOverlay: AssignmentNoRowsOverlay,
+            NoRowsOverlay,
           }}
         />
       </Box>

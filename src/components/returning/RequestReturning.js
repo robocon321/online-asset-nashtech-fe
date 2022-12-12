@@ -69,58 +69,76 @@ const RequestReturning = (props) => {
   const columns = [
     {
       field: "id",
-      headerName: "No.",
       minWidth: 50,
-      flex: 0.5,
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>No</h4>,
     },
     {
       field: "assetCode",
-      headerName: "Asset Code",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Asset Code</h4>,
     },
     {
       field: "assetName",
-      headerName: "Asset Name",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Asset Name</h4>,
     },
     {
       field: "requestedBy",
-      headerName: "Requested by",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Requested by</h4>,
     },
     {
       field: "assignedDate",
-      headerName: "Assigned Date",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Assigned Date</h4>,
       sortComparator: sortByDate,
     },
     {
       field: "acceptedBy",
-      headerName: "Accepted by",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Accepted By</h4>,
     },
     {
       field: "returnedDate",
-      headerName: "Returned Date",
       minWidth: 150,
-      flex: 1.5,
+      flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>Returned Date</h4>,
       sortComparator: sortByDate,
     },
     {
       field: "state",
-      headerName: "State",
-      minWidth: 200,
       flex: 2,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <h4>State</h4>,
     },
     {
-      headerName: "",
-      minWidth: 150,
       flex: 1.5,
+      headerAlign: "center",
+      align: "center",
+      sortable: false,
+      filterable: false,
+      renderHeader: () => <h4>Action</h4>,
       renderCell: (params) => {
         const isTick = params.row.state == "Waiting for returning";
         const isCancel = params.row.state == "Waiting for returning";
@@ -263,7 +281,7 @@ const RequestReturning = (props) => {
           </Grid>
         </Grid>
       </div>
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 480, width: "100%" }}>
         <DataGrid
           rows={requestReturningState.returnings.filter((item) => {
             console.log(
@@ -308,6 +326,7 @@ const RequestReturning = (props) => {
             Pagination: CustomPagination,
           }}
           pageSize={10}
+          disableColumnMenu
           disableSelectionOnClick
           onRowClick={() => changeOpenModalStatus(true)}
         />

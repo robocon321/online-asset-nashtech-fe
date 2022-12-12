@@ -318,6 +318,13 @@ function ListAsset() {
     {
       width: 110,
       flex: 2,
+      sortable: false,
+      filterable: false,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => {
+        return <h4>Action</h4>;
+      },
       align: "center",
       renderCell: (params) => {
         if (params.row.state === "Assigned") {
@@ -470,7 +477,7 @@ function ListAsset() {
         </Grid>
       </div>
 
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 480, width: "100%" }}>
         <DataGrid
           rows={assetState.assets.filter((item) => {
             if (
@@ -503,6 +510,7 @@ function ListAsset() {
           })}
           columns={columns}
           pageSize={10}
+          disableColumnMenu
           components={{
             Pagination: CustomPagination,
             NoRowsOverlay,
