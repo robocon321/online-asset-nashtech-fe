@@ -81,5 +81,4 @@ export const convertDateByFormatEdit_v2 = (dateString, format) => {
 export const compareDate = (date1, date2) => {
   const oneDay=1000*60*60*24;
   return Math.round((date1.getTime()-date2.getTime())/oneDay) == 0;
-
 }

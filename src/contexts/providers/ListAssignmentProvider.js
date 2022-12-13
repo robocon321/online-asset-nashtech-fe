@@ -73,10 +73,7 @@ const ListAssignmentProvider = (props) => {
   };
 
   const changeDateCondition = (value) => {
-    const assignedTime = new Date(value);
-    if (value == "" || validateDate(assignedTime)) {
-      setFieldConditionAction("assignedDate", value)(dispatch);
-    }
+    setFieldConditionAction("assignedDate", value)(dispatch);
   };
 
   const changeSearchCondition = (value) => {
