@@ -38,6 +38,7 @@ const ModalDetail = (props) => {
             width: "100%",
             alignItems: "center",
             justifyContent: "space-between",
+            marginBottom: '20px'
           }}
         >
           <Title title="Detailed Assignment Information" />
@@ -65,9 +66,8 @@ const ModalDetail = (props) => {
             <Grid item xs={9}> {listAssignmentState.modalDetail.data.assignedDate}</Grid>
             <Grid item xs={3}>State </Grid>
             <Grid item xs={9}> {listAssignmentState.modalDetail.data.state}</Grid>
-
             <Grid item xs={3}>Note</Grid>
-            <Grid item xs={9}><p style={{overflowWrap: "break-word"}}>{listAssignmentState.modalDetail.data.note}</p></Grid>
+            <Grid item xs={9} style={{overflowWrap: "break-word"}}>{listAssignmentState.modalDetail.data.note}</Grid>
           </Grid>
        
       </Box>

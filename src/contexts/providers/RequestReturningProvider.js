@@ -66,10 +66,7 @@ const RequestReturningProvider = (props) => {
   };
 
   const changeDateCondition = (value) => {
-    const returnedDate = new Date(value);
-    if (value == "" || validateDate(returnedDate)) {
-      setFieldConditionAction("returnedDate", value)(dispatch);
-    }
+    setFieldConditionAction("returnedDate", value)(dispatch);
   };
 
   const changeSearchCondition = (value) => {

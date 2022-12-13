@@ -34,6 +34,7 @@ import Search from "../common/search/Search";
 import SearchIconWrapper from "../common/search/SearchIconWrapper";
 import StyledInputBase from "../common/search/StyledInputBase";
 import Title from "../common/title/Title";
+import { validateDate } from "../../utils/Validate";
 
 function RequestReturningNoRowsOverlay() {
   return (
@@ -276,6 +277,7 @@ const RequestReturning = (props) => {
               (requestReturningState.conditions.returnedDate == null ||
                 requestReturningState.conditions.returnedDate == "" ||
                 (item.returnedDate != null &&
+                  validateDate(new Date(requestReturningState.conditions.returnedDate)) &&
                   compareDate(
                     new Date(requestReturningState.conditions.returnedDate),
                     new Date(

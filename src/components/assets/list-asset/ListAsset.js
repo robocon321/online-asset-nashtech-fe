@@ -393,7 +393,7 @@ function ListAsset() {
           </Grid>
           <Grid item lg={3} xs={12}>
             <FormControl style={{ width: "100%" }}>
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <InputLabel id="demo-simple-select-label" style={{ backgroundColor: "white", zIndex: "1" }}>Category</InputLabel>
               <Select
                 IconComponent={() => <FilterAltIcon />}
                 labelId="demo-simple-select-label"
@@ -509,7 +509,7 @@ function ListAsset() {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box sx={style} style={{ borderRadius: "20px", width: "700px" }}>
+        <Box sx={style} style={{ borderRadius: "20px", width: "700px", height: "auto" }}>
           <div
             style={{
               display: "flex",
@@ -517,6 +517,7 @@ function ListAsset() {
               width: "100%",
               alignItems: "center",
               justifyContent: "space-between",
+              marginBottom: '20px'
             }}
           >
             <Title title="Detailed Asset Information" />
@@ -527,59 +528,53 @@ function ListAsset() {
               />
             </IconButton>
           </div>
-          <div style={{ display: "flex" }}>
-            <div>
-              <p>Asset Code</p>
-              <p>Asset Name</p>
-              <p>Category</p>
-              <p>Installed Date </p>
-              <p>State </p>
-              <p>Location </p>
-              <p>Specification</p>
-            </div>
-            <div style={{ paddingLeft: "15px" }}>
-              <p> {listAssetState.assetDetails.code}</p>
-              <p> {listAssetState.assetDetails.name}</p>
-              <p> {listAssetState.assetDetails.categoryName}</p>
-              <p>
-                {listAssetState.assetDetails.installedDate
-                  ? listAssetState.assetDetails.installedDate
-                  : "N/A"}
-              </p>
-              <p> {listAssetState.assetDetails.state}</p>
-              <p> {listAssetState.assetDetails.location}</p>
-              <p> {listAssetState.assetDetails.specification}</p>
-            </div>
-          </div>
-          <div style={{ display: "flex" }}>
-            <div style={{ paddingRight: "10px" }}>
-              <p>History</p>
-            </div>
-            <Box
-              sx={{
-                height: 200,
-                width: "100%",
-                paddingTop: "20px",
-                paddingLeft: "15px",
-              }}
-            >
-              <DataGrid
-                rows={
-                  // []
-
-                  listAssetState.assetDetails.assignments
-                    ? listAssetState.assetDetails.assignments
-                    : []
-                }
-                getRowId={(r) => r.assignedTo}
-                columns={columnDetail}
-                components={{
-                  NoRowsOverlay: NoRowsDetailOverlay,
+          <Grid container spacing={3} alignItems="center">
+            <Grid item xs={3}>Asset Code</Grid>
+            <Grid item xs={9}>{listAssetState.assetDetails.code}</Grid>
+            <Grid item xs={3}>Asset Name</Grid>
+            <Grid item xs={9}>{listAssetState.assetDetails.name}</Grid>
+            <Grid item xs={3}>Category</Grid>
+            <Grid item xs={9}>{listAssetState.assetDetails.categoryName}</Grid>
+            <Grid item xs={3}>Installed Date</Grid>
+            <Grid item xs={9}>
+              {listAssetState.assetDetails.installedDate
+                ? listAssetState.assetDetails.installedDate
+                : "N/A"}            
+            </Grid>
+            <Grid item xs={3}>State</Grid>
+            <Grid item xs={9}>{listAssetState.assetDetails.state}</Grid>
+            <Grid item xs={3}>Location</Grid>
+            <Grid item xs={9}>{listAssetState.assetDetails.location}</Grid>
+            <Grid item xs={3}>Specification</Grid>
+            <Grid item xs={9} style={{ overflowWrap: "break-word" }}>{listAssetState.assetDetails.specification}</Grid>
+            <Grid item xs={3}>History</Grid>
+            <Grid item xs={9}>
+              <Box
+                sx={{
+                  height: 200,
+                  width: "100%",
+                  paddingTop: "20px",
+                  paddingLeft: "15px",
                 }}
-                hideFooter
-              ></DataGrid>
-            </Box>
-          </div>
+              >
+                <DataGrid
+                  rows={
+                    // []
+
+                    listAssetState.assetDetails.assignments
+                      ? listAssetState.assetDetails.assignments
+                      : []
+                  }
+                  getRowId={(r) => r.assignedTo}
+                  columns={columnDetail}
+                  components={{
+                    NoRowsOverlay: NoRowsDetailOverlay,
+                  }}
+                  hideFooter
+                ></DataGrid>
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
       </Modal>
 
