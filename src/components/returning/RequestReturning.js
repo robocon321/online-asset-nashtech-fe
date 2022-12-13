@@ -8,6 +8,7 @@ import {
   ListItemText,
   MenuItem,
   Select,
+  Slide,
   Stack,
   TextField,
 } from "@mui/material";
@@ -42,6 +43,10 @@ function RequestReturningNoRowsOverlay() {
     </Stack>
   );
 }
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const states = ["All", "Completed", "Waiting for returning"];
 
@@ -333,22 +338,22 @@ const RequestReturning = (props) => {
       </Box>
 
       <Dialog
-        //open={listAssignmentState.modalDelete.open}
         open={requestReturningState.modalDelete.open}
-        //TransitionComponent={Transition}
+        TransitionComponent={Transition}
         keepMounted
-        //onClose={handleClose}
+        onClose={() => changeOpenDelete(false)}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"Are you sure?"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Do you want to cancel this returning request?
+          <DialogContentText
+            id="alert-dialog-slide-description"
+            style={{ color: "black" }}
+          >
+            <p>Do you want to cancel this returning request?</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ mx: "auto", p: 2 }}>
-          {/* <Button onClick={() => deleteSubmit()}>Delete</Button>
-          <Button onClick={() => changeOpenDelete(false)}>Cancel</Button> */}
           <Button
             onClick={() => deleteSubmit()}
             color="error"
@@ -368,14 +373,18 @@ const RequestReturning = (props) => {
 
       <Dialog
         open={requestReturningState.modalAccept.open}
-        //TransitionComponent={Transition}
+        onClose={() => changeOpenAccept(false)}
+        TransitionComponent={Transition}
         keepMounted
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"Are you sure?"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Do you want to mark this returning request as 'Completed'?
+          <DialogContentText
+            id="alert-dialog-slide-description"
+            style={{ color: "black" }}
+          >
+            <p>Do you want to mark this returning request as 'Completed'?</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ mx: "auto", p: 2 }}>

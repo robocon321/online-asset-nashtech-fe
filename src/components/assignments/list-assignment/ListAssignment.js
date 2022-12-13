@@ -51,6 +51,10 @@ function AssignmentNoRowsOverlay() {
   );
 }
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const states = ["All", "Accepted", "Waiting for acceptance"];
 
 const sortByDate = (v1, v2) => {
@@ -375,15 +379,18 @@ const ListAssignment = (props) => {
 
       <Dialog
         open={listAssignmentState.modalDelete.open}
-        //TransitionComponent={Transition}
+        TransitionComponent={Transition}
         keepMounted
-        //onClose={handleClose}
+        onClose={() => changeOpenDelete(false)}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"Are you sure?"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Do you want to delete this assignment?
+          <DialogContentText
+            id="alert-dialog-slide-description"
+            style={{ color: "black" }}
+          >
+            <p>Do you want to delete this assignment?</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ mx: "auto", p: 2 }}>
