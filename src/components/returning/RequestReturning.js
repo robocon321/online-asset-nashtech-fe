@@ -344,8 +344,8 @@ const RequestReturning = (props) => {
         onClose={() => changeOpenDelete(false)}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Are you sure?"}</DialogTitle>
-        <DialogContent>
+        <DialogTitle sx={{ ml: 3 }}>Are you sure?</DialogTitle>
+        <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
           <DialogContentText
             id="alert-dialog-slide-description"
             style={{ color: "black" }}
@@ -378,8 +378,8 @@ const RequestReturning = (props) => {
         keepMounted
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Are you sure?"}</DialogTitle>
-        <DialogContent>
+        <DialogTitle sx={{ ml: 3 }}>Are you sure?</DialogTitle>
+        <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
           <DialogContentText
             id="alert-dialog-slide-description"
             style={{ color: "black" }}

@@ -457,7 +457,7 @@ function ListUser() {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box sx={style} style={{ borderRadius: "20px" }}>
+        <Box sx={style} style={{ borderRadius: "20px", width: "500px" }}>
           <div
             style={{
               display: "flex",
@@ -540,7 +540,7 @@ function ListUser() {
           TransitionComponent={Transition}
           keepMounted
         >
-          <DialogTitle>Are you sure</DialogTitle>
+          <DialogTitle sx={{ ml: 3 }}>Are you sure</DialogTitle>
           {/* </div> */}
           <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
             <DialogContentText
