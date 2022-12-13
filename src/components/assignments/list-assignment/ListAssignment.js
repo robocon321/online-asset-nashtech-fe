@@ -42,6 +42,7 @@ import {
 } from "../../../utils/DateUtils";
 import ModalDetail from "./ModalDetail";
 import CustomPagination from "../../common/pagination/CustomPagination";
+import { validateDate } from "../../../utils/Validate";
 
 function AssignmentNoRowsOverlay() {
   return (
@@ -169,9 +170,6 @@ const ListAssignment = (props) => {
               }}
               icon={<EditRoundedIcon />}
               disabled={!isEdit}
-              style={{
-                color: isEdit ? "black" : "#BCBCBC",
-              }}
               label="edit"
             />
             <GridActionsCellItem
@@ -194,7 +192,7 @@ const ListAssignment = (props) => {
             <GridActionsCellItem
               disabled={!isReturn}
               icon={
-                <ReplayIcon style={{ color: isReturn ? "blue" : "#BCBCBC" }} />
+                <ReplayIcon style={{ color: isReturn ? "blue" : "#0000ff52" }} />
               }
               label="Return"
               onClick={(e) => {
@@ -337,18 +335,15 @@ const ListAssignment = (props) => {
             return (
               (listAssignmentState.conditions.states.includes("All") ||
                 listAssignmentState.conditions.states.includes(item.state)) &&
-              (listAssignmentState.conditions.assignedDate == null ||
-                listAssignmentState.conditions.assignedDate == "" ||
-                (item.assignedDate != null &&
-                  compareDate(
-                    new Date(listAssignmentState.conditions.assignedDate),
-                    new Date(
-                      convertDateByFormatEdit_v2(
-                        item.assignedDate,
-                        "yyyy/MM/dd"
-                      )
-                    )
-                  ))) &&
+              (listAssignmentState.conditions.assignedDate == null || listAssignmentState.conditions.assignedDate == '' ||
+                item.assignedDate != null &&
+                validateDate(new Date(listAssignmentState.conditions.assignedDate)) &&
+                (compareDate(
+                  new Date(listAssignmentState.conditions.assignedDate),
+                  new Date(
+                    convertDateByFormatEdit_v2(item.assignedDate, "yyyy/MM/dd")
+                  )
+                ))) &&
               (item.assetCode
                 .toUpperCase()
                 .includes(

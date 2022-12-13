@@ -1,4 +1,4 @@
-import { IconButton, Modal } from "@mui/material";
+import { Grid, IconButton, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 
@@ -28,7 +28,7 @@ const ModalDetail = () => {
       aria-labelledby="keep-mounted-modal-title"
       aria-describedby="keep-mounted-modal-description"
     >
-      <Box sx={style} style={{ borderRadius: "20px", width: "500px" }}>
+      <Box sx={style} style={{ borderRadius: "20px", width: "700px" }}>
         <div
           style={{
             display: "flex",
@@ -36,6 +36,7 @@ const ModalDetail = () => {
             width: "100%",
             alignItems: "center",
             justifyContent: "space-between",
+            marginBottom: '20px'
           }}
         >
           <Title title="Detailed Assignment Information" />
@@ -46,28 +47,26 @@ const ModalDetail = () => {
             />
           </IconButton>
         </div>
-        <div style={{ display: "flex" }}>
-          <div>
-            <p>Asset Code</p>
-            <p>Asset Name</p>
-            <p>Specification</p>
-            <p>Assigned to</p>
-            <p>Assigned by </p>
-            <p>Assigned Date </p>
-            <p>State</p>
-            <p>Note</p>
-          </div>
-          <div style={{ paddingLeft: "15px" }}>
-            <p> {homeState.modalDetail.data.assetCode}</p>
-            <p> {homeState.modalDetail.data.assetName}</p>
-            <p> {homeState.modalDetail.data.specification}</p>
-            <p> {homeState.modalDetail.data.assignedTo}</p>
-            <p> {homeState.modalDetail.data.assignedBy}</p>
-            <p> {homeState.modalDetail.data.assignedDate}</p>
-            <p> {homeState.modalDetail.data.state}</p>
-            <p> {homeState.modalDetail.data.note}</p>
-          </div>
-        </div>
+        <Grid container spacing={3} alignItems="center">
+            <Grid item xs={3}>Asset Code</Grid>
+            <Grid item xs={9}>{homeState.modalDetail.data.assetCode}</Grid>
+            <Grid item xs={3}>Asset Name</Grid>
+            <Grid item xs={9}> {homeState.modalDetail.data.assetName}</Grid>
+            <Grid item xs={3}>Specification</Grid>
+            <Grid item xs={9} style={{ overflowWrap: "break-word" }}>
+              {homeState.modalDetail.data.specification}
+            </Grid>
+            <Grid item xs={3}>Assigned to</Grid>
+            <Grid item xs={9}> {homeState.modalDetail.data.assignedTo}</Grid>
+            <Grid item xs={3}>Assigned by</Grid>
+            <Grid item xs={9}> {homeState.modalDetail.data.assignedBy}</Grid>
+            <Grid item xs={3}>Assigned Date </Grid>
+            <Grid item xs={9}> {homeState.modalDetail.data.assignedDate}</Grid>
+            <Grid item xs={3}>State </Grid>
+            <Grid item xs={9}> {homeState.modalDetail.data.state}</Grid>
+            <Grid item xs={3}>Note</Grid>
+            <Grid item xs={9} style={{overflowWrap: "break-word"}}>{homeState.modalDetail.data.note}</Grid>
+          </Grid>
       </Box>
     </Modal>
   );

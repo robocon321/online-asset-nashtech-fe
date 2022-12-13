@@ -131,8 +131,8 @@ const CreateAssignmentProvider = (props) => {
       return ;   
     } else {
       const currentTime = new Date();
-      const oneDay=1000*60*60*24
-      const diff = Math.round((currentTime.getTime()-assignedTime.getTime())/oneDay)
+      const oneDay=1000*60*60*24;
+      const diff = Math.ceil((currentTime.getTime()-assignedTime.getTime())/oneDay)
       if (diff > 1) {
         addErrorFieldAction(
           "assignedDate",
