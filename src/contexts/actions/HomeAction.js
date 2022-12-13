@@ -28,7 +28,13 @@ export const loadHomeAction = () => async (dispatch) => {
       type: ACTIONS.SET_LIST_ASSIGNMENT,
       payload: res.data,
     });
-  }).catch(error => console.log(error));
+  }).catch(error => {
+    console.log(error)
+    dispatch({
+      type: ACTIONS.SET_LIST_ASSIGNMENT,
+      payload: [],
+    });
+  });
 };
 
 export const detailAssignmentAction = (id) => async (dispatch) => {
