@@ -540,9 +540,7 @@ function ListUser() {
           TransitionComponent={Transition}
           keepMounted
         >
-          <DialogTitle style={{ textAlign: "center" }}>
-            Are you sure
-          </DialogTitle>
+          <DialogTitle>Are you sure</DialogTitle>
           {/* </div> */}
           <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
             <DialogContentText

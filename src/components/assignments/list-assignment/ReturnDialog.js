@@ -38,9 +38,7 @@ export default function AlertDialogSlide() {
         "border-style": "solid",
       }}
     >
-      <DialogTitle sx={{ ml: 3, textAlign: "center" }}>
-        Are you sure?
-      </DialogTitle>
+      <DialogTitle sx={{ ml: 3 }}>Are you sure?</DialogTitle>
       <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
         <DialogContentText
           id="alert-dialog-slide-description"
