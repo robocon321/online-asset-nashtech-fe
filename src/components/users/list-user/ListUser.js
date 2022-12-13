@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { forwardRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
@@ -8,6 +8,12 @@ import {
   useGridApiContext,
   useGridSelector,
 } from "@mui/x-data-grid";
+import Slide from "@mui/material/Slide";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { styled, alpha } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
@@ -31,6 +37,10 @@ import IconButton from "@mui/material/IconButton";
 import { UserContext } from "../../../contexts/providers/UserProvider";
 import Stack from "@mui/material/Stack";
 import { Grid } from "@mui/material";
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -490,86 +500,81 @@ function ListUser() {
         </Box>
       </Modal>
       {listUserState.checkDelete === 1 ? (
-        <Modal
-          keepMounted
+        <Dialog
           open={listUserState.openDelete}
           onClose={handleCloseDelete}
-          aria-labelledby="keep-mounted-modal-title"
-          aria-describedby="keep-mounted-modal-description"
+          TransitionComponent={Transition}
+          keepMounted
         >
-          <Box sx={style} style={{ borderRadius: "20px" }}>
-            <div
+          <DialogTitle
+            style={{
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <p>Can not disable user</p>
+            <IconButton onClick={handleCloseDelete}>
+              <DisabledByDefaultOutlinedIcon
+                sx={{ fontSize: 40 }}
+                style={{ color: "#e30613" }}
+              />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
+            <DialogContentText
+              id="alert-dialog-slide-description"
               style={{
-                display: "flex",
-                borderBottom: "1px solid black",
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "space-between",
+                color: "black",
               }}
             >
-              <Title title="Can not disable user" />
-              <IconButton onClick={handleCloseDelete}>
-                <DisabledByDefaultOutlinedIcon
-                  sx={{ fontSize: 40 }}
-                  style={{ color: "#e30613" }}
-                />
-              </IconButton>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div>
-                <p>There are valid assignments belonging to this user.</p>
-                <p>Please close all assignments before disabling user.</p>
-              </div>
-            </div>
-          </Box>
-        </Modal>
+              <p>There are valid assignments belonging to this user.</p>
+              <p>Please close all assignments before disabling user.</p>
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
       ) : (
-        <Modal
-          keepMounted
+        <Dialog
           open={listUserState.openDelete}
           onClose={handleCloseDelete}
-          aria-labelledby="keep-mounted-modal-title"
-          aria-describedby="keep-mounted-modal-description"
+          TransitionComponent={Transition}
+          keepMounted
         >
-          <Box sx={style} style={{ borderRadius: "20px" }}>
-            <div
-              style={{
-                display: "flex",
-                borderBottom: "1px solid black",
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
+          <DialogTitle style={{ textAlign: "center" }}>
+            Are you sure
+          </DialogTitle>
+          {/* </div> */}
+          <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
+            <DialogContentText
+              id="alert-dialog-slide-description"
+              style={{ color: "black" }}
             >
-              <Title title="Are you sure?" />
+              <p>Do you want to disable this user?</p>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions sx={{ mx: "auto", p: 2 }}>
+            {/* <p>Do you want to disable this user?</p> */}
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => disableUser(listUserState.checkId)}
+                style={{ fontSize: "15px" }}
+              >
+                Disable
+              </Button>
+              <Button
+                onClick={handleCloseDelete}
+                variant="contained"
+                color="success"
+                style={{ marginLeft: "10px", fontSize: "15px" }}
+              >
+                Cancel
+              </Button>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div>
-                <p>Do you want to disable this user?</p>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <Button
-                    variant="contained"
-                    color="error"
-                    onClick={() => disableUser(listUserState.checkId)}
-                    style={{ fontSize: "15px" }}
-                  >
-                    Disable
-                  </Button>
-                  <Button
-                    onClick={handleCloseDelete}
-                    variant="contained"
-                    color="success"
-                    style={{ marginRight: "100px", fontSize: "15px" }}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Box>
-        </Modal>
+          </DialogActions>
+          {/* </Box> */}
+        </Dialog>
       )}
     </div>
   );
