@@ -506,18 +506,18 @@ function ListUser() {
           TransitionComponent={Transition}
           keepMounted
         >
-          <DialogTitle
-            style={{
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <p>Can not disable user</p>
-            <IconButton onClick={handleCloseDelete}>
+          <DialogTitle sx={{ ml: 3 }}>
+            Can not disable user
+            <IconButton
+              onClick={handleCloseDelete}
+              style={{
+                float: "right",
+                padding: "0px"
+              }}
+            >
               <DisabledByDefaultOutlinedIcon
-                sx={{ fontSize: 40 }}
-                style={{ color: "#e30613" }}
+                sx={{ fontSize: 35 }}
+                style={{ color: "#e30613", float: "right", marginTop: "0px" }}
               />
             </IconButton>
           </DialogTitle>
@@ -526,10 +526,13 @@ function ListUser() {
               id="alert-dialog-slide-description"
               style={{
                 color: "black",
+                marginBottom: "50px",
               }}
             >
-              <p>There are valid assignments belonging to this user.</p>
-              <p>Please close all assignments before disabling user.</p>
+              <p>
+                There are valid assignments belonging to this user. <br />
+                Please close all assignments before disabling user.
+              </p>
             </DialogContentText>
           </DialogContent>
         </Dialog>
@@ -540,7 +543,7 @@ function ListUser() {
           TransitionComponent={Transition}
           keepMounted
         >
-          <DialogTitle sx={{ ml: 3 }}>Are you sure</DialogTitle>
+          <DialogTitle sx={{ ml: 3 }}>Are you sure?</DialogTitle>
           {/* </div> */}
           <DialogContent sx={{ p: 0, pl: 6, pr: 6, height: "100%" }}>
             <DialogContentText
@@ -552,7 +555,12 @@ function ListUser() {
           </DialogContent>
           <DialogActions sx={{ mx: "auto", p: 2 }}>
             {/* <p>Do you want to disable this user?</p> */}
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <Button
                 variant="contained"
                 color="error"
